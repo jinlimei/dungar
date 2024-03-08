@@ -1,0 +1,48 @@
+
+variables:
+  IN_CI_ENV: "1"
+
+stages:
+ - tests
+ - deploy
+
+linter:
+  image: gitlab.int.magneato.site:4567/dungar/test-image:latest
+  stage: tests
+  script:
+    - make lint
+
+main-test:
+  image: gitlab.int.magneato.site:4567/dungar/test-image:latest
+  stage: tests
+  script:
+    - make test
+
+race-test:
+  image: gitlab.int.magneato.site:4567/dungar/test-image:latest
+  stage: tests
+  script:
+    - make race
+
+msan-test:
+  image: gitlab.int.magneato.site:4567/dungar/test-image:latest
+  stage: tests
+  script:
+    - make msan
+
+coverage-test:
+  image: gitlab.int.magneato.site:4567/dungar/test-image:latest
+  stage: tests
+  script:
+    - make coverage
+
+deploy_local:
+  image: gitlab.int.magneato.site:4567/dungar/test-image:latest
+  stage: deploy
+  environment:
+    name: local_production
+  script:
+    - make build
+    - bash tools/deploy_script.sh
+  only:
+    - master

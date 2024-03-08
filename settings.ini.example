@@ -1,0 +1,6 @@
+
+[base]
+mode=discord
+debug=true
+secret_file=secrets.ini
+;seed=1526685321315953500

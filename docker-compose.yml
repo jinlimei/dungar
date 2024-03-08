@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  dungar:
+    build: .
+    environment:
+      IN_CI_ENV: "1"
+      IN_CD_ENV: "1"
+      DUNGAR_DB_DATA: "dungar_test"
+      DUNGAR_DB_HOST: "postgres"
+      DUNGAR_DB_PASS: "dungar_ci_test"
+      DUNGAR_DB_USER: "dungar_ci_test"
+
+    command: ["/bin/bash", "tools/safe_testing.sh"]
