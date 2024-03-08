@@ -45,4 +45,4 @@ deploy_local:
     - make build
     - bash tools/deploy_script.sh
   only:
-    - master
+    - main
