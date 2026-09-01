@@ -24,6 +24,7 @@ func initScheduleGroup() {
 
 	scheduleGroup.SetScheduleEvs([]*core2.ScheduleEvHandler{
 		{0, "OutputQueue", outputQueueScheduler, 1 * time.Second, 0},
+		{1, "ManicMinute", manicMinuteScheduler, manicMinuteTick, 0},
 		{1, "Commentator", commentateScheduler, 6 * time.Hour, 0},
 	})
 }

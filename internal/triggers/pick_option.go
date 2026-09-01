@@ -19,35 +19,29 @@ var alternativeOptions = []weightedChoice{
 	{0.10, "no checkbox, didn't vote"},
 }
 
-var alternativeOptionsForTwo = []weightedChoice{
-	{0.30, "por que no los dos?"},
-	{0.30, "yes"},
-	{0.30, "i'm leaning towards the former but honestly the latter tho"},
-	{0.10, "have you considered picking up chess instead?"},
-}
-
 const pickOptionRegex = ":?\\s*(.+\\s+or\\s+.+)\\??"
 
 var (
 	splitterRegexp = regexp.MustCompile("\\s*(?:,?\\sor\\s|,)\\s*")
-	directedToRgx  = regexp.MustCompile("^(@[^:][^ ]+|[^:][^ ]+):?\\s*")
+	directedToRgx  = regexp.MustCompile("^(?:@[^: ][^ ]+\\s+|<@!?[^>]+(?:\\|[^>]+)?>\\s+|[^: ][^ ]+:\\s*)")
 )
 
 func pickOptionHandler(str, serverID string) string {
-	if directedToRgx.MatchString(str) {
-		sub := directedToRgx.FindStringSubmatch(str)
-		str = strings.TrimSpace(strings.Replace(str, sub[0], "", -1))
+	if prefix := directedToRgx.FindString(str); prefix != "" {
+		str = strings.TrimSpace(strings.TrimPrefix(str, prefix))
 	}
 
 	options := splitterRegexp.Split(str, -1)
+	for idx := range options {
+		options[idx] = strings.TrimSpace(strings.Trim(options[idx], "?!"))
+	}
+
+	if len(options) == 2 {
+		return random.PickString(options)
+	}
 
 	// we decide to ignore their dumb choices and roll with our own choices.
 	if fromBasicChance("pickOptionHandler--ignoreUser") {
-		// If it's only two options we can build off of a different list.
-		if len(options) == 2 && fromBasicChance("pickOptionHandler--altOptions") {
-			return buildPostMessage(pickWeightedChoice(alternativeOptionsForTwo), serverID)
-		}
-
 		return buildPostMessage(pickWeightedChoice(alternativeOptions), serverID)
 	}
 

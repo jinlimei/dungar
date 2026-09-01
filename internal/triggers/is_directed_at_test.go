@@ -27,6 +27,7 @@ func makeIncMessage(msg, name string) *core2.IncomingMessage {
 	return &core2.IncomingMessage{
 		ID:             "",
 		UserID:         "",
+		ServerID:       "arena",
 		ChannelID:      "",
 		SubChannelID:   "",
 		IsSubMessage:   false,
@@ -50,11 +51,33 @@ func TestIsDirectedAtDungar(t *testing.T) {
 	assert.Truef(t, isDirectedAtDungar(svc, msg), "got false for msg '%v'", msg)
 	msg = makeIncMessage("%s: sup", inf.Name)
 	assert.Truef(t, isDirectedAtDungar(svc, msg), "got false for msg '%v'", msg)
+	msg = makeIncMessage("@%s sup", inf.ID)
+	assert.Truef(t, isDirectedAtDungar(svc, msg), "got false for msg '%v'", msg)
 
 	msg = makeIncMessage("hello @%s", inf.Name)
 	assert.Falsef(t, isDirectedAtDungar(svc, msg), "got true for msg '%v'", msg)
 	msg = makeIncMessage("!%s sup", inf.Name)
 	assert.Falsef(t, isDirectedAtDungar(svc, msg), "got true for msg '%v'", msg)
+}
+
+func TestIsDirectedAtDungarUsesGuildResolvedBotName(t *testing.T) {
+	svc := initMockServices()
+
+	mockDriver.SetBotUser(core2.BotUser{
+		ID:      "dungar",
+		Name:    "Dungarmatic",
+		IsBot:   true,
+		IsAdmin: false,
+	})
+	mockDriver.Users["dungar"] = core2.User{
+		ID:      "dungar",
+		Name:    "Furrymatic",
+		IsBot:   true,
+		IsAdmin: false,
+	}
+
+	msg := makeIncMessage("@%s sup", "Furrymatic")
+	assert.Truef(t, isDirectedAtDungar(svc, msg), "got false for msg '%v'", msg)
 }
 
 func TestIsDirectedAtDungarRandom(t *testing.T) {
@@ -93,9 +116,31 @@ func TestIsMentioningDungar(t *testing.T) {
 	assert.Truef(t, isMentioningDungar(svc, msg), "msg '%v' is not mentioning dungar", msg)
 	msg = makeIncMessage("whats up @%s?", inf.Name)
 	assert.Truef(t, isMentioningDungar(svc, msg), "msg '%v' is not mentioning dungar", msg)
+	msg = makeIncMessage("whats up @%s?", inf.ID)
+	assert.Truef(t, isMentioningDungar(svc, msg), "msg '%v' is not mentioning dungar", msg)
 
 	msg = makeIncMessage("hey friends how are you doing?", "")
 	assert.Falsef(t, isMentioningDungar(svc, msg), "msg '%v' is mentioning dungar", msg)
+}
+
+func TestIsMentioningDungarUsesGuildResolvedBotName(t *testing.T) {
+	svc := initMockServices()
+
+	mockDriver.SetBotUser(core2.BotUser{
+		ID:      "dungar",
+		Name:    "Dungarmatic",
+		IsBot:   true,
+		IsAdmin: false,
+	})
+	mockDriver.Users["dungar"] = core2.User{
+		ID:      "dungar",
+		Name:    "Furrymatic",
+		IsBot:   true,
+		IsAdmin: false,
+	}
+
+	msg := makeIncMessage("hello %s", "Furrymatic")
+	assert.Truef(t, isMentioningDungar(svc, msg), "msg '%v' is not mentioning dungar", msg)
 }
 
 func TestIsMentioningDungarRandom(t *testing.T) {

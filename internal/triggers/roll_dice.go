@@ -11,6 +11,7 @@ import (
 )
 
 var rollDiceRegex = regexp.MustCompile("\\s+((\\d+)[Dd](\\d+)([hlHLoO](\\d+)|))")
+var rollDiceTokenRegex = regexp.MustCompile("^((\\d*)[Dd](\\d+)([hlHLoO](\\d+)|))$")
 
 var overDiceRollsLimitResponses = []weightedChoice{
 	{0.80, "perhaps try using 5 or less different rolls"},
@@ -23,11 +24,15 @@ func rollDiceHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Re
 		return core2.EmptyRsp()
 	}
 
-	if !rollDiceRegex.MatchString(msg.Contents) {
+	matches := parseDirectedRollCommand(svc, msg)
+	if len(matches) == 0 && !rollDiceRegex.MatchString(msg.Contents) {
 		return core2.EmptyRsp()
 	}
 
-	matches := rollDiceRegex.FindAllStringSubmatch(msg.Contents, -1)
+	if len(matches) == 0 {
+		matches = rollDiceRegex.FindAllStringSubmatch(msg.Contents, -1)
+	}
+
 	output := ""
 
 	max := len(matches)
@@ -38,7 +43,11 @@ func rollDiceHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Re
 
 	//spew.Dump(matches)
 	for pos, matchGroup := range matches {
-		diceRolls, _ := strconv.Atoi(matchGroup[2])
+		diceRolls := 1
+		if matchGroup[2] != "" {
+			diceRolls, _ = strconv.Atoi(matchGroup[2])
+		}
+
 		diceSize, _ := strconv.Atoi(matchGroup[3])
 
 		if diceSize <= 1 || diceRolls <= 0 || diceSize > 10000 || diceRolls > 10 {
@@ -55,6 +64,30 @@ func rollDiceHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Re
 	output = strings.TrimSpace(output)
 
 	return core2.PrefixedSingleRsp(output)
+}
+
+func parseDirectedRollCommand(svc *core2.Service, msg *core2.IncomingMessage) [][]string {
+	contents := normalizeDirectedContents(svc, msg.ServerID, msg.Contents, svc.GetBotUser())
+	parts := strings.Fields(contents)
+	if len(parts) < 2 || !strings.EqualFold(parts[0], "roll") {
+		return nil
+	}
+
+	matches := make([][]string, 0, len(parts)-1)
+	for _, part := range parts[1:] {
+		match := rollDiceTokenRegex.FindStringSubmatch(strings.Trim(part, ",;"))
+		if match == nil {
+			continue
+		}
+
+		if match[2] == "" {
+			match[2] = "1"
+		}
+
+		matches = append(matches, match)
+	}
+
+	return matches
 }
 
 func generateDiceRolls(matchGroup []string, diceRolls, diceSize int) string {

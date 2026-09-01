@@ -5,6 +5,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 	"github.com/davecgh/go-spew/spew"
 	"gitlab.int.magneato.site/dungar/prototype/internal/db"
+	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
 	"gitlab.int.magneato.site/dungar/prototype/library/core2"
 	"log"
 	"time"
@@ -29,6 +30,16 @@ func (d *Driver) handleOutgoingResponses(outgoing *core2.OutgoingResponses) {
 }
 
 func (d *Driver) handleEnvelope(envelope *core2.ResponseEnvelope) {
+	if !d.isAllowedOutputChannel(envelope.Message.ChannelID) {
+		log.Printf(
+			"skipping %d outgoing discord responses for disallowed channelID='%s'",
+			len(envelope.Responses),
+			envelope.Message.ChannelID,
+		)
+
+		return
+	}
+
 	for _, response := range envelope.Responses {
 		if envelope.Message.ChannelID == "" {
 			db.LogIssue(
@@ -146,4 +157,15 @@ func (d *Driver) handleResponse(envelope *core2.ResponseEnvelope, response *core
 			d.core.SetLastSentMessage()
 		}
 	} // end switch response.ResponseType
+}
+
+func (d *Driver) isAllowedOutputChannel(channelID string) bool {
+	allowed := utils.DiscordAllowedOutputChannelIDs()
+
+	if len(allowed) == 0 {
+		return true
+	}
+
+	_, ok := allowed[channelID]
+	return ok
 }

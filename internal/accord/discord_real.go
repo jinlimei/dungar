@@ -18,6 +18,15 @@ type RealDiscordConnection struct {
 	connected bool
 }
 
+func discordGatewayIntents() discordgo.Intent {
+	return discordgo.IntentsGuilds |
+		discordgo.IntentsGuildMembers |
+		discordgo.IntentsGuildEmojis |
+		discordgo.IntentsGuildMessages |
+		discordgo.IntentsGuildMessageReactions |
+		discordgo.IntentsMessageContent
+}
+
 // NewRealDiscordConnection starts an instance of RealDiscordConnection
 func NewRealDiscordConnection() *RealDiscordConnection {
 	return &RealDiscordConnection{}
@@ -37,6 +46,9 @@ func (r *RealDiscordConnection) Start(token string) error {
 		return err
 	}
 
+	// Member and message-content events are privileged and must also be enabled
+	// in the Discord developer portal for the bot application.
+	dgo.Identify.Intents = discordGatewayIntents()
 	dgo.LogLevel = discordgo.LogInformational
 
 	r.session = dgo

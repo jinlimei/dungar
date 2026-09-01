@@ -16,6 +16,7 @@ func SlackRunner() core2.ProtocolDriver {
 	coreSvc := core2.New(tautDriver)
 
 	triggers.RegisterHandlers(coreSvc)
+	triggers.InitializeManicMinute()
 
 	tautDriver.Connect(utils.SlackAccessToken())
 

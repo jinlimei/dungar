@@ -22,7 +22,7 @@ func (d *Driver) handleGuildMemberRemoveEvent(s *discordgo.Session, ev *discordg
 }
 
 func (d *Driver) translateDiscordMember(member *discordgo.Member) core2.User {
-	nickName := member.User.Username
+	nickName := displayDiscordUserName(member.User)
 
 	if member.Nick != "" {
 		nickName = member.Nick

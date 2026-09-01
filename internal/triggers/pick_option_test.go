@@ -1,9 +1,7 @@
 package triggers
 
 import (
-	"fmt"
 	"regexp"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -34,25 +32,7 @@ func TestPickOptionRegex(t *testing.T) {
 func TestPickOption2(t *testing.T) {
 	random.UseTestSeed()
 
-	quickTest := func(possibilities []string) {
-		result := pickOptionHandler("@dungar food or sleep?", "")
-
-		passed := false
-		for _, possible := range possibilities {
-			if result != possible {
-				passed = true
-				break
-			}
-		}
-
-		if !passed {
-			assert.Fail(t,
-				fmt.Sprintf("failed to find '%s' in '%v'", result, possibilities))
-		}
-	}
-
-	quickTest([]string{"checkbox, voted all", "fred"})
-
+	assert.Contains(t, []string{"food", "sleep"}, pickOptionHandler("@dungar food or sleep?", ""))
 	assert.Equal(t, "food", pickOptionHandler("@dungar food or sleep?", ""))
 	assert.Equal(t, "sleep", pickOptionHandler("@dungar food or sleep?", ""))
 	assert.Equal(t, "food", pickOptionHandler("@dungar food or sleep?", ""))
@@ -101,16 +81,7 @@ func TestPickOption(t *testing.T) {
 		}
 	}
 
-	assert.True(t, results["a"] > 0 && results["a"] <= 25000)
-	assert.True(t, results["b"] > 0 && results["b"] <= 25000)
-
-	nickDeciders := 0
-
-	for key, val := range results {
-		if strings.Contains(key, "let") && strings.Contains(key, "decide") {
-			nickDeciders += val
-		}
-	}
-
-	assert.True(t, nickDeciders > 0 && nickDeciders <= 1000)
+	assert.True(t, results["a"] > 0)
+	assert.True(t, results["b"] > 0)
+	assert.Equal(t, 2, len(results))
 }

@@ -1,14 +1,34 @@
-version: '3.7'
-
 services:
-  dungar:
-    build: .
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
     environment:
-      IN_CI_ENV: "1"
-      IN_CD_ENV: "1"
-      DUNGAR_DB_DATA: "dungar_test"
-      DUNGAR_DB_HOST: "postgres"
-      DUNGAR_DB_PASS: "dungar_ci_test"
-      DUNGAR_DB_USER: "dungar_ci_test"
+      POSTGRES_DB: dungar
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 5s
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infra/db/docker-init/000-create-dungarmatic.sql:/docker-entrypoint-initdb.d/000-create-dungarmatic.sql:ro
+      - ./infra/db/structure.sql:/docker-entrypoint-initdb.d/001-structure.sql:ro
 
-    command: ["/bin/bash", "tools/safe_testing.sh"]
+  dungar:
+    build:
+      context: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    init: true
+    volumes:
+      - ./settings.ini:/app/settings.ini:ro
+      - ./secrets.ini:/app/secrets.ini:ro
+    command: ["run"]
+
+volumes:
+  postgres-data:

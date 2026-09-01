@@ -1,9 +1,12 @@
 package triggers
 
 import (
+	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"strings"
+	"testing"
 	"time"
 
 	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
@@ -32,12 +35,24 @@ func makeMessage(msg, userID, chanID string) *core2.IncomingMessage {
 	}
 }
 
-var learnedAliceInWonderland = false
+var (
+	learnedAliceInWonderland = false
+	aliceInWonderlandErr     error
+)
 
 func retrieveAliceInWonderland() ([]byte, error) {
+	if bod, err := os.ReadFile("testdata/alice_in_wonderland.txt"); err == nil {
+		return bod, nil
+	}
+
 	rsp, err := http.Get("https://tabhome.app/alice_in_wonderland.txt")
 	if err != nil {
 		return nil, err
+	}
+	defer rsp.Body.Close()
+
+	if rsp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("fixture fetch returned status %d", rsp.StatusCode)
 	}
 
 	bod, err := io.ReadAll(rsp.Body)
@@ -48,7 +63,13 @@ func retrieveAliceInWonderland() ([]byte, error) {
 	return bod, nil
 }
 
-func useAliceInWonderland() {
+func useAliceInWonderland(t *testing.T) {
+	t.Helper()
+
+	if aliceInWonderlandErr != nil {
+		t.Skipf("alice in wonderland fixture unavailable: %v", aliceInWonderlandErr)
+	}
+
 	if learnedAliceInWonderland {
 		return
 	}
@@ -61,7 +82,8 @@ func useAliceInWonderland() {
 	res, err := retrieveAliceInWonderland()
 
 	if err != nil {
-		panic(err)
+		aliceInWonderlandErr = err
+		t.Skipf("alice in wonderland fixture unavailable: %v", err)
 	}
 
 	lines := learning.ReadABook(string(res))

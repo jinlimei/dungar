@@ -2,6 +2,7 @@ package triggers
 
 import (
 	"log"
+	"strings"
 
 	"gitlab.int.magneato.site/dungar/prototype/internal/random"
 	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
@@ -82,13 +83,10 @@ var choices8Ball = []string{
 
 func questionsHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Response {
 	contents := msg.Contents
-	process := false
+	directed := isDirectedAtDungar(svc, msg)
+	process := directed
 
 	// Must be directed at dungar in order to answer a question
-	if isDirectedAtDungar(svc, msg) {
-		process = true
-	}
-
 	if isMentioningDungar(svc, msg) && fromBasicChance("questionsHandler--mention") {
 		process = true
 	}
@@ -97,19 +95,40 @@ func questionsHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.R
 		return core2.EmptyRsp()
 	}
 
-	//log.Println("question: " + msg.Contents)
+	if directed {
+		contents = normalizeDirectedContents(svc, msg.ServerID, contents, svc.GetBotUser())
+	}
+
+	contents = strings.TrimSpace(contents)
+
+	if contents == "" {
+		return core2.PrefixedSingleRsp(markovGenerate(markovPickWord()))
+	}
 
 	for _, handler := range questionHandlers {
 		if handler.matches(contents) {
 			log.Println("question handling " + utils.GetFunctionName(handler.Handler))
-			msg := handler.Handler(contents, msg.ServerID)
+			out := handler.Handler(contents, msg.ServerID)
 
-			if msg == "" {
+			if out == "" {
 				continue
 			}
 
-			return core2.PrefixedSingleRsp(msg)
+			if handler.Trigger == percGameSubjectRegex {
+				rsp := core2.MakeRsp(out)
+				if svc != nil && (svc.DriverName() == "discord" || svc.DriverName() == "mock") {
+					rsp.MakeSubChannelIfPossible = true
+				}
+
+				return core2.SingleRsp(rsp)
+			}
+
+			return core2.PrefixedSingleRsp(out)
 		}
+	}
+
+	if directed {
+		return core2.PrefixedSingleRsp(markovGenerate(pickMarkovSeed(contents)))
 	}
 
 	// ends with a question mark
@@ -119,9 +138,49 @@ func questionsHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.R
 
 	if fromBasicChance("questionsHandler--markov") {
 		return core2.PrefixedSingleRsp(
-			markovGenerate(pickRandomWord(contents, true)),
+			markovGenerate(pickMarkovSeed(contents)),
 		)
 	}
 
 	return core2.EmptyRsp()
+}
+
+func normalizeDirectedContents(svc *core2.Service, serverID, contents string, bot core2.BotUser) string {
+	for _, target := range botMatchTargets(svc, serverID, bot) {
+		if trimmed, ok := trimDirectedPrefix(contents, target); ok {
+			return trimmed
+		}
+	}
+
+	return strings.TrimSpace(contents)
+}
+
+func trimDirectedPrefix(contents, target string) (string, bool) {
+	contents = strings.TrimSpace(contents)
+	target = strings.TrimSpace(target)
+
+	if contents == "" || target == "" {
+		return contents, false
+	}
+
+	fields := strings.Fields(contents)
+	if len(fields) == 0 {
+		return contents, false
+	}
+
+	first := strings.Trim(fields[0], "@:<>!")
+	if !strings.EqualFold(first, target) {
+		return contents, false
+	}
+
+	return strings.TrimSpace(contents[len(fields[0]):]), true
+}
+
+func pickMarkovSeed(contents string) string {
+	words := utils.StringToWords(contents, true)
+	if len(words) == 0 {
+		return markovPickWord()
+	}
+
+	return random.PickString(words)
 }

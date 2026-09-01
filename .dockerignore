@@ -1,3 +1,9 @@
 /.git/
 /.vscode/
 /.idea/
+/.agents/
+/.codex/
+/bin/
+/logs/
+/settings.ini
+/secrets.ini

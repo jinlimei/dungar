@@ -1,9 +1,20 @@
 package accord
 
 import (
+	"strings"
+
+	"github.com/bwmarrin/discordgo"
 	"gitlab.int.magneato.site/dungar/prototype/library/core2"
 	"log"
 )
+
+func displayDiscordUserName(user *discordgo.User) string {
+	if user == nil {
+		return ""
+	}
+
+	return strings.TrimSpace(user.DisplayName())
+}
 
 // SetBotUser assigns the bot user
 func (d *Driver) SetBotUser(bu *core2.BotUser) {
@@ -17,14 +28,19 @@ func (d *Driver) GetUserName(userID, serverID string) string {
 	member, ok := guild.memberCache[userID]
 
 	if !ok {
-		return ""
+		if d.botUser != nil && d.botUser.ID == userID && d.botUser.Name != "" {
+			return d.botUser.Name
+		}
+
+		user, err := d.GetUser(userID, serverID)
+		if err != nil {
+			return ""
+		}
+
+		return user.Name
 	}
 
-	if member.Nick != "" {
-		return member.Nick
-	}
-
-	return member.User.Username
+	return d.translateDiscordMember(member).Name
 }
 
 // GetBotUser returns the bot user if it is valid or an empty bot user

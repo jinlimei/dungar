@@ -41,7 +41,7 @@ func TestStupidQuestionAnswerRegex(t *testing.T) {
 }
 
 func TestQuestionAnswer(t *testing.T) {
-	useAliceInWonderland()
+	useAliceInWonderland(t)
 
 	//db.TestDatabaseConnect()
 
@@ -69,7 +69,7 @@ func TestQuestionAnswer(t *testing.T) {
 
 func TestWeirdQnAMarkov(t *testing.T) {
 	//db.TestDatabaseConnect()
-	useAliceInWonderland()
+	useAliceInWonderland(t)
 
 	seeds := [4]int64{0, 1337, 31337, 42069}
 
@@ -84,7 +84,7 @@ func TestWeirdQnAMarkov(t *testing.T) {
 
 func TestStupidQuestionAnswerHandler(t *testing.T) {
 	//db.TestDatabaseConnect()
-	useAliceInWonderland()
+	useAliceInWonderland(t)
 
 	assert.NotNil(t, stupidQuestionAnswerHandler("do you batman.jpg?", ""))
 }

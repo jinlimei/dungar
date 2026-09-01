@@ -1,15 +1,19 @@
 package core2
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // NewMockService will create a new Service with a MockProtocolDriver associated
 // with it for testing purposes
 func NewMockService() (*Service, *MockProtocolDriver) {
 	mock := &MockProtocolDriver{
-		Core:     nil,
-		Users:    make(map[string]User),
-		Channels: make(map[string]Channel),
-		BotUser:  BotUser{},
+		Core:      nil,
+		Users:     make(map[string]User),
+		Channels:  make(map[string]Channel),
+		BotUser:   BotUser{},
+		UserRoles: make(map[string]map[string]struct{}),
 	}
 
 	mock.Core = New(mock)
@@ -19,10 +23,11 @@ func NewMockService() (*Service, *MockProtocolDriver) {
 
 // MockProtocolDriver is our mock implementation of a protocol driver
 type MockProtocolDriver struct {
-	Core     *Service
-	Users    map[string]User
-	Channels map[string]Channel
-	BotUser  BotUser
+	Core      *Service
+	Users     map[string]User
+	Channels  map[string]Channel
+	BotUser   BotUser
+	UserRoles map[string]map[string]struct{}
 }
 
 // DriverName returns "mock"
@@ -43,6 +48,15 @@ func (mpd *MockProtocolDriver) SetUser(id, name string) {
 		IsBot:   false,
 		IsAdmin: false,
 	}
+}
+
+// AddUserRole adds a case-insensitive role name to a mock user.
+func (mpd *MockProtocolDriver) AddUserRole(userID, roleName string) {
+	if mpd.UserRoles[userID] == nil {
+		mpd.UserRoles[userID] = make(map[string]struct{})
+	}
+
+	mpd.UserRoles[userID][strings.ToLower(roleName)] = struct{}{}
 }
 
 // SetChannel will create a new Channel
@@ -86,6 +100,17 @@ func (mpd *MockProtocolDriver) GetUsers(serverID string) map[string]User {
 // GetBotUser is our ProtocolDriver.GetBotUser implementation
 func (mpd *MockProtocolDriver) GetBotUser() BotUser {
 	return mpd.BotUser
+}
+
+// HasRole reports whether the mock user has the supplied role.
+func (mpd *MockProtocolDriver) HasRole(userID, _ string, roleName string) bool {
+	roles := mpd.UserRoles[userID]
+	if roles == nil {
+		return false
+	}
+
+	_, ok := roles[strings.ToLower(roleName)]
+	return ok
 }
 
 // GetChannelName is our ProtocolDriver.GetChannelName implementation

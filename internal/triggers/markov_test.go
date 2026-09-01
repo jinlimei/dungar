@@ -11,7 +11,7 @@ import (
 )
 
 func TestMarkovPickWord(t *testing.T) {
-	useAliceInWonderland()
+	useAliceInWonderland(t)
 	random.UseTestSeed()
 
 	var word string
@@ -27,7 +27,7 @@ func TestMarkovPickWord(t *testing.T) {
 }
 
 func TestMarkovGenerate(t *testing.T) {
-	useAliceInWonderland()
+	useAliceInWonderland(t)
 	random.UseTestSeed()
 
 	var msg string
@@ -46,7 +46,7 @@ func TestMarkovGenerate(t *testing.T) {
 
 func TestMarkovHandler(t *testing.T) {
 	initMockServices()
-	useAliceInWonderland()
+	useAliceInWonderland(t)
 	random.UseTestSeed()
 	db.TestDatabaseConnect()
 
@@ -96,7 +96,7 @@ func TestMarkovHandler(t *testing.T) {
 
 func TestMarkovSettingHandlerAsJinli(t *testing.T) {
 	initMockServices()
-	useAliceInWonderland()
+	useAliceInWonderland(t)
 	random.UseTestSeed()
 	db.TestDatabaseConnect()
 

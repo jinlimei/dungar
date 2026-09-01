@@ -24,11 +24,13 @@ const (
 
 var (
 	learningMutex       = sync.Mutex{}
+	rebuildMutex        = sync.Mutex{}
 	activeMarkovVersion = mV3
 	lastSpokeM3         = time.Now()
 
 	m3           *markov3.Markov
 	lastLoadedM3 time.Time
+	rebuildBusy  bool
 )
 
 func setMarkovVersion(ver markovVer) {
@@ -41,6 +43,23 @@ func markovUsingV3() *markov3.Markov {
 	}
 
 	return m3
+}
+
+// PreloadMarkovOnStartup initializes and loads the active Markov model into the
+// running bot process so startup picks up any newly backfilled raw messages.
+func PreloadMarkovOnStartup() {
+	log.Printf("[PreloadMarkovOnStartup] Preloading Markov for mode='%s'", utils.ProtocolMode())
+
+	switch strings.ToLower(utils.ProtocolMode()) {
+	case "discord":
+		markovUsingV3()
+		markovV3Learn()
+		log.Printf("[PreloadMarkovOnStartup] %s", strings.TrimSpace(generateM3Stats()))
+	case "slack":
+		log.Printf("[PreloadMarkovOnStartup] Slack startup preload is not implemented yet")
+	default:
+		log.Printf("[PreloadMarkovOnStartup] Unknown protocol mode '%s'; skipping preload", utils.ProtocolMode())
+	}
 }
 
 func markovV3Learn() {
@@ -56,6 +75,46 @@ func markovV3Learn() {
 		log.Printf("[markovV3Learn] Learned (legacy=%d, modern=%d) messages!\n",
 			legacy, modern)
 	}
+}
+
+func markovV3Rebuild() int {
+	if markovUsingV3() == nil {
+		return 0
+	}
+
+	log.Println("[markovV3Rebuild] Rebuilding from current raw messages.......")
+	learningMutex.Lock()
+	defer learningMutex.Unlock()
+
+	m3.Reset()
+	lastLoadedM3 = time.Now()
+	learned := m3.LearnFromRawMessages()
+
+	log.Printf("[markovV3Rebuild] Rebuilt modern=%d messages!\n", learned)
+	return learned
+}
+
+func markovV3RebuildAsync(reason string) {
+	rebuildMutex.Lock()
+	if rebuildBusy {
+		rebuildMutex.Unlock()
+		log.Printf("[markovV3RebuildAsync] skipping duplicate rebuild request reason='%s'", reason)
+		return
+	}
+
+	rebuildBusy = true
+	rebuildMutex.Unlock()
+
+	go func() {
+		defer func() {
+			rebuildMutex.Lock()
+			rebuildBusy = false
+			rebuildMutex.Unlock()
+		}()
+
+		log.Printf("[markovV3RebuildAsync] rebuilding reason='%s'", reason)
+		markovV3Rebuild()
+	}()
 }
 
 func markovPickWord() string {

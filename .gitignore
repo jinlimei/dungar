@@ -17,3 +17,5 @@ coverage.html
 *.gob
 *.json
 z_*
+AGENTS.md
+/vendor

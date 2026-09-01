@@ -27,8 +27,8 @@ func TestAdvancedControl_Execute(t *testing.T) {
 			"Default current chance should be 0.0")
 		assert.True(t, ctrl.Execute(),
 			"Control should have been true when executing (init is auto-called)")
-		assert.NotEqual(t, 0, ctrl.lastTimeTrue.Second(),
-			"last time true should be at the start of the epoch")
+		assert.False(t, ctrl.lastTimeTrue.IsZero(),
+			"last time true should have been set")
 
 		ctrl.Init()
 
@@ -36,7 +36,7 @@ func TestAdvancedControl_Execute(t *testing.T) {
 			"Default & current Chances should be the same")
 		assert.True(t, ctrl.Execute(),
 			"Control should have been true when executing.")
-		assert.NotEqual(t, 0, ctrl.lastTimeTrue.Second(),
+		assert.False(t, ctrl.lastTimeTrue.IsZero(),
 			"last time true should be now(ish)")
 
 		ctrl.lastTimeTrue = time.Now().Add(-13 * time.Minute)
@@ -124,7 +124,7 @@ func TestAdvancedControl_ExecuteIncrement(t *testing.T) {
 
 func TestAdvancedControl_ToAnalytics(t *testing.T) {
 	var (
-		exID = "foo"
+		exID   = "foo"
 		chance = 0.42069
 	)
 

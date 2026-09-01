@@ -136,7 +136,7 @@ func TestIsQuote(t *testing.T) {
 }
 
 func TestCommentateHandler(t *testing.T) {
-	useAliceInWonderland()
+	useAliceInWonderland(t)
 	random.UseTestSeed()
 
 	msg := makeMessage(":thinking:", "jinli", "#butts")

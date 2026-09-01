@@ -80,6 +80,15 @@ func initMessageGroup() {
 
 		// Test Mode
 
+		// Blocklist management
+		{3, "Blocklist", blocklistHandler},
+
+		// MANIC MINUTE admin controls
+		{3, "ManicMinuteAdmin", manicMinuteAdminHandler},
+
+		// MANIC MINUTE
+		{3, "ManicMinute", manicMinuteHandler},
+
 		// Markov Commands (version, analytics)
 		{3, "MarkovSetting", core2.WrapNoServiceFunc(markovSettingHandler)},
 
@@ -118,6 +127,9 @@ func initMessageGroup() {
 		// No You (Fuck You -> NO YOU)
 		{12, "NoYou", core2.WrapNoServiceFunc(noYouHandler)},
 
+		// Negative mentions of the bot
+		{12, "NegativeMentionSnark", negativeMentionSnarkHandler},
+
 		// Name Check (Get My Name Out of Your Mouth)
 		{13, "NameCheck", nameCheckHandler},
 
@@ -132,6 +144,9 @@ func initMessageGroup() {
 
 		// Chances (hey go outside c/d)
 		{17, "Chances", chanceGameHandler},
+
+		// User-specific simulation
+		{17, "Simulate", simulateUserHandler},
 
 		// Markov Extended ("Tell me about shakespeare")
 		{17, "Markov Extended", markovExtendedHandler},

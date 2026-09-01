@@ -3,6 +3,7 @@ package utils
 import (
 	"log"
 	"os"
+	"strings"
 
 	"gopkg.in/ini.v1"
 )
@@ -12,6 +13,9 @@ const (
 	EnvCI = "IN_CI_ENV"
 	// EnvCD is our name for the environmental variable IN_CD_ENV
 	EnvCD = "IN_CD_ENV"
+	// DiscordLearningLookbackDays is the fixed Discord history window used
+	// for both learning queries and one-shot history backfills.
+	DiscordLearningLookbackDays = 30
 )
 
 var (
@@ -144,6 +148,52 @@ func DiscordAccessToken() string {
 	}
 
 	return secretsIniFile.Section("discord").Key("token").String()
+}
+
+// DiscordAllowedOutputChannelIDs returns the channel IDs the bot is allowed
+// to send messages or reactions to. An empty map means unrestricted output.
+func DiscordAllowedOutputChannelIDs() map[string]struct{} {
+	raw := ""
+
+	if MustUseEnvVars() {
+		raw = os.Getenv("DUNGAR_DISCORD_ALLOWED_OUTPUT_CHANNEL_IDS")
+	} else if normalIniFile != nil {
+		raw = normalIniFile.Section("discord").Key("allowed_output_channel_ids").String()
+	}
+
+	out := make(map[string]struct{})
+
+	for _, channelID := range strings.Split(raw, ",") {
+		channelID = strings.TrimSpace(channelID)
+
+		if channelID == "" {
+			continue
+		}
+
+		out[channelID] = struct{}{}
+	}
+
+	return out
+}
+
+// DiscordAllowedLearningChannelIDs returns the channel IDs the bot is allowed
+// to learn from. Today this intentionally mirrors the outgoing allowlist so
+// Discord speech and training stay scoped to the same channels.
+func DiscordAllowedLearningChannelIDs() map[string]struct{} {
+	return DiscordAllowedOutputChannelIDs()
+}
+
+// IsDiscordLearningChannelAllowed reports whether the bot may learn from the
+// given channel. An empty allowlist means unrestricted learning.
+func IsDiscordLearningChannelAllowed(channelID string) bool {
+	allowed := DiscordAllowedLearningChannelIDs()
+
+	if len(allowed) == 0 {
+		return true
+	}
+
+	_, ok := allowed[channelID]
+	return ok
 }
 
 // SlackAccessToken will return the slack access token

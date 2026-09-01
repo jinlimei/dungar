@@ -95,7 +95,7 @@ func (d *Driver) registerHandlers() {
 func (d *Driver) handleReadyStateEvent(s *discordgo.Session, ev *discordgo.Ready) {
 	d.SetBotUser(&core2.BotUser{
 		ID:      ev.User.ID,
-		Name:    strings.ToLower(ev.User.Username),
+		Name:    displayDiscordUserName(ev.User),
 		IsBot:   true,
 		IsAdmin: false,
 	})
@@ -117,6 +117,10 @@ func (d *Driver) handleGuildCreateEvent(s *discordgo.Session, ev *discordgo.Guil
 
 		for _, member := range ev.Members {
 			guild.memberCache[member.User.ID] = member
+		}
+
+		for _, role := range ev.Roles {
+			guild.roleCache[role.ID] = role
 		}
 
 		for _, emoji := range ev.Emojis {

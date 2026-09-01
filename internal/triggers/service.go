@@ -1,6 +1,7 @@
 package triggers
 
 import (
+	"gitlab.int.magneato.site/dungar/prototype/internal/db"
 	tracker "gitlab.int.magneato.site/dungar/prototype/internal/triggers/tracking"
 	"gitlab.int.magneato.site/dungar/prototype/library/core2"
 )
@@ -18,4 +19,5 @@ func RegisterHandlers(svc *core2.Service) {
 	core.SetIncomingEventHandler(eventHandler)
 	core.SetIncomingMessageHandler(incomingMessageHandler)
 	core.SetScheduleHandler(scheduleHandler)
+	db.SetRawMessageMutationListener(markovV3RebuildAsync)
 }

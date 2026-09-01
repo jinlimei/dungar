@@ -3,15 +3,17 @@ package triggers
 import (
 	"fmt"
 	"regexp"
+	"strings"
 
 	"gitlab.int.magneato.site/dungar/prototype/internal/random"
 )
 
 const (
-	percGameDungarRegex2 = "^(@[^ ]+:?|[^ ]+:) [Hh]ow much do you ([\\w ]+)\\??$"
-	percGameDungarRegex  = "^(@[^ ]+:?|[^ ]+:) [Hh]ow (?:much |)([\\w ]+) are you\\??$"
-	percGameSubjectRegex = "^(@[^ ]+:?|[^ ]+:) [Hh]ow ([\\w ]+) (?:is|are) ([^?]+)\\??$"
-	percGameYouRegex     = "^(@[^ ]+:?|[^ ]+:) [Hh]ow ([\\w ]+) am [Ii]\\??$"
+	percGamePrefixRegex  = "(?:(?:@[^ ]+:?|[^ ]+:)\\s+)?"
+	percGameDungarRegex2 = "^" + percGamePrefixRegex + "[Hh]ow much do you ([\\w ]+)\\??$"
+	percGameDungarRegex  = "^" + percGamePrefixRegex + "[Hh]ow (?:much |)([\\w ]+) are you\\??$"
+	percGameSubjectRegex = "^" + percGamePrefixRegex + "[Hh]ow ([\\w ]+) (?:is|are) ([^?]+)\\??$"
+	percGameYouRegex     = "^" + percGamePrefixRegex + "[Hh]ow ([\\w ]+) am [Ii]\\??$"
 )
 
 var (
@@ -41,12 +43,12 @@ func percGameDungarHandler(msg, _ string) string {
 		matches = percDungarCompiledRegex2.FindStringSubmatch(msg)
 	}
 
-	if hasMatch && len(matches) >= 3 {
+	if hasMatch && len(matches) >= 2 {
 		if fromBasicChance("percGameHandler--8ball") {
 			return random.PickString(choices8Ball)
 		}
 
-		return fmt.Sprintf("%s %0.2f%% %s.", pickWeightedChoice(percSubjectChoices), random.Float64()*100, matches[2])
+		return fmt.Sprintf("%s %d%% %s.", pickWeightedChoice(percSubjectChoices), random.Int(101), strings.TrimSpace(matches[1]))
 	}
 
 	return ""
@@ -59,7 +61,7 @@ func percGameYouHandler(msg, _ string) string {
 
 	matches := percYouCompiledRegex.FindStringSubmatch(msg)
 
-	return fmt.Sprintf("you're %0.2f%% %s.", random.Float64()*100, matches[2])
+	return fmt.Sprintf("you're %d%% %s.", random.Int(101), strings.TrimSpace(matches[1]))
 }
 
 func percGameSubjectHandler(msg, _ string) string {
@@ -69,5 +71,5 @@ func percGameSubjectHandler(msg, _ string) string {
 
 	matches := percSubjectCompiledRegex.FindStringSubmatch(msg)
 
-	return fmt.Sprintf("%s [%0.2f%% %s]", matches[3], random.Float64()*100, matches[2])
+	return fmt.Sprintf("%s is %d%% %s.", strings.TrimSpace(matches[2]), random.Int(101), strings.TrimSpace(matches[1]))
 }

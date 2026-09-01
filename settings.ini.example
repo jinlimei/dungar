@@ -4,3 +4,8 @@ mode=discord
 debug=true
 secret_file=secrets.ini
 ;seed=1526685321315953500
+
+[discord]
+; Restricts both Discord output and Markov learning to these channel IDs.
+; Discord Markov learning also only considers the last 30 days of recorded rows.
+allowed_output_channel_ids=362144221148479489,471817271749115905

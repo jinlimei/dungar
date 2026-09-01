@@ -152,6 +152,115 @@ create table raw_messages
   created_at timestamp with time zone not null
 );
 
+create table if not exists raw_messages_discord
+(
+    id serial not null
+        constraint raw_messages_discord_pk
+            primary key,
+    message_id varchar(32) not null,
+    server_id varchar(32) not null,
+    channel_id varchar(32) not null,
+    author_user_id varchar(32),
+    message text not null,
+    created_at timestamp with time zone not null
+);
+
+create index if not exists raw_messages_discord_server_channel_idx
+    on raw_messages_discord (server_id, channel_id);
+
+create index if not exists raw_messages_discord_author_user_idx
+    on raw_messages_discord (author_user_id);
+
+create unique index if not exists raw_messages_discord_message_id_uidx
+    on raw_messages_discord (message_id);
+
+create table if not exists raw_message_user_blocklist
+(
+    protocol_driver varchar(20) not null,
+    server_id varchar(32) not null,
+    user_id varchar(32) not null,
+    nick varchar(100) not null,
+    created_at timestamp with time zone not null,
+    constraint raw_message_user_blocklist_pk
+        primary key (protocol_driver, server_id, user_id)
+);
+
+create index if not exists raw_message_user_blocklist_lookup_idx
+    on raw_message_user_blocklist (protocol_driver, server_id, user_id);
+
+create table if not exists manic_minute_events
+(
+    id serial not null
+        constraint manic_minute_events_pk
+            primary key,
+    server_id varchar(32) not null,
+    channel_id varchar(32) not null,
+    trigger_word varchar(128) not null,
+    trigger_message_id varchar(32),
+    triggered_by_user_id varchar(32),
+    status varchar(20) not null,
+    stop_reason varchar(50),
+    message_count integer default 0 not null,
+    started_at timestamp with time zone not null,
+    cooldown_until timestamp with time zone not null,
+    ended_at timestamp with time zone
+);
+
+create index if not exists manic_minute_events_server_started_idx
+    on manic_minute_events (server_id, started_at desc);
+
+create index if not exists manic_minute_events_channel_started_idx
+    on manic_minute_events (server_id, channel_id, started_at desc);
+
+create index if not exists manic_minute_events_word_started_idx
+    on manic_minute_events (server_id, trigger_word, started_at desc);
+
+create index if not exists manic_minute_events_channel_cooldown_idx
+    on manic_minute_events (server_id, channel_id, cooldown_until desc);
+
+create index if not exists manic_minute_events_word_cooldown_idx
+    on manic_minute_events (server_id, trigger_word, cooldown_until desc);
+
+create table if not exists manic_minute_runtime_state
+(
+    protocol_driver varchar(20) not null
+        constraint manic_minute_runtime_state_pk
+            primary key,
+    trigger_word varchar(128) not null,
+    start_chance double precision default 0.25 not null,
+    active boolean default false not null,
+    active_server_id varchar(32),
+    active_channel_id varchar(32),
+    cooldown_until timestamp with time zone,
+    updated_reason varchar(50),
+    updated_at timestamp with time zone not null
+);
+
+create table if not exists discord_backfill_checkpoints
+(
+    channel_id varchar(32) not null
+        constraint discord_backfill_checkpoints_pk
+            primary key,
+    guild_id varchar(32) not null,
+    channel_name varchar(100),
+    status varchar(20) not null,
+    before_message_id varchar(32),
+    since_ts timestamp with time zone not null,
+    fetched integer default 0 not null,
+    stored integer default 0 not null,
+    skipped_duplicate integer default 0 not null,
+    skipped_unusable integer default 0 not null,
+    skipped_old integer default 0 not null,
+    last_message_timestamp timestamp with time zone,
+    last_error text,
+    started_at timestamp with time zone not null,
+    updated_at timestamp with time zone not null,
+    completed_at timestamp with time zone
+);
+
+create index if not exists discord_backfill_checkpoints_status_idx
+    on discord_backfill_checkpoints (status, updated_at desc);
+
 create table if not exists log_issues
 (
     id serial not null
@@ -177,6 +286,26 @@ create table if not exists user_tracking
 
 create unique index if not exists table_name_unique_id_uindex
     on user_tracking (unique_id);
+
+create table if not exists user_tracking_new
+(
+    user_id varchar(32) not null,
+    server_id varchar(32) not null,
+    protocol_driver varchar(20) not null,
+    nick varchar(100) not null,
+    message_count integer default 1 not null,
+    custom_data jsonb,
+    first_seen timestamp not null,
+    last_seen timestamp not null,
+    constraint user_tracking_new_pk
+        primary key (user_id, server_id)
+);
+
+create index if not exists user_tracking_new_last_seen_idx
+    on user_tracking_new (server_id, last_seen desc);
+
+create index if not exists user_tracking_new_lower_nick_idx
+    on user_tracking_new (server_id, lower(nick));
 
 create table bad_words
 (
@@ -266,4 +395,3 @@ alter table tomes owner to postgres;
 
 create unique index tomes_title_uindex
     on tomes (title);
-

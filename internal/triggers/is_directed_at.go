@@ -18,7 +18,7 @@ func isDirectedAtDungar(svc *core2.Service, msg *core2.IncomingMessage) bool {
 	// Get the bot name
 	bot := svc.GetBotUser()
 
-	if bot.ID == "" || bot.Name == "" {
+	if bot.ID == "" && bot.Name == "" {
 		return false
 	}
 
@@ -26,7 +26,13 @@ func isDirectedAtDungar(svc *core2.Service, msg *core2.IncomingMessage) bool {
 		return true
 	}
 
-	return checkDirectedPrefix(msg.Contents, bot.Name)
+	for _, target := range botMatchTargets(svc, msg.ServerID, bot) {
+		if checkDirectedPrefix(msg.Contents, target) {
+			return true
+		}
+	}
+
+	return false
 }
 
 // isMentioningDungar checks if dungar is being mentioned in a message, not
@@ -34,7 +40,7 @@ func isDirectedAtDungar(svc *core2.Service, msg *core2.IncomingMessage) bool {
 func isMentioningDungar(svc *core2.Service, msg *core2.IncomingMessage) bool {
 	bot := svc.GetBotUser()
 
-	if bot.ID == "" || bot.Name == "" {
+	if bot.ID == "" && bot.Name == "" {
 		return false
 	}
 
@@ -42,10 +48,14 @@ func isMentioningDungar(svc *core2.Service, msg *core2.IncomingMessage) bool {
 		return true
 	}
 
-	return strings.Contains(
-		strings.ToLower(msg.Contents),
-		strings.ToLower(bot.Name),
-	)
+	contents := strings.ToLower(msg.Contents)
+	for _, target := range botMatchTargets(svc, msg.ServerID, bot) {
+		if strings.Contains(contents, strings.ToLower(target)) {
+			return true
+		}
+	}
+
+	return false
 }
 
 // isDirectedAtDungarRandom provides a chance for the message to turn
@@ -78,9 +88,46 @@ func extractUserNameTarget(str string, reg *regexp.Regexp) string {
 	return strings.Trim(matches[1], "@:")
 }
 
+func botMatchTargets(svc *core2.Service, serverID string, bot core2.BotUser) []string {
+	targets := make([]string, 0, 3)
+	seen := make(map[string]struct{}, 3)
+
+	appendTarget := func(target string) {
+		target = strings.TrimSpace(target)
+		if target == "" {
+			return
+		}
+
+		lowered := strings.ToLower(target)
+		if _, ok := seen[lowered]; ok {
+			return
+		}
+
+		seen[lowered] = struct{}{}
+		targets = append(targets, target)
+	}
+
+	if bot.Name != "" {
+		appendTarget(bot.Name)
+	}
+
+	if bot.ID != "" {
+		appendTarget(bot.ID)
+		if svc != nil && serverID != "" {
+			appendTarget(svc.GetUserName(bot.ID, serverID))
+		}
+	}
+
+	return targets
+}
+
 func checkDirectedPrefix(msg, name string) bool {
 	msg = strings.TrimSpace(msg)
 	name = strings.TrimSpace(name)
+
+	if name == "" {
+		return false
+	}
 
 	var (
 		msgRunes  = []rune(msg)

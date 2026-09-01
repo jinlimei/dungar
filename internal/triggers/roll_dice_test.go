@@ -35,6 +35,24 @@ func TestRollDiceHandler(t *testing.T) {
 	assert.True(t, strings.Contains(rsp[0].Contents, "100d20: nah"),
 		"Match of 100d20 failed: "+rsp[0].Contents)
 
+	msg.Contents = "@dungar roll d20 D6"
+	rsp = rollDiceHandler(svc, msg)
+
+	assert.True(t, regexp.MustCompile("d20: \\d+; D6: \\d+").MatchString(rsp[0].Contents),
+		"Match of 'roll d20 D6' failed: "+rsp[0].Contents)
+
+	msg.Contents = "@dungar roll 3d6 4d20"
+	rsp = rollDiceHandler(svc, msg)
+
+	assert.True(t, regexp.MustCompile("3d6: (\\d+[,\\s]*){3}; 4d20: (\\d+[,\\s]*){4}$").MatchString(rsp[0].Contents),
+		"Match of 'roll 3d6 4d20' failed: "+rsp[0].Contents)
+
+	msg.Contents = "@dungar roll 12d4"
+	rsp = rollDiceHandler(svc, msg)
+
+	assert.True(t, strings.Contains(rsp[0].Contents, "12d4: nah"),
+		"Match of 'roll 12d4' failed: "+rsp[0].Contents)
+
 	msg.Contents = "@dungar 1d20 1d20 1d20 1d20 1d20 1d20 1d20"
 	rsp = rollDiceHandler(svc, msg)
 
