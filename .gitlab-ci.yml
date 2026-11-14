@@ -1,6 +1,8 @@
 
 variables:
   IN_CI_ENV: "1"
+  DOCKER_TLS_CERTDIR: ""
+  BUILDX_NO_DEFAULT_ATTESTATIONS: "1"
 
 stages:
  - tests
