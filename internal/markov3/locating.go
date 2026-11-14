@@ -51,12 +51,14 @@ func (m *Markov) FindWord(w string) (MarkovID, bool) {
 	// lower-case lets us normalize the output
 	// in such a manner that we can provide a better
 	// Markov experience
-	id, ok := m.Words[w]
+
+	_, ok := m.Words[w]
 
 	if !ok {
 		w = cleanWord(w)
 	}
 
+	var id MarkovID
 	id, ok = m.Words[w]
 
 	if !ok {
@@ -179,15 +181,11 @@ func (m *Markov) WordFragmentCount(w MarkovID) int {
 // for fragments, and return that list of
 // fragments.
 func (m *Markov) WordFragmentIDs(w MarkovID) ([]MarkovID, bool) {
-	if w < 0 {
-		return []MarkovID{}, false
-	}
-
 	fragments, ok := m.FragmentWords[w]
-	//log.Printf("WordFragmentIDs(w=%d), ok=%v, fragments=%v\n", w, ok, fragments)
+	// log.Printf("WordFragmentIDs(w=%d), ok=%v, fragments=%v\n", w, ok, fragments)
 
 	if !ok {
-		//log.Fatalf("WordFragmentIDs failed to capture any with word %d\n", w)
+		// log.Fatalf("WordFragmentIDs failed to capture any with word %d\n", w)
 		return []MarkovID{}, false
 	}
 
@@ -233,7 +231,7 @@ func (m *Markov) GetFragmentWithWordID(w MarkovID) (Fragment, bool) {
 // to their corresponding string values, including LeftMost and
 // RightMost
 func (m *Markov) WordIDsToWords(wordIDs []MarkovID) []string {
-	//log.Printf("WordIDsToWords: %v\n", wordIDs)
+	// log.Printf("WordIDsToWords: %v\n", wordIDs)
 	var (
 		words = make([]string, len(wordIDs))
 		pos   = 0
@@ -244,10 +242,6 @@ func (m *Markov) WordIDsToWords(wordIDs []MarkovID) []string {
 	)
 
 	for _, wordID := range wordIDs {
-		if wordID < 0 {
-			continue
-		}
-
 		w = m.RevWords[wordID]
 		t, ok = revFillerMap[w]
 

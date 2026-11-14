@@ -192,7 +192,7 @@ func (ct *ChatToken) Analyze() []ChatToken {
 	} else if ct.TokenType == ChatTokenSpecial {
 		// inside of the <>'s
 
-		//log.Printf("ChatTokenSpecial: %v\n", string(ct.Value))
+		// log.Printf("ChatTokenSpecial: %v\n", string(ct.Value))
 		if len(ct.Value) == 0 {
 			log.Printf("Encountered zero-length token, returning nothin' (%+v)\n", ct)
 			return nil
@@ -349,7 +349,7 @@ func Tokenize(str string) TokenList {
 
 	peekUntil := func(pos int, until rune) int {
 		for p := pos; p <= strLen; p++ {
-			//log.Printf("peekUntil: p=%d,max=%d,chr='%c',until='%c' (%d)\n",
+			// log.Printf("peekUntil: p=%d,max=%d,chr='%c',until='%c' (%d)\n",
 			//	p, strLen, peek(p), until, until)
 			if peek(p) == until {
 				return p
@@ -379,9 +379,9 @@ func Tokenize(str string) TokenList {
 	var chr rune
 	for pos := 0; pos <= strLen; pos++ {
 		chr = peek(pos)
-		//x := string([]rune{chr})
-		//log.Printf("x: %v\n", x)
-		//log.Printf("chr: '%c' (%d), pos='%d', lastSpace: %d, tokenStart: %d, progress: '%s'\n",
+		// x := string([]rune{chr})
+		// log.Printf("x: %v\n", x)
+		// log.Printf("chr: '%c' (%d), pos='%d', lastSpace: %d, tokenStart: %d, progress: '%s'\n",
 		//	chr, chr, pos, lastSpace, tokenStart, string(runes[0:pos]))
 
 		switch chr {
@@ -423,7 +423,7 @@ func Tokenize(str string) TokenList {
 				bigCode = true
 			}
 
-			//log.Printf("thingy encountered, bigCode=%v\n", bigCode)
+			// log.Printf("thingy encountered, bigCode=%v\n", bigCode)
 
 			if !bigCode {
 				end := peekUntil(pos+1, '`')
@@ -448,7 +448,7 @@ func Tokenize(str string) TokenList {
 				tokenStart = end + 1
 				pos = end
 			} else {
-				//log.Printf("pos-1 = '%c', pos = '%c', pos+1 = '%c', pos+2 = '%c'\n",
+				// log.Printf("pos-1 = '%c', pos = '%c', pos+1 = '%c', pos+2 = '%c'\n",
 				//	peek(pos - 1), chr, peek(pos + 1), peek(pos + 2))
 
 				pos += 3
@@ -462,10 +462,10 @@ func Tokenize(str string) TokenList {
 					break
 				}
 
-				//log.Printf("end = %d, end-1 = '%c', end = '%c', end+1 = '%c', end+2 = '%c'\n",
+				// log.Printf("end = %d, end-1 = '%c', end = '%c', end+1 = '%c', end+2 = '%c'\n",
 				//	end, peek(end - 1), peek(end), peek(end + 1), peek(end + 2))
 
-				for true {
+				for {
 					if peek(end+1) == '`' && peek(end+2) == '`' {
 						tokens = append(tokens, ChatToken{
 							TokenType: ChatTokenCode,
@@ -537,7 +537,7 @@ func Tokenize(str string) TokenList {
 
 			// Similarly: There's no way emoticons are going to be zero-length
 			if peek(pos+1) == ':' {
-				//pos++
+				// pos++
 				break
 			}
 
@@ -547,10 +547,10 @@ func Tokenize(str string) TokenList {
 			// This is _probably_ due to both being -1
 			if spcEnd == colEnd {
 				//				db.LogIssue("cleaner_chat", "spcEnd == colEnd", fmt.Sprintf(`
-				//colEnd: %d
-				//spcEnd: %d
-				//message: '%s'
-				//`, colEnd, spcEnd, str))
+				// colEnd: %d
+				// spcEnd: %d
+				// message: '%s'
+				// `, colEnd, spcEnd, str))
 
 				if spcEnd != -1 {
 					db.LogIssue("cleaner_chat", "spcEnd == colEnd but not -1", fmt.Sprintf(`

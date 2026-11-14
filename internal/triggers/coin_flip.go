@@ -11,7 +11,7 @@ import (
 	"gitlab.int.magneato.site/dungar/prototype/library/core2"
 )
 
-var coinFlipRegexp = regexp.MustCompile("flip (a coin|([\\d,]+) coins)")
+var coinFlipRegexp = regexp.MustCompile(`flip (a coin|([\d,]+) coins)`)
 
 var coinFlipBadRangeResponses = []weightedChoice{
 	{0.20, "i have no idea what you want"},

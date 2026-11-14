@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	questionStartRegex = regexp.MustCompile("^(@[^ ]+:?|[^ ]+:)\\s+.+\\??")
+	questionStartRegex = regexp.MustCompile(`^(@[^ ]+:?|[^ ]+:)\s+.+\??`)
 )
 
 // isDirectedAtDungar provides a direct yes/no for being directed at dungar
@@ -113,11 +113,7 @@ func checkDirectedPrefix(msg, name string) bool {
 	}
 
 	word := string(msgRunes[pos:firstSpace])
-	//fmt.Printf("word: '%s', name: '%s'\n", word, name)
+	// fmt.Printf("word: '%s', name: '%s'\n", word, name)
 
-	if strings.ToLower(word) == strings.ToLower(name) {
-		return true
-	}
-
-	return false
+	return strings.EqualFold(word, name)
 }

@@ -10,7 +10,7 @@ import (
 	"gitlab.int.magneato.site/dungar/prototype/library/core2"
 )
 
-var rangeRegexp = regexp.MustCompile("^(@[^: ]+|[^: ]+):? pick a (.+) between ([\\d,.-]+)(?: and |\\s*-\\s*)([\\d,.-]+)\\s*$")
+var rangeRegexp = regexp.MustCompile(`^(@[^: ]+|[^: ]+):? pick a (.+) between ([\d,.-]+)(?: and |\s*-\s*)([\d,.-]+)\s*$`)
 
 var badMinMaxResponses = []weightedChoice{
 	{0.40, "I want you to think on that one buddy"},
@@ -31,31 +31,35 @@ func rangeHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Respo
 
 	matches := rangeRegexp.FindStringSubmatch(msg.Contents)
 
-	minStr := strings.Replace(matches[3], ",", "", -1)
-	maxStr := strings.Replace(matches[4], ",", "", -1)
+	minStr := strings.ReplaceAll(matches[3], ",", "")
+	maxStr := strings.ReplaceAll(matches[4], ",", "")
 
 	// We're dealing with floats for the float gods.
 	if strings.Contains(minStr, ".") || strings.Contains(maxStr, ".") {
-		min := mustParseFloat(minStr)
-		max := mustParseFloat(maxStr)
+		var (
+			minS = mustParseFloat(minStr)
+			maxS = mustParseFloat(maxStr)
+		)
 
-		if max <= min {
+		if maxS <= minS {
 			return core2.PrefixedSingleRsp(pickWeightedChoice(badMinMaxResponses))
 		}
 
-		rsp := fmt.Sprintf("I picked the %s %0.4f", matches[2], random.Float64Range(min, max))
+		rsp := fmt.Sprintf("I picked the %s %0.4f", matches[2], random.Float64Range(minS, maxS))
 
 		return core2.PrefixedSingleRsp(rsp)
 	}
 
-	min := mustParseInt(minStr)
-	max := mustParseInt(maxStr)
+	var (
+		minI = mustParseInt(minStr)
+		maxI = mustParseInt(maxStr)
+	)
 
-	if max <= min {
+	if maxI <= minI {
 		return core2.PrefixedSingleRsp(pickWeightedChoice(badMinMaxResponses))
 	}
 
-	rsp := fmt.Sprintf("I picked the %s %d", matches[2], random.Int64Range(min, max))
+	rsp := fmt.Sprintf("I picked the %s %d", matches[2], random.Int64Range(minI, maxI))
 	return core2.PrefixedSingleRsp(rsp)
 }
 

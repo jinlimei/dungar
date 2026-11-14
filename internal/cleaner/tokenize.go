@@ -86,7 +86,7 @@ func Tokenize(str string, variant TokenVariant) TokenList {
 				})
 			}
 
-			//spew.Dump(getRuneRange(runes, lastSpace, pos))
+			// spew.Dump(getRuneRange(runes, lastSpace, pos))
 
 			tokens = append(tokens, Token{
 				Type:     TokenEOL,
@@ -131,7 +131,7 @@ func Tokenize(str string, variant TokenVariant) TokenList {
 
 			prEnd := inlinePeekUntil(runes, pos+1, ')')
 
-			if intAbs(pos - lastSpace) > 0 {
+			if intAbs(pos-lastSpace) > 0 {
 				tokens = append(tokens, Token{
 					Type:     TokenWord,
 					StartPos: lastSpace,
@@ -176,7 +176,8 @@ func Tokenize(str string, variant TokenVariant) TokenList {
 					Value:    getRuneRange(runes, lastSpace, pos),
 				})
 
-				lastSpace = pos + 1
+				// this is apparently unnecessary
+				// lastSpace = pos + 1
 			}
 
 			tokens = append(tokens, Token{
@@ -254,7 +255,7 @@ func Tokenize(str string, variant TokenVariant) TokenList {
 				// after we want. weird?
 				pos = bPos + 2
 				lastSpace = pos + 1
-				//log.Printf("pos: %d, peek: '%v'\n",
+				// log.Printf("pos: %d, peek: '%v'\n",
 				//	pos, peek(runes, pos))
 			} else {
 				next := peekUntil(runes, pos+1, '`')
@@ -267,10 +268,10 @@ func Tokenize(str string, variant TokenVariant) TokenList {
 							break
 						}
 					}
-					//nextThree := peek(runes, next+1) == '`' && peek(runes, next+2) == '`' && peek(runes, next+3) == '`'
-					//log.Printf("Count of next backticks: %d\n", btCnt)
-					//log.Printf("Looking at (potential): %s\n", string(getRuneRange(runes, pos, next+1)))
-					//log.Printf("Looking at (next,next+btCnt): %s\n", string(getRuneRange(runes, next, next+btCnt)))
+					// nextThree := peek(runes, next+1) == '`' && peek(runes, next+2) == '`' && peek(runes, next+3) == '`'
+					// log.Printf("Count of next backticks: %d\n", btCnt)
+					// log.Printf("Looking at (potential): %s\n", string(getRuneRange(runes, pos, next+1)))
+					// log.Printf("Looking at (next,next+btCnt): %s\n", string(getRuneRange(runes, next, next+btCnt)))
 				}
 
 				if next > pos && (btCnt == 1 || btCnt%2 == 0 || peekUntil(runes, next+btCnt+1, '`') < 0) {
@@ -287,7 +288,7 @@ func Tokenize(str string, variant TokenVariant) TokenList {
 			}
 
 		case '>':
-			//if inBrace {
+			// if inBrace {
 			//	tokens = append(tokens, Token{
 			//		Type:  TokenSpecial,
 			//		Value: getRuneRange(runes, tokStart+1, pos),
@@ -295,7 +296,7 @@ func Tokenize(str string, variant TokenVariant) TokenList {
 			//
 			//	tokStart = pos + 1
 			//	lastSpace = pos + 1
-			//}
+			// }
 
 		case ':':
 			if !variant.isEmojiVariant() {
@@ -314,7 +315,7 @@ func Tokenize(str string, variant TokenVariant) TokenList {
 				break
 			}
 
-			//log.Printf("Looking at colon at pos %d\n", pos)
+			// log.Printf("Looking at colon at pos %d\n", pos)
 			// we're trying to match emoticons here, so any 'weird' characters should
 			// exclude us from matching said emoticons
 			peekPos, peekChr := peekUntilSet(runes, pos+2, ':', ' ', '?', '/', '\n', '`')
@@ -351,10 +352,10 @@ func Tokenize(str string, variant TokenVariant) TokenList {
 
 	output := make([]Token, 0, len(tokens))
 
-	//DebugPrintTokenList(tokens)
+	// DebugPrintTokenList(tokens)
 
 	for _, token := range tokens {
-		//log.Println(token.DebugString())
+		// log.Println(token.DebugString())
 		updated := token.Parse(variant)
 		output = append(output, updated...)
 	}

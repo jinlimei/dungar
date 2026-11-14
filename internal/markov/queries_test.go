@@ -10,12 +10,12 @@ import (
 )
 
 func connect() {
-	//if db.GetDatabase() != nil {
+	// if db.GetDatabase() != nil {
 	//	return
-	//}
+	// }
 	//
-	//utils.LoadSettingsAndSecrets()
-	//db.ConnectToDatabase()
+	// utils.LoadSettingsAndSecrets()
+	// db.ConnectToDatabase()
 }
 
 func TestGetFragmentFromWordCount(t *testing.T) {
@@ -24,13 +24,13 @@ func TestGetFragmentFromWordCount(t *testing.T) {
 	random.UseTestSeed()
 	connect()
 
-	testWord := func (word, condName string, cond func(i int64) bool) {
+	testWord := func(word, condName string, cond func(i int64) bool) {
 		c := getFragmentFromWordCount(word)
-		assert.True(t, cond(c), "Word '" + word + "' should pass condition " + condName)
+		assert.True(t, cond(c), "Word '"+word+"' should pass condition "+condName)
 	}
 
-	shouldBeZero := func (c int64) bool { return c == 0 }
-	shouldBeMany := func (c int64) bool { return c > 0 }
+	shouldBeZero := func(c int64) bool { return c == 0 }
+	shouldBeMany := func(c int64) bool { return c > 0 }
 
 	testWord("butt", "shouldBeZero", shouldBeZero)
 	testWord("https://gist.github.com/metatoaster/e20394f6377f5aa05272f21f259fc5a8", "shouldBeZero", shouldBeZero)
@@ -47,7 +47,7 @@ func TestGetFragmentFromWord(t *testing.T) {
 	random.UseTestSeed()
 	connect()
 
-	assertValidFragment := func (frag *fragment) {
+	assertValidFragment := func(frag *fragment) {
 		assert.NotNil(t, frag)
 
 		if frag != nil {
@@ -89,7 +89,7 @@ func TestQueryChain(t *testing.T) {
 	var frag *fragment
 
 	for count == 0 {
-		frag  = getFragmentFromWord("english")
+		frag = getFragmentFromWord("english")
 
 		if frag == nil {
 			break
@@ -163,6 +163,6 @@ func TestGenerate(t *testing.T) {
 	random.UseTestSeed()
 	connect()
 
-	assert.True(t, "" != Generate("dovi"))
-	assert.True(t, "" != Generate("rand.Int64n(-1)"))
+	assert.NotEqual(t, "", Generate("dovi"))
+	assert.NotEqual(t, "", Generate("rand.Int64n(-1)"))
 }

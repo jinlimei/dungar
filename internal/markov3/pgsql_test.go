@@ -25,5 +25,5 @@ func zTestMarkovLearnFromRawMessages(t *testing.T) {
 	}
 
 	log.Printf("Finished learning, having %d words and %d fragments. Took %s\n",
-		len(m.RevWords), len(m.Fragments), time.Now().Sub(n).String())
+		len(m.RevWords), len(m.Fragments), time.Since(n).String())
 }

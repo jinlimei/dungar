@@ -22,7 +22,7 @@ func (d *Driver) handleMessageUpdateEvent(s *discordgo.Session, ev *discordgo.Me
 		translated string
 	)
 
-	if ev.Content == "" && ev.Embeds != nil && len(ev.Embeds) > 0 {
+	if ev.Content == "" && len(ev.Embeds) > 0 {
 		// We've got an embedYay
 		// Let's see if it's a message already handled
 		converted := d.convertEmbeds(ev.Embeds)
@@ -41,7 +41,7 @@ func (d *Driver) handleMessageUpdateEvent(s *discordgo.Session, ev *discordgo.Me
 			Type:        core2.MessageTypeChanged,
 			Attachments: converted,
 		}
-	} else if ev.Content != "" && (ev.Embeds == nil || len(ev.Embeds) == 0) {
+	} else if ev.Content != "" && len(ev.Embeds) == 0 {
 		parsed = parseDiscordMessage(ev.Message)
 		translated = d.translateParsedMessage(ev.GuildID, parsed)
 

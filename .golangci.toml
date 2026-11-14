@@ -1,0 +1,32 @@
+version = "2"
+
+linters.disable = [
+  "unused"
+]
+
+[linters.settings.staticcheck]
+checks = [
+  # this is the default
+  "all", "-ST1000", "-ST1003", "-ST1016", "-ST1020", "-ST1021", "-ST1022",
+  # for Discord, we *want* to point to embedded fields in case it changes
+  # in the future.
+  "-QF1008",
+  # We embed string literals in our tests sometimes. Keeping this off for
+  # now.
+  "-ST1018",
+  # every single one of these has been calling on strings.Builder which
+  # is better to use `WriteString(fmt.Sprintf(...))` instead of `fmt.Fprintf(...)`
+  # due to not having to care about errors.
+  "-QF1012",
+]
+
+[linters.settings.errcheck]
+check-blank = false
+exclude-functions = [
+  "(*database/sql.Rows).Close",
+  "(*database/sql.Stmt).Close",
+  "(*database/sql.Tx).Rollback",
+  "encoding/binary.Write",
+  "(*os.File).Close",
+]
+

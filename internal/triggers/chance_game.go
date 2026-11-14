@@ -13,7 +13,7 @@ var chanceTable = []weightedChoice{
 	{0.05, "idk"},
 }
 
-var chanceRegex = regexp.MustCompile(".+ [cC]/[dD]\\??$")
+var chanceRegex = regexp.MustCompile(`.+ [cC]/[dD]\??$`)
 
 func chanceGameHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Response {
 	if !chanceRegex.MatchString(msg.Contents) {

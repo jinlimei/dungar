@@ -53,7 +53,7 @@ func ReconstructFragments(file string) {
 
 		start = time.Now()
 		step  = time.Now()
-		now   = time.Now()
+		now   time.Time
 
 		sentencesWritten = 0
 		fragmentsWritten = 0

@@ -43,26 +43,21 @@ func parseDiscordMessage(msg *discordgo.Message) *core2.ParsedMessage {
 	return parsed
 }
 
-//go:fix inline
-func ptr(s string) *string {
-	return new(s)
-}
-
 func parseDiscordPiece(piece string) []core2.MessageToken {
-	//log.Printf("parseDiscordPiece='%s'", piece)
+	// log.Printf("parseDiscordPiece='%s'", piece)
 	var (
-		//pLen  = len(piece)
+		// pLen  = len(piece)
 		runes = []rune(piece)
 		rLen  = len(runes)
 
 		start = 0
-		skip  = 0
+		skip  int
 		pos   = 0
 
 		inBracket bool
 
 		chr rune
-		//nxt rune
+		// nxt rune
 
 		value     string
 		tokenType core2.TokenType
@@ -83,10 +78,12 @@ func parseDiscordPiece(piece string) []core2.MessageToken {
 	}
 
 	find := func(str string, item rune, start int) int {
-		runes := []rune(str)
-		max := len(runes)
+		var (
+			runes    = []rune(str)
+			maxRunes = len(runes)
+		)
 
-		for ; start < max; start++ {
+		for ; start < maxRunes; start++ {
 			if runes[start] == item {
 				return start
 			}
@@ -97,7 +94,7 @@ func parseDiscordPiece(piece string) []core2.MessageToken {
 
 	for ; pos <= rLen; pos++ {
 		chr = get(pos)
-		//nxt = get(pos + 1)
+		// nxt = get(pos + 1)
 
 		switch chr {
 		case rune(0x0000):
@@ -122,7 +119,7 @@ func parseDiscordPiece(piece string) []core2.MessageToken {
 			if inBracket {
 				inBracket = false
 				value = string(runes[start : pos+1])
-				//log.Printf("value='%s' value-1='%s'", value, string(value[1]))
+				// log.Printf("value='%s' value-1='%s'", value, string(value[1]))
 				switch value[1] {
 				case '@':
 					tokenType = core2.TokenUserID
@@ -151,7 +148,7 @@ func parseDiscordPiece(piece string) []core2.MessageToken {
 				case ':':
 					next := find(value, ':', 2)
 
-					//log.Printf("next='%d'", next)
+					// log.Printf("next='%d'", next)
 
 					tokens = append(tokens, core2.MessageToken{
 						Token:    value,
@@ -173,7 +170,7 @@ func parseDiscordPiece(piece string) []core2.MessageToken {
 func (d *Driver) translateParsedMessage(serverID string, parsed *core2.ParsedMessage) string {
 	var out strings.Builder
 
-	//session := d.Con.GetSession()
+	// session := d.Con.GetSession()
 
 	for _, token := range parsed.Tokens {
 

@@ -64,8 +64,8 @@ func (rsp *Response) IsEmpty() bool {
 	return strings.TrimSpace(rsp.Contents) == ""
 }
 
-// IsCancelled returns whether or not the response is cancelled.
-func (rsp *Response) IsCancelled() bool {
+// IsCanceled returns whether or not the response is cancelled.
+func (rsp *Response) IsCanceled() bool {
 	return rsp.CancelledMessage
 }
 

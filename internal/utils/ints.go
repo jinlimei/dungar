@@ -7,9 +7,7 @@ func JoinInt64s(data ...[]int64) []int64 {
 	out := make([]int64, 0)
 
 	for _, group := range data {
-		for _, val := range group {
-			out = append(out, val)
-		}
+		out = append(out, group...)
 	}
 
 	return out

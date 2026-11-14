@@ -33,16 +33,16 @@ func TestHandlerOtherTriggersInChain(t *testing.T) {
 
 		// Guinea Pig Handler (who to bully)
 		// TODO implement this coherently
-		//{5, "GuineaPig", guineaPigHandler},
+		// {5, "GuineaPig", guineaPigHandler},
 
 		// No You (Fuck You -> NO YOU)
 		{Order: 6, Name: "NoYou", Func: core2.WrapNoServiceFunc(noYouHandler)},
 
 		// GDPR
-		//{7, "GDPR", gdprHandler},
+		// {7, "GDPR", gdprHandler},
 
 		// !pins
-		//{8, "!pins", core2.WrapNoServiceFunc(pinRestHandler)},
+		// {8, "!pins", core2.WrapNoServiceFunc(pinRestHandler)},
 		{Order: 8, Name: "!pins", Func: core2.WrapNoServiceFunc(pinDBHandler)},
 
 		// !dadjoke
@@ -153,7 +153,7 @@ func TestCommentateHandler(t *testing.T) {
 		}
 	}
 
-	if out == nil || len(out) == 0 {
+	if len(out) == 0 {
 		assert.Fail(t, "Out is Nil")
 		return
 	}

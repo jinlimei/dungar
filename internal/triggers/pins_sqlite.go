@@ -44,7 +44,7 @@ func (pds *pinDBService) requestAllPins() ([]simplePin, error) {
 		return nil, err
 	}
 
-	return pds.completeRows(rows, err)
+	return pds.completeRows(rows)
 }
 
 func (pds *pinDBService) requestPinsFromText(text string) ([]simplePin, error) {
@@ -77,15 +77,17 @@ func (pds *pinDBService) completeQuerySearch(qry string, text string) ([]simpleP
 		return nil, err
 	}
 
-	return pds.completeRows(rows, err)
+	return pds.completeRows(rows)
 }
 
-func (pds *pinDBService) completeRows(rows *sql.Rows, err error) ([]simplePin, error) {
+func (pds *pinDBService) completeRows(rows *sql.Rows) ([]simplePin, error) {
 	var (
 		pins = make([]simplePin, 0)
 
 		userDisplay string
 		messageText string
+
+		err error
 	)
 
 	for rows.Next() {

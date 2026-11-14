@@ -42,9 +42,9 @@ func incomingMessageHandler(msg *core2.IncomingMessage) *core2.ResponseEnvelope 
 	)
 
 	for _, response := range responses {
-		if !response.IsEmpty() && !response.IsCancelled() {
+		if !response.IsEmpty() && !response.IsCanceled() {
 			out = append(out, response)
-		} else if response.IsCancelled() {
+		} else if response.IsCanceled() {
 			cancelled++
 		} else if response.IsEmpty() {
 			empty++

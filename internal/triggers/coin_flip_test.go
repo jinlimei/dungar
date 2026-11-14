@@ -21,6 +21,7 @@ func TestCoinFlipHandler(t *testing.T) {
 
 	msg.Contents = "@dungar flip 40.3 coins"
 	rsp = coinFlipHandler(svc, msg)
+	assert.True(t, isEmptyRsp(rsp))
 
 	msg.Contents = "@dungar flip 1000 coins"
 	rsp = coinFlipHandler(svc, msg)
@@ -28,7 +29,7 @@ func TestCoinFlipHandler(t *testing.T) {
 	assert.True(t, strings.Contains(rsp[0].Contents, "flipped 1000 coins:"),
 		"failed to find coins: "+rsp[0].Contents)
 
-	rgx := regexp.MustCompile("coins: (\\d+) heads, (\\d+) tails")
+	rgx := regexp.MustCompile(`coins: (\d+) heads, (\d+) tails`)
 	m := rgx.FindAllStringSubmatch(rsp[0].Contents, 1)
 
 	heads, _ := strconv.Atoi(m[0][1])

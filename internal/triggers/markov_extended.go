@@ -88,7 +88,7 @@ func buildAlternativeMarkovs() {
 		}
 
 		log.Printf("finished '%s', took %s\n",
-			title, time.Now().Sub(start))
+			title, time.Since(start))
 
 		altMarkovs[title] = m
 	}

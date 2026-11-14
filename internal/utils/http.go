@@ -2,12 +2,20 @@ package utils
 
 import (
 	"io"
+	"log"
 
 	"net/http"
 )
 
+func closeBody(res *http.Response) {
+	err := res.Body.Close()
+	if err != nil {
+		log.Printf("ERROR: failed to close response body: %s", err)
+	}
+}
+
 func retrieveRequestBody(res *http.Response) ([]byte, error) {
-	defer res.Body.Close()
+	defer closeBody(res)
 	body, err := io.ReadAll(res.Body)
 
 	if err != nil {

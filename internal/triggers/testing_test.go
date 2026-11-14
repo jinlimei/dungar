@@ -39,6 +39,6 @@ func TestTestingHandler(t *testing.T) {
 	rsp = testingHandler(svc, screamingInAnotherChannel)
 	assert.NotNil(t, rsp)
 	assert.Len(t, rsp, 1)
-	assert.True(t, rsp[0].IsCancelled(), "IsCancelled() on Response should be true for `screamingInAnotherChannel`")
+	assert.True(t, rsp[0].IsCanceled(), "IsCancelled() on Response should be true for `screamingInAnotherChannel`")
 	assert.True(t, rsp[0].IsHandled(), "IsHandled() on Response should be true for `screamingInAnotherChannel`")
 }

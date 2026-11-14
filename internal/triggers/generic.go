@@ -11,7 +11,7 @@ import (
 	"gitlab.int.magneato.site/dungar/prototype/internal/random"
 )
 
-var garbagePrefix = regexp.MustCompile("^(<[^>]+>|\\(?[^)]+\\))")
+var garbagePrefix = regexp.MustCompile(`^(<[^>]+>|\(?[^)]+\))`)
 
 var foodChoices = []string{
 	"chipotle",
@@ -149,7 +149,7 @@ func lotsOfSpaceHandler(svc *core2.Service, rsps []*core2.Response) []*core2.Res
 		str = strings.TrimSpace(str)
 
 		for strings.Contains(str, "  ") {
-			str = strings.Replace(str, "  ", " ", -1)
+			str = strings.ReplaceAll(str, "  ", " ")
 		}
 
 		rsp.Contents = str

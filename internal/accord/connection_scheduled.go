@@ -8,7 +8,7 @@ func (d *Driver) runScheduledTasks(outgoing *core2.OutgoingResponses) {
 		scheduled   = d.core.HandleSchedule(outgoingCnt)
 	)
 
-	if scheduled != nil && len(scheduled) > 0 {
+	if len(scheduled) > 0 {
 		envelopes := scheduled.ToResponseEnvelopes()
 		for _, envelope := range envelopes {
 			outgoing.AddEnvelope(envelope)

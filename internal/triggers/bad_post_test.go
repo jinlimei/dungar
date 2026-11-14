@@ -22,7 +22,7 @@ func TestPreBadWordsHandler(t *testing.T) {
 	rsp := preBadWordsHandler(msg)
 
 	assert.True(t, rsp[0].IsEmpty())
-	assert.True(t, rsp[0].IsCancelled())
+	assert.True(t, rsp[0].IsCanceled())
 }
 
 func TestPostBadWordsHandler(t *testing.T) {
@@ -37,13 +37,13 @@ func TestPostBadWordsHandler(t *testing.T) {
 	nex := postBadWordsHandler(svc, rsp)
 
 	assert.False(t, nex[0].IsEmpty())
-	assert.True(t, nex[0].IsCancelled())
+	assert.True(t, nex[0].IsCanceled())
 
 	rsp = core2.MakeSingleRsp("FoO buz baz bar")
 	nex = postBadWordsHandler(svc, rsp)
 
 	assert.False(t, nex[0].IsEmpty())
-	assert.True(t, nex[0].IsCancelled())
+	assert.True(t, nex[0].IsCanceled())
 
 	rsp = core2.MakeSingleRsp("buz baz bar")
 	nex = postBadWordsHandler(svc, rsp)

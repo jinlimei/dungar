@@ -92,7 +92,7 @@ func (d *Driver) registerHandlers() {
 	d.Con.AddHandler(d.handleReactionRemove)
 }
 
-func (d *Driver) handleReadyStateEvent(s *discordgo.Session, ev *discordgo.Ready) {
+func (d *Driver) handleReadyStateEvent(_ *discordgo.Session, ev *discordgo.Ready) {
 	d.SetBotUser(&core2.BotUser{
 		ID:      ev.User.ID,
 		Name:    strings.ToLower(ev.User.Username),
@@ -101,11 +101,11 @@ func (d *Driver) handleReadyStateEvent(s *discordgo.Session, ev *discordgo.Ready
 	})
 }
 
-func (d *Driver) handleGuildCreateEvent(s *discordgo.Session, ev *discordgo.GuildCreate) {
+func (d *Driver) handleGuildCreateEvent(_ *discordgo.Session, ev *discordgo.GuildCreate) {
 	logEvent("guild_create_ev", time.Now(), ev)
 
 	if ev.Name != "" && ev.Guild != nil {
-		guild := d.getOrMakeGuild(ev.Guild.ID)
+		guild := d.getOrMakeGuild(ev.ID)
 
 		for _, chn := range ev.Channels {
 			guild.channelCache[chn.ID] = chn

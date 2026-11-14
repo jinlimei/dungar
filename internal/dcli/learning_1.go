@@ -3,8 +3,9 @@ package dcli
 import (
 	"database/sql"
 	"fmt"
-	"gitlab.int.magneato.site/dungar/prototype/internal/learning"
 	"os"
+
+	"gitlab.int.magneato.site/dungar/prototype/internal/learning"
 
 	"log"
 	"time"
@@ -26,9 +27,9 @@ func M1LearnFile(file string) {
 		lines []string
 		step  time.Time
 		stop  time.Time
-		max   int
+		maxL  int
 
-		start = time.Now()
+		start time.Time
 	)
 
 	bytes, err = os.ReadFile(file)
@@ -38,11 +39,11 @@ func M1LearnFile(file string) {
 	str = string(bytes)
 	lines = learning.ReadABook(str)
 
-	max = len(lines) - 1
+	maxL = len(lines) - 1
 
-	if max > m1LearnLength {
+	if maxL > m1LearnLength {
 		log.Printf("Setting a hard limit to max of %d\n", m1LearnLength)
-		max = m1LearnLength
+		maxL = m1LearnLength
 	}
 
 	DBConnect()
@@ -53,7 +54,6 @@ func M1LearnFile(file string) {
 	}
 
 	start = time.Now()
-	stop = time.Now()
 	step = time.Now()
 
 	tx := db.BeginTransaction()
@@ -62,16 +62,16 @@ func M1LearnFile(file string) {
 		if (pos % 50) == 0 {
 			stop = time.Now()
 
-			fmt.Printf("Learning line %d of %d lines (%v)\n", pos, max,
+			fmt.Printf("Learning line %d of %d lines (%v)\n", pos, maxL,
 				stop.Sub(step).String())
 
 			step = stop
 		}
 
-		//db.LegacyRecordRawMessage(line, source)
+		// db.LegacyRecordRawMessage(line, source)
 		markov.ActuallyLearnSentence(line)
 
-		if pos >= max {
+		if pos >= maxL {
 			break
 		}
 	}
@@ -80,7 +80,7 @@ func M1LearnFile(file string) {
 
 	stop = time.Now()
 
-	fmt.Printf("Learned %d of %d lines (%v, total %v)\n", max, max,
+	fmt.Printf("Learned %d of %d lines (%v, total %v)\n", maxL, maxL,
 		stop.Sub(step).String(), stop.Sub(start).String())
 }
 

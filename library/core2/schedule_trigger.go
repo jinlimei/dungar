@@ -113,19 +113,19 @@ func (stg *ScheduleTriggerGroup) Process(svc *Service) {
 	)
 
 	for _, handler := range stg.schedules {
-		//log.Printf("handler '%v': runTick='%v', lastRun='%v', now='%v'\n",
+		// log.Printf("handler '%v': runTick='%v', lastRun='%v', now='%v'\n",
 		//	handler.Name, handler.RunTick.Seconds(), handler.LastRan, now)
 
 		if (now - handler.LastRan) >= int64(handler.RunTick.Seconds()) {
 			handler.LastRan = now
 			output = stg.runSchedule(svc, handler)
 
-			if output == nil || len(output) == 0 {
-				//log.Printf("handle '%v': had no output\n", handler.Name)
+			if len(output) == 0 {
+				// log.Printf("handle '%v': had no output\n", handler.Name)
 				continue
 			}
 
-			//log.Printf("handle '%v': had %d output\n", handler.Name, len(output))
+			// log.Printf("handle '%v': had %d output\n", handler.Name, len(output))
 			messages = append(messages, output...)
 		}
 	} // end for
@@ -180,7 +180,7 @@ func (stg *ScheduleTriggerGroup) runSchedule(svc *Service, handler *ScheduleEvHa
 
 	handler.setLastRan()
 
-	if results == nil || len(results) == 0 {
+	if len(results) == 0 {
 		return nil
 	}
 

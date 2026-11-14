@@ -1,32 +1,33 @@
 package accord
 
 import (
-	"github.com/bwmarrin/discordgo"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
 	"log"
 	"strings"
+
+	"github.com/bwmarrin/discordgo"
+	"gitlab.int.magneato.site/dungar/prototype/library/core2"
 )
 
-func (d *Driver) handleChannelCreateEvent(s *discordgo.Session, ev *discordgo.ChannelCreate) {
+func (d *Driver) handleChannelCreateEvent(_ *discordgo.Session, ev *discordgo.ChannelCreate) {
 	guild := d.getOrMakeGuild(ev.GuildID)
-	guild.channelCache[ev.Channel.ID] = ev.Channel
+	guild.channelCache[ev.ID] = ev.Channel
 
 	d.core.HandleIncomingEvent(&core2.IncomingEvent{
 		ID:        ev.ID,
 		UserID:    ev.OwnerID,
 		ServerID:  ev.GuildID,
-		ChannelID: ev.Channel.ID,
-		Text:      ev.Channel.Name,
+		ChannelID: ev.ID,
+		Text:      ev.Name,
 		Type:      core2.EventChannelJoin,
 	})
 }
 
-func (d *Driver) handleChannelUpdateEvent(s *discordgo.Session, ev *discordgo.ChannelUpdate) {
+func (d *Driver) handleChannelUpdateEvent(_ *discordgo.Session, ev *discordgo.ChannelUpdate) {
 	guild := d.getOrMakeGuild(ev.GuildID)
 	guild.channelCache[ev.Channel.ID] = ev.Channel
 }
 
-func (d *Driver) handleChannelDeleteEvent(s *discordgo.Session, ev *discordgo.ChannelDelete) {
+func (d *Driver) handleChannelDeleteEvent(_ *discordgo.Session, ev *discordgo.ChannelDelete) {
 	guild := d.getOrMakeGuild(ev.GuildID)
 	delete(guild.channelCache, ev.Channel.ID)
 
@@ -40,7 +41,7 @@ func (d *Driver) handleChannelDeleteEvent(s *discordgo.Session, ev *discordgo.Ch
 	})
 }
 
-func (d *Driver) handleThreadCreateEvent(s *discordgo.Session, ev *discordgo.ThreadCreate) {
+func (d *Driver) handleThreadCreateEvent(_ *discordgo.Session, ev *discordgo.ThreadCreate) {
 	guild := d.getOrMakeGuild(ev.GuildID)
 	guild.channelCache[ev.Channel.ID] = ev.Channel
 
@@ -54,12 +55,12 @@ func (d *Driver) handleThreadCreateEvent(s *discordgo.Session, ev *discordgo.Thr
 	})
 }
 
-func (d *Driver) handleThreadUpdateEvent(s *discordgo.Session, ev *discordgo.ThreadUpdate) {
+func (d *Driver) handleThreadUpdateEvent(_ *discordgo.Session, ev *discordgo.ThreadUpdate) {
 	guild := d.getOrMakeGuild(ev.GuildID)
 	guild.channelCache[ev.Channel.ID] = ev.Channel
 }
 
-func (d *Driver) handleThreadDeleteEvent(s *discordgo.Session, ev *discordgo.ThreadDelete) {
+func (d *Driver) handleThreadDeleteEvent(_ *discordgo.Session, ev *discordgo.ThreadDelete) {
 	guild := d.getOrMakeGuild(ev.GuildID)
 	delete(guild.channelCache, ev.Channel.ID)
 

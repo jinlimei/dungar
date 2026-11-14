@@ -11,12 +11,14 @@ import (
 	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
 )
 
-var normalizedWords []string
-var globalFetchTime = time.Now()
-var wordListMaxAge = int64(600)
-var maxChainDistance = 50
-var emoticons []string
-var retrievedThings = -1
+var (
+	normalizedWords  []string
+	globalFetchTime  = time.Now()
+	wordListMaxAge   = int64(600)
+	maxChainDistance = 50
+	emoticons        []string
+	retrievedThings  = -1
+)
 
 // This is based off of the work done by the venerable meta toaster
 // https://github.com/metatoaster/mtj.markov.git
@@ -30,7 +32,7 @@ func splitDirection(dir string) (string, string) {
 func buildGlobalWordList() {
 	regenerate := false
 
-	if retrievedThings < 0 && (normalizedWords == nil || len(normalizedWords) == 0) {
+	if retrievedThings < 0 && len(normalizedWords) == 0 {
 		log.Println("normalizedWords is nil or empty")
 		regenerate = true
 	}
@@ -91,10 +93,10 @@ func GenerateFromCon(word string, con db.QueryAble) string {
 	if frag == nil {
 		// something went horribly wrong
 		log.Println("Fragment was <nil> when it shouldn't be.")
-		//utils.SentryMessage(
+		// utils.SentryMessage(
 		//	"fragment <nil> when shouldn't be",
 		//	map[string]string{"loc": "GenerateFromCon"},
-		//)
+		// )
 
 		return ""
 	}

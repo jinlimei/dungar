@@ -10,7 +10,7 @@ import (
 	"gitlab.int.magneato.site/dungar/prototype/library/core2"
 )
 
-var rollDiceRegex = regexp.MustCompile("\\s+((\\d+)[Dd](\\d+)([hlHLoO](\\d+)|))")
+var rollDiceRegex = regexp.MustCompile(`\s+((\d+)[Dd](\d+)([hlHLoO](\d+)|))`)
 
 var overDiceRollsLimitResponses = []weightedChoice{
 	{0.80, "perhaps try using 5 or less different rolls"},
@@ -60,7 +60,7 @@ func rollDiceHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Re
 func generateDiceRolls(matchGroup []string, diceRolls, diceSize int) string {
 	output := matchGroup[1] + ": "
 
-	//spew.Dump(matchGroup)
+	// spew.Dump(matchGroup)
 	rolls := make([]int, 0)
 
 	for range diceRolls {
@@ -79,18 +79,19 @@ func generateDiceRolls(matchGroup []string, diceRolls, diceSize int) string {
 
 		nRolls := make([]int, 0)
 
-		if matchGroup[4][0] == 'h' || matchGroup[4][0] == 'H' {
+		switch matchGroup[4][0] {
+		case 'h', 'H':
 			pos := len(rolls) - 1
 			for range lim {
 				nRolls = append(nRolls, rolls[pos])
 				pos--
 			}
-		} else if matchGroup[4][0] == 'l' || matchGroup[4][0] == 'L' {
+		case 'l', 'L':
 			for x := range lim {
 				nRolls = append(nRolls, rolls[x])
 			}
-		} else {
-			midStart := max(int(len(rolls)/2)-lim, 0)
+		default:
+			midStart := max((len(rolls)/2)-lim, 0)
 
 			for x := range lim {
 				nRolls = append(nRolls, rolls[midStart+x])

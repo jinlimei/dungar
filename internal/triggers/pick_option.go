@@ -26,17 +26,17 @@ var alternativeOptionsForTwo = []weightedChoice{
 	{0.10, "have you considered picking up chess instead?"},
 }
 
-const pickOptionRegex = ":?\\s*(.+\\s+or\\s+.+)\\??"
+const pickOptionRegex = `:?\s*(.+\s+or\s+.+)\??`
 
 var (
-	splitterRegexp = regexp.MustCompile("\\s*(?:,?\\sor\\s|,)\\s*")
-	directedToRgx  = regexp.MustCompile("^(@[^:][^ ]+|[^:][^ ]+):?\\s*")
+	splitterRegexp = regexp.MustCompile(`\s*(?:,?\\sor\\s|,)\s*`)
+	directedToRgx  = regexp.MustCompile(`^(@[^:][^ ]+|[^:][^ ]+):?\s*`)
 )
 
 func pickOptionHandler(str, serverID string) string {
 	if directedToRgx.MatchString(str) {
 		sub := directedToRgx.FindStringSubmatch(str)
-		str = strings.TrimSpace(strings.Replace(str, sub[0], "", -1))
+		str = strings.TrimSpace(strings.ReplaceAll(str, sub[0], ""))
 	}
 
 	options := splitterRegexp.Split(str, -1)

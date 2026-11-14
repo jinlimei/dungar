@@ -42,7 +42,7 @@ func usingOutgoingQueue() *outgoingQueue {
 func outputQueueScheduler(svc *core2.Service) []*core2.ScheduledMessage {
 	rsp := usingOutgoingQueue().PopAll()
 
-	if rsp == nil || len(rsp) == 0 {
+	if len(rsp) == 0 {
 		return nil
 	}
 

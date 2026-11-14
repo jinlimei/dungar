@@ -25,7 +25,7 @@ type UserTracking struct {
 
 // CustomDataJSON returns a json.RawMessage for the UserTracking.CustomData member
 func (ut *UserTracking) CustomDataJSON() json.RawMessage {
-	if ut.CustomData == nil || len(ut.CustomData) == 0 {
+	if len(ut.CustomData) == 0 {
 		return []byte{}
 	}
 

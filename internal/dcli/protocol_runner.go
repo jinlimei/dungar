@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"syscall"
 
 	"gitlab.int.magneato.site/dungar/prototype/internal/db"
 	"gitlab.int.magneato.site/dungar/prototype/internal/random"
@@ -35,7 +36,7 @@ func ProtocolRunner() {
 	}
 
 	signals := make(chan os.Signal, 1)
-	signal.Notify(signals, os.Interrupt, os.Kill)
+	signal.Notify(signals, os.Interrupt, syscall.SIGTERM)
 
 	<-signals
 

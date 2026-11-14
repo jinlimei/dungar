@@ -8,15 +8,15 @@ import (
 )
 
 var urlRegex = regexp.MustCompile(`^[a-z]+\.[a-z0-9]+(.*/?|)`)
-var hasWordChar = regexp.MustCompile("\\W")
-var punctuationStrip = regexp.MustCompile("^\\W*(.+?)\\W*$")
+var hasWordChar = regexp.MustCompile(`\W`)
+var punctuationStrip = regexp.MustCompile(`^\W*(.+?)\W*$`)
 
 // IsEmoticon makes a determination if the incoming word is in fact of an emoticon nature
 func IsEmoticon(word string) bool {
 	word = strings.TrimSpace(word)
 	wordLen := len(word)
 
-	if wordLen > 2 && word[0] == ':' && word[wordLen-1] == ':' && strings.Index(word, " ") == -1 {
+	if wordLen > 2 && word[0] == ':' && word[wordLen-1] == ':' && !strings.Contains(word, " ") {
 		return true
 	}
 

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var phraseRegexp = regexp.MustCompile("\\$([a-zA-Z0-9]+)\\$")
+var phraseRegexp = regexp.MustCompile(`\$([a-zA-Z0-9]+)\$`)
 
 type buildHandlerFn func(serverID string) string
 
@@ -34,7 +34,7 @@ func buildPostMessage(str, serverID string) string {
 		// we'll replace and log
 		if !ok {
 			log.Print("Cannot find callback for '" + match[1] + "'")
-			str = strings.Replace(str, match[0], "", -1)
+			str = strings.ReplaceAll(str, match[0], "")
 			continue
 		}
 

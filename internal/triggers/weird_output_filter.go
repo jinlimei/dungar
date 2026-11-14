@@ -24,7 +24,7 @@ func isJulietNumberSequence(str string) bool {
 	nonDigits := 0
 
 	for _, chr := range str {
-		if strings.IndexAny("0123456789,.", string(chr)) >= 0 {
+		if strings.ContainsAny("0123456789,.", string(chr)) {
 			digits++
 		} else {
 			nonDigits++

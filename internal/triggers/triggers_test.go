@@ -78,5 +78,5 @@ func isEmptyRsp(rsp []*core2.Response) bool {
 		return true
 	}
 
-	return !rsp[0].IsHandled() && !rsp[0].IsConsumed() && !rsp[0].IsCancelled()
+	return !rsp[0].IsHandled() && !rsp[0].IsConsumed() && !rsp[0].IsCanceled()
 }

@@ -81,8 +81,10 @@ var choices8Ball = []string{
 }
 
 func questionsHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Response {
-	contents := msg.Contents
-	process := false
+	var (
+		contents = msg.Contents
+		process  bool
+	)
 
 	// Must be directed at dungar in order to answer a question
 	if isDirectedAtDungar(svc, msg) {
@@ -97,7 +99,7 @@ func questionsHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.R
 		return core2.EmptyRsp()
 	}
 
-	//log.Println("question: " + msg.Contents)
+	// log.Println("question: " + msg.Contents)
 
 	for _, handler := range questionHandlers {
 		if handler.matches(contents) {

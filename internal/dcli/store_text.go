@@ -33,6 +33,7 @@ func StoreTextFiles(dir string) {
 	tx = db.BeginTransaction()
 
 	meta, err = os.ReadFile(dir + "/meta.json")
+	utils.HaltingError("StoreTextFiles.ReadFile", err)
 
 	err = json.Unmarshal(meta, &infos)
 	utils.HaltingError("StoreTextFiles.Unmarshal", err)

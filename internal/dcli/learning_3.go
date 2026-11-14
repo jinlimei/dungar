@@ -3,14 +3,14 @@ package dcli
 import (
 	"bufio"
 	"fmt"
+	"log"
+	"os"
+	"time"
+
 	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
 	"gitlab.int.magneato.site/dungar/prototype/internal/learning"
 	"gitlab.int.magneato.site/dungar/prototype/internal/markov3"
 	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
-	"log"
-	"os"
-	"strings"
-	"time"
 )
 
 // M3LearnCleaned is a methodology for learning a "cleaned" file where each
@@ -28,14 +28,13 @@ func M3LearnCleaned(id, file string, makeFile bool) {
 
 		markov *markov3.Markov
 
-		start = time.Now()
+		start time.Time
 	)
 
 	sock, err = os.OpenFile(file, os.O_RDONLY, 0444)
 	utils.HaltingError("M3LearnCleaned", err)
 
 	start = time.Now()
-	stop = time.Now()
 	step = time.Now()
 
 	markov = markov3.MakeMarkov(markov3.MarkovSpaceID(id))
@@ -81,24 +80,21 @@ func M3LearnBook(id, file string, makeFile bool) {
 		lines []string
 		step  time.Time
 		stop  time.Time
-		max   int
+		maxL  int
 
 		markov *markov3.Markov
 
-		start = time.Now()
+		start time.Time
 	)
 
 	bytes, err = os.ReadFile(file)
 	utils.HaltingError("M3LearnBook", err)
 
-	file = strings.ReplaceAll(file, "\\", "/")
-
 	lines = learning.CleanToLines(string(bytes))
 
-	max = len(lines) - 1
+	maxL = len(lines) - 1
 
 	start = time.Now()
-	stop = time.Now()
 	step = time.Now()
 
 	markov = markov3.MakeMarkov(markov3.MarkovSpaceID(id))
@@ -107,7 +103,7 @@ func M3LearnBook(id, file string, makeFile bool) {
 		if (pos % 500) == 0 {
 			stop = time.Now()
 
-			fmt.Printf("Learning line %d of %d lines (%v)\n", pos, max,
+			fmt.Printf("Learning line %d of %d lines (%v)\n", pos, maxL,
 				stop.Sub(step).String())
 
 			step = stop
@@ -127,6 +123,6 @@ func M3LearnBook(id, file string, makeFile bool) {
 
 	stop = time.Now()
 
-	fmt.Printf("Learned %d of %d lines (%v, total %v)\n", max, max,
+	fmt.Printf("Learned %d of %d lines (%v, total %v)\n", maxL, maxL,
 		stop.Sub(step).String(), stop.Sub(start).String())
 }

@@ -16,10 +16,10 @@ func TestMarkovPickWord(t *testing.T) {
 
 	var word string
 
-	//activeMarkovVersion = mV1
+	// activeMarkovVersion = mV1
 	//
-	//word := markovPickWord()
-	//assert.NotEmpty(t, word)
+	// word := markovPickWord()
+	// assert.NotEmpty(t, word)
 
 	activeMarkovVersion = mV3
 	word = markovPickWord()
@@ -32,10 +32,10 @@ func TestMarkovGenerate(t *testing.T) {
 
 	var msg string
 
-	//activeMarkovVersion = mV1
+	// activeMarkovVersion = mV1
 	//
-	//msg := markovGenerate("alice")
-	//assert.NotEmpty(t, msg)
+	// msg := markovGenerate("alice")
+	// assert.NotEmpty(t, msg)
 
 	activeMarkovVersion = mV3
 
@@ -58,15 +58,15 @@ func TestMarkovHandler(t *testing.T) {
 	rsp = markovSettingHandler(msg)
 	assert.Equal(t, core2.EmptyRsp(), rsp)
 
-	//msg.Contents = "!m1"
-	//rsp = markovSettingHandler(msg)
-	//assert.True(t, rsp[0].HandledMessage)
-	//assert.True(t, rsp[0].ConsumedMessage)
+	// msg.Contents = "!m1"
+	// rsp = markovSettingHandler(msg)
+	// assert.True(t, rsp[0].HandledMessage)
+	// assert.True(t, rsp[0].ConsumedMessage)
 	//
-	//msg.Contents = "!m1 alice"
-	//rsp = markovSettingHandler(msg)
-	//assert.True(t, rsp[0].HandledMessage)
-	//assert.True(t, rsp[0].ConsumedMessage)
+	// msg.Contents = "!m1 alice"
+	// rsp = markovSettingHandler(msg)
+	// assert.True(t, rsp[0].HandledMessage)
+	// assert.True(t, rsp[0].ConsumedMessage)
 
 	msg.Contents = "!m3"
 	rsp = markovSettingHandler(msg)
@@ -100,59 +100,59 @@ func TestMarkovSettingHandlerAsJinli(t *testing.T) {
 	random.UseTestSeed()
 	db.TestDatabaseConnect()
 
-	//log.Println("TestMarkovSettingHandlerAsJinli")
+	// log.Println("TestMarkovSettingHandlerAsJinli")
 
 	msg := makeMessage("!markov get-version", "U3Q9ZPR32", "dungar-test")
 
-	//log.Printf("msg '%+v'", msg)
+	// log.Printf("msg '%+v'", msg)
 
 	setMarkovVersion(mV1)
-	//log.Printf("[SHOULD REPORT V1] Active Markov Version %d", activeMarkovVersion)
+	// log.Printf("[SHOULD REPORT V1] Active Markov Version %d", activeMarkovVersion)
 	rsp := markovSettingHandler(msg)
-	//log.Printf("[mV1] RESPONSE: %+v", rsp)
+	// log.Printf("[mV1] RESPONSE: %+v", rsp)
 	assert.Contains(t, rsp[0].Contents, "Actively")
 	assert.Contains(t, rsp[0].Contents, "1")
 
 	setMarkovVersion(mV3)
-	//log.Printf("[SHOULD REPORT V3] Active Markov Version %d", activeMarkovVersion)
+	// log.Printf("[SHOULD REPORT V3] Active Markov Version %d", activeMarkovVersion)
 	rsp = markovSettingHandler(msg)
-	//log.Printf("[mV3] RESPONSE: %+v", rsp)
+	// log.Printf("[mV3] RESPONSE: %+v", rsp)
 	assert.Contains(t, rsp[0].Contents, "Actively")
 	assert.Contains(t, rsp[0].Contents, "3")
 
 	msg.Contents = "!markov set-version 1"
-	rsp = markovSettingHandler(msg)
-	//log.Printf("[set-version 1] RESPONSE: %+v", rsp)
+	markovSettingHandler(msg)
+	// log.Printf("[set-version 1] RESPONSE: %+v", rsp)
 	assert.Equal(t, mV1, activeMarkovVersion)
 
 	msg.Contents = "!markov set-version 3"
-	rsp = markovSettingHandler(msg)
-	//log.Printf("[set-version 2] RESPONSE: %+v", rsp)
+	markovSettingHandler(msg)
+	// log.Printf("[set-version 2] RESPONSE: %+v", rsp)
 	assert.Equal(t, mV3, activeMarkovVersion)
 
 	msg.Contents = "!markov set-version"
 	rsp = markovSettingHandler(msg)
-	//log.Printf("[set-version none] RESPONSE: %+v", rsp)
+	// log.Printf("[set-version none] RESPONSE: %+v", rsp)
 	assert.Contains(t, rsp[0].Contents, "WHAT")
 
 	msg.Contents = "!markov set-version blue"
 	rsp = markovSettingHandler(msg)
-	//log.Printf("[set-version blue] RESPONSE: %+v", rsp)
+	// log.Printf("[set-version blue] RESPONSE: %+v", rsp)
 	assert.Contains(t, rsp[0].Contents, "fucked up")
 
 	msg.Contents = "!markov set-version 4"
 	rsp = markovSettingHandler(msg)
-	//log.Printf("[set-version 4] RESPONSE: %+v", rsp)
+	// log.Printf("[set-version 4] RESPONSE: %+v", rsp)
 	assert.Equal(t, core2.EmptyRsp(), rsp)
 
 	// causes a data race :(
-	//msg.Contents = "!markov load-m3"
-	//rsp = markovSettingHandler(msg)
-	//assert.Contains(t, rsp[0].Contents, "whatever")
+	// msg.Contents = "!markov load-m3"
+	// rsp = markovSettingHandler(msg)
+	// assert.Contains(t, rsp[0].Contents, "whatever")
 
 	msg.Contents = "!markov m3-stats"
 	rsp = markovSettingHandler(msg)
-	//log.Printf("[m3-stats] RESPONSE: %+v", rsp)
+	// log.Printf("[m3-stats] RESPONSE: %+v", rsp)
 	assert.Contains(t, rsp[0].Contents, "Words")
 	assert.Contains(t, rsp[0].Contents, "Fragments")
 }

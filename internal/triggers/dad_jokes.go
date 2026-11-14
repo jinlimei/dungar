@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -136,10 +137,10 @@ func storeDadJoke(rsp dadJokeResponse) {
 	var (
 		id     uint64
 		jokeID string
-	)
 
-	row := db.ConQueryRow(sel, chk)
-	err := row.Err()
+		row = db.ConQueryRow(sel, chk)
+		err = row.Err()
+	)
 
 	if err != nil {
 		log.Printf("Failed to retrieve Dad Jokes: %v\n", err)
@@ -148,11 +149,11 @@ func storeDadJoke(rsp dadJokeResponse) {
 
 	err = row.Scan(&id, &jokeID)
 
-	if err != nil && err != sql.ErrNoRows {
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		log.Printf("Failed to Scan: %v\n", err)
 	}
 
-	if err == sql.ErrNoRows {
+	if errors.Is(err, sql.ErrNoRows) {
 		ins := `
 			INSERT INTO dad_jokes (the_joke, joke_checksum, joke_id, created_at, last_used)
 			VALUES($1, $2, $3, CURRENT_TIMESTAMP, NULL)
@@ -175,5 +176,8 @@ func storeDadJoke(rsp dadJokeResponse) {
 		`
 
 		_, err = db.ConExec(upd, id)
+		if err != nil {
+			log.Printf("Failed to update dad joke: %v", err)
+		}
 	}
 }

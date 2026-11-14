@@ -73,22 +73,22 @@ func (mtg *MessageTriggerGroup) Process(svc *Service, msg *IncomingMessage) []*R
 	responses := mtg.processWithHandlers(svc)
 
 	if len(responses) == 0 {
-		//log.Printf("After processing, have %d responses\n", len(responses))
+		// log.Printf("After processing, have %d responses\n", len(responses))
 		mtg.responses = nil
 		return nil
 	}
 
 	responses = mtg.processFilters(svc, responses)
 
-	//log.Printf("After filtering, have %d responses\n", len(responses))
+	// log.Printf("After filtering, have %d responses\n", len(responses))
 
-	if isAnyCancelled(responses) {
-		//log.Printf("At least 1 response is flagged as cancelled, so skipping.\n")
+	if isAnyCanceled(responses) {
+		// log.Printf("At least 1 response is flagged as cancelled, so skipping.\n")
 		mtg.responses = nil
 		return nil
 	}
 
-	//log.Printf("All said and done, %d responses", len(responses))
+	// log.Printf("All said and done, %d responses", len(responses))
 
 	mtg.responses = responses
 
@@ -125,8 +125,8 @@ func (mtg *MessageTriggerGroup) processWithHandlers(svc *Service) []*Response {
 	var (
 		output    = make([]*Response, 0)
 		responses []*Response
-		consumed  = false
-		handled   = false
+		consumed  bool
+		handled   bool
 	)
 
 	for _, handler := range mtg.messageHandlers {
@@ -183,7 +183,7 @@ func (mtg *MessageTriggerGroup) runMessageEv(svc *Service, handler MessageEvHand
 		outgoing  = make([]*Response, 0)
 	)
 
-	//log.Printf("Ran runMessageEv on %s, with respones=%d\n",
+	// log.Printf("Ran runMessageEv on %s, with respones=%d\n",
 	//	handler.Name, len(responses))
 
 	// Filter out nil's

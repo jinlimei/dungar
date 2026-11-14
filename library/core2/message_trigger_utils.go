@@ -1,9 +1,9 @@
 package core2
 
-func isAnyCancelled(responses []*Response) bool {
+func isAnyCanceled(responses []*Response) bool {
 	for _, rsp := range responses {
-		// Well we did encounter a cancelled message. Nothing goes out now.
-		if rsp.IsCancelled() {
+		// Well we did encounter a canceled message. Nothing goes out now.
+		if rsp.IsCanceled() {
 			return true
 		}
 	}
@@ -13,7 +13,7 @@ func isAnyCancelled(responses []*Response) bool {
 
 func isAnyHandled(responses []*Response) bool {
 	// Can't handle message if there's no valid responses.
-	if responses == nil || len(responses) == 0 {
+	if len(responses) == 0 {
 		return false
 	}
 

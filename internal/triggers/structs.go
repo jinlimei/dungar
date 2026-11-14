@@ -79,7 +79,7 @@ func (mtc *multiTriggerCallback) matches(str string) bool {
 }
 
 func ensureMtcCache(mtc *multiTriggerCallback) {
-	if mtc.cache == nil || len(mtc.cache) == 0 {
+	if len(mtc.cache) == 0 {
 		mtc.cache = make([]*regexp.Regexp, len(mtc.Triggers))
 
 		for i, k := range mtc.Triggers {
@@ -105,10 +105,6 @@ func randomWeightChoice(choice string) weightedChoice {
 		random.Float64(),
 		choice,
 	}
-}
-
-func (wc weightedChoice) randomizeChance() {
-	wc.Chance = random.Float64()
 }
 
 func sliceFromWeightedChoice(choices []weightedChoice) []string {
