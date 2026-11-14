@@ -33,7 +33,6 @@ func assertTokenSequence(t *testing.T, expectedLen int, incoming []Token, expect
 		))
 
 		panic("broken test")
-		return
 	}
 
 	if incLen != expLen {

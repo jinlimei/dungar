@@ -10,7 +10,7 @@ import (
 var msgGroup *core2.MessageTriggerGroup
 
 // incomingMessageHandler Handles all assorted messageTriggers and
-// returns an slice of sentences
+// returns a slice of sentences
 func incomingMessageHandler(msg *core2.IncomingMessage) *core2.ResponseEnvelope {
 	log.Printf(
 		"[incomingMessageHandler serverID='%s' userID='%s'] %s\n",
@@ -66,100 +66,100 @@ func initMessageGroup() {
 
 	msgGroup.SetMessageTriggers([]core2.MessageEvHandler{
 		// Pre-filtering of Bad Words
-		{0, "PreBadWords", core2.WrapNoServiceFunc(preBadWordsHandler)},
-		//{1, "TestMode", testModeHandler},
+		{Order: 0, Name: "PreBadWords", Func: core2.WrapNoServiceFunc(preBadWordsHandler)},
+		// {1, "TestMode", testModeHandler},
 
 		// Raw Message Recorder
-		{1, "Recorder", rawMessageRecorder},
+		{Order: 1, Name: "Recorder", Func: rawMessageRecorder},
 
 		// User Tracking
-		{2, "UserTracker", userTrackingHandler},
+		{Order: 2, Name: "UserTracker", Func: userTrackingHandler},
 
 		// Debugger!
-		{2, "Debugger", debugHandler},
+		{Order: 2, Name: "Debugger", Func: debugHandler},
 
 		// Test Mode
 
 		// Markov Commands (version, analytics)
-		{3, "MarkovSetting", core2.WrapNoServiceFunc(markovSettingHandler)},
+		{Order: 3, Name: "MarkovSetting", Func: core2.WrapNoServiceFunc(markovSettingHandler)},
 
 		// Random analytics (for things that are setup w/ it)
-		{3, "RandomAnalytics", core2.WrapNoServiceFunc(randomHandler)},
+		{Order: 3, Name: "RandomAnalytics", Func: core2.WrapNoServiceFunc(randomHandler)},
 
 		// Main Control (to disable/change wild triggers)
-		{3, "MainControl", core2.WrapNoServiceFunc(mainControlHandler)},
+		{Order: 3, Name: "MainControl", Func: core2.WrapNoServiceFunc(mainControlHandler)},
 
 		// User Spamming (stop spamming dungar, nerd!)
-		{4, "UserSpammed", userSpammedHandler},
+		{Order: 4, Name: "UserSpammed", Func: userSpammedHandler},
 
 		// Guinea Pig Handler (who to bully)
 		// TODO implement this coherently
-		//{5, "GuineaPig", guineaPigHandler},
+		// {Order:5, Name: "GuineaPig", Func: guineaPigHandler},
 
 		// GDPR
-		//{6, "GDPR", gdprHandler},
+		// {Order:6, Name: "GDPR", Func: gdprHandler},
 
 		// !pins
-		//{7, "!pins", core2.WrapNoServiceFunc(pinRestHandler)},
-		{7, "!pins", core2.WrapNoServiceFunc(pinDBHandler)},
+		// {Order:7, Name: "!pins", Func: core2.WrapNoServiceFunc(pinRestHandler)},
+		{Order: 7, Name: "!pins", Func: core2.WrapNoServiceFunc(pinDBHandler)},
 
 		// !dadjoke
-		{8, "DadJoke", core2.WrapNoServiceFunc(dadJokeHandler)},
+		{Order: 8, Name: "DadJoke", Func: core2.WrapNoServiceFunc(dadJokeHandler)},
 
 		// !bitcoin
-		{9, "BitCoin", core2.WrapNoServiceFunc(bitCoinValueHandler)},
+		{Order: 9, Name: "BitCoin", Func: core2.WrapNoServiceFunc(bitCoinValueHandler)},
 
 		// !alexjons and !hannity
-		{10, "AlexJones", alexJonesHandler},
+		{Order: 10, Name: "AlexJones", Func: alexJonesHandler},
 
 		// !f (fortune teller)
-		{11, "Fortune", core2.WrapNoServiceFunc(fortuneHandler)},
+		{Order: 11, Name: "Fortune", Func: core2.WrapNoServiceFunc(fortuneHandler)},
 
 		// No You (Fuck You -> NO YOU)
-		{12, "NoYou", core2.WrapNoServiceFunc(noYouHandler)},
+		{Order: 12, Name: "NoYou", Func: core2.WrapNoServiceFunc(noYouHandler)},
 
 		// Name Check (Get My Name Out of Your Mouth)
-		{13, "NameCheck", nameCheckHandler},
+		{Order: 13, Name: "NameCheck", Func: nameCheckHandler},
 
 		// Range Handler (pick a number between a and b)
-		{14, "Range", rangeHandler},
+		{Order: 14, Name: "Range", Func: rangeHandler},
 
 		// Roll Die (1d20)
-		{15, "RollDice", rollDiceHandler},
+		{Order: 15, Name: "RollDice", Func: rollDiceHandler},
 
 		// Coin Flip (heads/tails also haha sides)
-		{16, "CoinFlip", coinFlipHandler},
+		{Order: 16, Name: "CoinFlip", Func: coinFlipHandler},
 
 		// Chances (hey go outside c/d)
-		{17, "Chances", chanceGameHandler},
+		{Order: 17, Name: "Chances", Func: chanceGameHandler},
 
 		// Markov Extended ("Tell me about shakespeare")
-		{17, "Markov Extended", markovExtendedHandler},
+		{Order: 17, Name: "Markov Extended", Func: markovExtendedHandler},
 
 		// Questions answered by 8Ball
-		{18, "8Ball", questionsHandler},
+		{Order: 18, Name: "8Ball", Func: questionsHandler},
 
 		// Sequence handler
-		{19, "Sequences", core2.WrapNoServiceFunc(sequenceHandler)},
+		{Order: 19, Name: "Sequences", Func: core2.WrapNoServiceFunc(sequenceHandler)},
 
 		// Prefix triggers (dovibus)
-		{20, "Simple Prefix", core2.WrapNoServiceFunc(simplePrefixHandler)},
+		{Order: 20, Name: "Simple Prefix", Func: core2.WrapNoServiceFunc(simplePrefixHandler)},
 
 		// Random triggers
-		{20, "Sauce Questions", core2.WrapNoServiceFunc(sauceQuestionsHandler)},
+		{Order: 20, Name: "Sauce Questions", Func: core2.WrapNoServiceFunc(sauceQuestionsHandler)},
 
 		// Repeatable messaging
-		{21, "Repeatable", core2.WrapNoServiceFunc(repeatableHandler)},
+		{Order: 21, Name: "Repeatable", Func: core2.WrapNoServiceFunc(repeatableHandler)},
 
 		// Random Markov Commentary
-		{22, "Commentator", core2.WrapNoServiceFunc(commentateHandler)},
+		{Order: 22, Name: "Commentator", Func: core2.WrapNoServiceFunc(commentateHandler)},
 	})
 
 	msgGroup.SetResponseTriggers([]core2.ResponseEvHandler{
-		{0, core2.Filter, "BadWords", postBadWordsHandler},
-		{1, core2.Filter, "GarbagePrefixes", removeGarbagePrefixedHandler},
-		{2, core2.Filter, "WhiteSpace", lotsOfSpaceHandler},
-		//{3, core2.Filter, "WeirdOutput", postWeirdOutputFilterHandler},
-		{4, core2.Adder, "SelfSpamming", selfSpamHandler},
+		{Order: 0, Type: core2.Filter, Name: "BadWords", Func: postBadWordsHandler},
+		{Order: 1, Type: core2.Filter, Name: "GarbagePrefixes", Func: removeGarbagePrefixedHandler},
+		{Order: 2, Type: core2.Filter, Name: "WhiteSpace", Func: lotsOfSpaceHandler},
+		// {Order:3, Type: core2.Filter, Name: "WeirdOutput", Func: postWeirdOutputFilterHandler},
+		{Order: 4, Type: core2.Adder, Name: "SelfSpamming", Func: selfSpamHandler},
 	})
 }

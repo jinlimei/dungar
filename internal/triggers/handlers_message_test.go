@@ -16,11 +16,11 @@ func TestHandleMessage(t *testing.T) {
 
 	assert.NotNil(t, msgGroup)
 	msgGroup.SetMessageTriggers([]core2.MessageEvHandler{
-		{0, "UserSpammed", userSpammedHandler},
+		{Order: 0, Name: "UserSpammed", Func: userSpammedHandler},
 	})
 
 	msgGroup.SetResponseTriggers([]core2.ResponseEvHandler{
-		{0, core2.Filter, "GarbagePrefixes", removeGarbagePrefixedHandler},
+		{Order: 0, Type: core2.Filter, Name: "GarbagePrefixes", Func: removeGarbagePrefixedHandler},
 	})
 
 	rspEnveloper := incomingMessageHandler(&core2.IncomingMessage{

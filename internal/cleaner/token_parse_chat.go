@@ -168,7 +168,7 @@ func (t *Token) parseWordForChat(variant TokenVariant) []Token {
 					Value:    []rune{'.'},
 				})
 
-				pos = pos
+				//pos = pos
 				p1 = pos + 1
 			}
 

@@ -23,7 +23,7 @@ func initScheduleGroup() {
 	scheduleGroup = core2.NewScheduleTriggerGroup()
 
 	scheduleGroup.SetScheduleEvs([]*core2.ScheduleEvHandler{
-		{0, "OutputQueue", outputQueueScheduler, 1 * time.Second, 0},
-		{1, "Commentator", commentateScheduler, 6 * time.Hour, 0},
+		{Order: 0, Name: "OutputQueue", Func: outputQueueScheduler, RunTick: 1 * time.Second},
+		{Order: 1, Name: "Commentator", Func: commentateScheduler, RunTick: 6 * time.Hour},
 	})
 }
