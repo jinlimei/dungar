@@ -37,6 +37,7 @@ coverage-test:
   stage: tests
   script:
     - make coverage
+  coverage: '/total:\s+\(statements\)\s+\d+.\d+%/'
 
 deploy_local:
   image: gitlab.int.magneato.site:4567/dungar/test-image:latest
