@@ -3,10 +3,11 @@ PKG := "gitlab.int.magneato.site/dungar/${PROJECT_NAME}"
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
 GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
 GOPATH := $(shell go env GOPATH)
-CC := clang-15
-CXX := clang-15
+CC := clang-22
+CXX := clang-22
 
 export DCWD=$(shell pwd)
+export GOAMD64=v3
 
 .PHONY: all lint dep build clean test coverage coverage_html
 
@@ -14,7 +15,8 @@ export DCWD=$(shell pwd)
 all: build
 
 lint: dep ## Lint all the files
-	$(GOPATH)/bin/golint -set_exit_status ${PKG_LIST}
+	@go fix ${PKG_LIST}
+	@go vet ${PKG_LIST}
 
 test: ## Run tests
 	@go test -parallel 8 ${PKG_LIST}
