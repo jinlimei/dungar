@@ -8,6 +8,12 @@ stages:
  - tests
  - deploy
 
+golangci-lint:
+  image: gitlab.int.magneato.site:4567/dungar/test-image:latest
+  stage: tests
+  script:
+    - make ci_lint
+
 go-vet:
   image: gitlab.int.magneato.site:4567/dungar/test-image:latest
   stage: tests

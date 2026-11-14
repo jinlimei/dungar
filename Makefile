@@ -9,9 +9,16 @@ CXX := clang-22
 export DCWD=$(shell pwd)
 export GOAMD64=v3
 
-.PHONY: all fix vet dep build clean test coverage coverage_html
+.PHONY: all dep build fix vet ci_lint lint slim_lint test race msan coverage coverage_html cli_test clean help
 
 all: build
+
+dep: ## Get the dependencies
+	@go mod download
+	@go mod verify
+
+build: dep ## Build the binary file
+	@go build -o bin/dungar -compiler gc -ldflags="-s -w" cmd/dungar/*.go
 
 fix: dep
 	@go fix ${PKG_LIST}
@@ -19,6 +26,15 @@ fix: dep
 
 vet: dep ## go vet
 	@go vet ${PKG_LIST}
+
+ci_lint: dep ## golangci-lint
+	@golangci-lint run --max-issues-per-linter 0 --max-same-issues 0 --output.code-climate.path=gl-code-quality-report.json
+
+lint: dep ## golangci-lint
+	@golangci-lint run --max-issues-per-linter 0 --max-same-issues 0
+
+slim_lint: dep ## golangci-lint
+	@golangci-lint run --max-issues-per-linter 0 --max-same-issues 0 --new
 
 test: ## Run tests
 	@go test -parallel 8 ${PKG_LIST}
@@ -34,13 +50,6 @@ coverage: ## Generate global code coverage report
 
 coverage_html:
 	@bash ./tools/coverage.sh html;
-
-dep: ## Get the dependencies
-	@go mod download
-	@go mod verify
-
-build: dep ## Build the binary file
-	@go build -o bin/dungar -compiler gc -ldflags="-s -w" cmd/dungar/*.go
 
 cli_test: ## Test on the CLI
 	@docker compose up --force-recreate --remove-orphans --build
