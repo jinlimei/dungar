@@ -29,5 +29,8 @@ func logEvent(subj string, ts time.Time, ev any) {
 	logMessageEvNum++
 
 	log.Printf("[LOG MESSAGE EVENT] name=%s", name)
-	os.WriteFile(name, jsn, 0664)
+	err := os.WriteFile(name, jsn, 0664)
+	if err != nil {
+		log.Printf("[LOG MESSAGE EVENT] failed to write to file '%s': %v", name, err)
+	}
 }
