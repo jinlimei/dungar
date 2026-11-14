@@ -89,7 +89,7 @@ func TestPickOption4(t *testing.T) {
 func TestPickOption(t *testing.T) {
 	results := make(map[string]int, 0)
 
-	for i := 0; i < 50000; i++ {
+	for range 50000 {
 		opt := pickOptionHandler("a or b?", "")
 
 		count, ok := results[opt]

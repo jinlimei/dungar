@@ -94,7 +94,7 @@ func TestHandlerOtherTriggersInChain(t *testing.T) {
 	svc := initMockServices()
 	msg := makeMessage("mercy", "george", "main")
 
-	for k := 0; k < 25; k++ {
+	for range 25 {
 		random.UseTimeBasedSeed()
 
 		iters := 0

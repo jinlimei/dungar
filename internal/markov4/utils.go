@@ -3,6 +3,7 @@ package markov4
 import (
 	"encoding/binary"
 	"hash/crc64"
+	"slices"
 	"strings"
 )
 
@@ -22,16 +23,16 @@ var repl = strings.NewReplacer(
 
 func cleanWordTrimFunc(r rune) bool {
 	return r == '\\' ||
-			r == ',' ||
-			r == ':' ||
-			r == '/' ||
-			r == '"' ||
-			r == ' ' ||
-			r == '‘' ||
-			r == '’' ||
-			r == '“' ||
-			r == '”' ||
-			r == '\''
+		r == ',' ||
+		r == ':' ||
+		r == '/' ||
+		r == '"' ||
+		r == ' ' ||
+		r == '‘' ||
+		r == '’' ||
+		r == '“' ||
+		r == '”' ||
+		r == '\''
 }
 
 func cleanWord(w string) string {
@@ -46,8 +47,8 @@ func reverseTokenIDs(arr []TokenID) []TokenID {
 
 	fwd := 0
 
-	for rev := len(arr) - 1; rev >= 0; rev-- {
-		out[fwd] = arr[rev]
+	for _, a := range slices.Backward(arr) {
+		out[fwd] = a
 		fwd++
 	}
 

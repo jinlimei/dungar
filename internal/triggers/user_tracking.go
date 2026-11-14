@@ -62,13 +62,13 @@ func userTrackingHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core
 			return core2.MakeSingleRsp("No top posters, lol y'all suck")
 		}
 
-		out := ""
-		for pos := 0; pos < len(posters); pos++ {
+		var out strings.Builder
+		for pos := range posters {
 			poster := posters[pos]
-			out += fmt.Sprintf("%02d: %s with %d posts\n", pos+1, poster.Nick, poster.MessageCount)
+			out.WriteString(fmt.Sprintf("%02d: %s with %d posts\n", pos+1, poster.Nick, poster.MessageCount))
 		}
 
-		return core2.MakeSingleRsp(out)
+		return core2.MakeSingleRsp(out.String())
 	}
 
 	return core2.EmptyRsp()

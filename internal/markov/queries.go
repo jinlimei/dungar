@@ -145,13 +145,13 @@ func lookupStatesByIDs(ids []int64, con db.QueryAble) string {
 		words[id] = word
 	}
 
-	output := ""
+	var output strings.Builder
 
 	for _, id := range ids {
-		output += words[id] + " "
+		output.WriteString(words[id] + " ")
 	}
 
-	return strings.TrimSpace(output)
+	return strings.TrimSpace(output.String())
 }
 
 func queryChainCount(frag *fragment, source, target string, con db.QueryAble) int64 {

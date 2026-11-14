@@ -10,12 +10,12 @@ type TokenList struct {
 
 // String provides the raw values back at the user (rebuilt)
 func (tl *TokenList) String() string {
-	out := ""
+	var out strings.Builder
 	for _, t := range tl.tokens {
-		out += string(t.Value)
+		out.WriteString(string(t.Value))
 	}
 
-	return out
+	return out.String()
 }
 
 // TokenStr returns the list of tokens in a string (delimited by space)

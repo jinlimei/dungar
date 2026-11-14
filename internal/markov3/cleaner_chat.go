@@ -239,12 +239,12 @@ func (tl *TokenList) RawString() string {
 
 // String outputs all the chat tokens values
 func (tl *TokenList) String() string {
-	output := ""
+	var output strings.Builder
 	for _, token := range tl.Tokens {
-		output += string(token.Value)
+		output.WriteString(string(token.Value))
 	}
 
-	return output
+	return output.String()
 }
 
 // MarkovConsumable provides a list of tokens that make

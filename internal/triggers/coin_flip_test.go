@@ -54,7 +54,7 @@ func TestCoinFlipHandlerOdds(t *testing.T) {
 	tails := 0
 	sides := 0
 
-	for i := 0; i < 1000; i++ {
+	for range 1000 {
 		rsp := coinFlipHandler(svc, msg)
 
 		if strings.Contains(rsp[0].Contents, "heads") {

@@ -5,7 +5,8 @@ import (
 	"encoding/json"
 	"gitlab.int.magneato.site/dungar/prototype/internal/db"
 	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
-	"io/ioutil"
+	"os"
+
 	"log"
 	"strings"
 	"time"
@@ -31,7 +32,7 @@ type fragment struct {
 func ReconstructFragments(file string) {
 	var cfg *config
 
-	rawc, err := ioutil.ReadFile(file)
+	rawc, err := os.ReadFile(file)
 	utils.HaltingError("ReconstructFragments,readfile", err)
 
 	err = json.Unmarshal(rawc, &cfg)
@@ -64,7 +65,6 @@ func ReconstructFragments(file string) {
 		for _, frag := range frags {
 			tmp = append(tmp, words[frag.CWordID])
 		}
-
 
 		//fmt.Printf("Words: %d\n", len(tmp))
 		//fmt.Println(strings.Join(tmp, " "))

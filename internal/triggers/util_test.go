@@ -21,7 +21,7 @@ func TestPickWeightedChoice(t *testing.T) {
 
 	results := make(map[string]int, 3)
 
-	for i := 0; i < 10000; i++ {
+	for range 10000 {
 		name := pickWeightedChoice(choices)
 
 		count, there := results[name]

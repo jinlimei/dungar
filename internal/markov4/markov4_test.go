@@ -58,7 +58,7 @@ func zTestDonaldTrump(t *testing.T) {
 
 	random.UseTimeBasedSeed()
 
-	for k := 0; k < 10; k++ {
+	for range 10 {
 		sentence := mt.Generate("Hillary")
 
 		fmt.Println(sentence)

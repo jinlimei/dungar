@@ -12,7 +12,7 @@ func TestAdvancedControl_Execute(t *testing.T) {
 		ctrl AdvancedControl
 	)
 
-	for k := 0; k < 100; k++ {
+	for range 100 {
 		UseTestSeed()
 
 		ctrl = AdvancedControl{
@@ -65,7 +65,7 @@ func TestAdvancedControl_Execute(t *testing.T) {
 func TestAdvancedControl_ExecuteIncrement(t *testing.T) {
 	now := time.Now()
 
-	for k := 0; k < 5; k++ {
+	for range 5 {
 		UseTestSeed()
 
 		ctrl := AdvancedControl{
@@ -124,7 +124,7 @@ func TestAdvancedControl_ExecuteIncrement(t *testing.T) {
 
 func TestAdvancedControl_ToAnalytics(t *testing.T) {
 	var (
-		exID = "foo"
+		exID   = "foo"
 		chance = 0.42069
 	)
 

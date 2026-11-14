@@ -9,7 +9,7 @@ func normalizeWordList(words []string) []string {
 	handleWord := func(w string) int {
 		_, ok := occurrences[w]
 
-		if ! ok {
+		if !ok {
 			occurrences[w] = 1
 			return 0
 		}
@@ -45,7 +45,7 @@ func makeChains(words []string) [][]string {
 
 	output := make([][]string, 0)
 
-	for i := 0; i < wordLen; i++ {
+	for i := range wordLen {
 		output = append(output, []string{
 			wordAt(i - 1),
 			words[i],

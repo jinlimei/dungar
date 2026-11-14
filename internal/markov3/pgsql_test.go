@@ -20,7 +20,7 @@ func zTestMarkovLearnFromRawMessages(t *testing.T) {
 	m := MakeMarkov("")
 	m.LearnFromRawMessagesM1()
 
-	for k := 0; k < 50; k++ {
+	for k := range 50 {
 		log.Printf("%02d: %s\n", k, m.Generate("genius"))
 	}
 

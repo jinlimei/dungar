@@ -72,7 +72,7 @@ func coinFlipHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Re
 		sides = 0
 	)
 
-	for k := 0; k < intNum; k++ {
+	for range intNum {
 		if fromDefinedChance("coinFlipHandler--sides", sideChance) {
 			sides++
 		} else if fromBasicChance("coinFlipHandler--flip") {

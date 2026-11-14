@@ -28,8 +28,6 @@ func ProtocolRunner() {
 	log.Printf("Protocol Mode: %s", utils.ProtocolMode())
 
 	switch utils.ProtocolMode() {
-	case "slack":
-		driver = SlackRunner()
 	case "discord":
 		driver = DiscordRunner()
 	default:

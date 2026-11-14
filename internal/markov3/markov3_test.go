@@ -66,7 +66,7 @@ func zTestDonaldTrump(t *testing.T) {
 	random.UseTimeBasedSeed()
 
 	var ids []MarkovID
-	for k := 0; k < 3; k++ {
+	for range 3 {
 		ids = mt.GenerateGraph(vars[random.Int(len(vars))])
 		//assert.True(t, len(ids) > 0)
 		fmt.Println(strings.TrimSpace(strings.Join(mt.WordIDsToWords(ids), " ")))

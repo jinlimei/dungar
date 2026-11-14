@@ -6,6 +6,6 @@ import (
 )
 
 // GetFunctionName will do some fancy reflection stuff and grab the function name
-func GetFunctionName(a interface{}) string {
+func GetFunctionName(a any) string {
 	return runtime.FuncForPC(reflect.ValueOf(a).Pointer()).Name()
 }

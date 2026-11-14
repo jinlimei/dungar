@@ -53,7 +53,7 @@ func fortuneHandler(msg *core2.IncomingMessage) []*core2.Response {
 		return core2.MakeSingleRsp("I'm not a fortune teller maybe go outside or something idk")
 	}
 
-	for limit := 0; limit < 10; limit++ {
+	for range 10 {
 		id := random.Int(fortuneLen)
 		fortune := fortunes[id]
 

@@ -1,5 +1,7 @@
 package utils
 
+import "slices"
+
 // JoinInt64s will take all parameters of []int64 and return a map of them in the exact order.
 func JoinInt64s(data ...[]int64) []int64 {
 	out := make([]int64, 0)
@@ -18,8 +20,8 @@ func ReverseInt64s(arr []int64) []int64 {
 	rev := make([]int64, len(arr))
 
 	k := 0
-	for i := len(arr) - 1; i >= 0; i-- {
-		rev[k] = arr[i]
+	for _, a := range slices.Backward(arr) {
+		rev[k] = a
 		k++
 	}
 

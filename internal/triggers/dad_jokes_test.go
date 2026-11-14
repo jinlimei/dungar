@@ -131,7 +131,7 @@ func TestDadJokeHandler(t *testing.T) {
 	})
 
 	nutshellCount := 0
-	for k := 0; k < 10; k++ {
+	for range 10 {
 		lastDadJoke = time.Now().Add(-24 * time.Hour)
 		rsp = dadJokeHandler(msg)
 

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"regexp"
+	"slices"
 	"strings"
 	"unicode"
 )
@@ -103,13 +104,7 @@ func StringInSlice(str string, slice []string) bool {
 		return true
 	}
 
-	for _, msg := range slice {
-		if msg == str {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(slice, str)
 }
 
 // CleanSpaces will remove all double spaces.

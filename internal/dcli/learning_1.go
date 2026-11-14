@@ -4,7 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"gitlab.int.magneato.site/dungar/prototype/internal/learning"
-	"io/ioutil"
+	"os"
+
 	"log"
 	"time"
 
@@ -30,7 +31,7 @@ func M1LearnFile(file string) {
 		start = time.Now()
 	)
 
-	bytes, err = ioutil.ReadFile(file)
+	bytes, err = os.ReadFile(file)
 
 	utils.HaltingError("M1LearnFile", err)
 

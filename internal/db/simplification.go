@@ -13,13 +13,13 @@ var ErrNoDBConnection = errors.New("no connection to database")
 
 // QueryAble is our interface for working with either a db connection or a transaction
 type QueryAble interface {
-	QueryRow(query string, data ...interface{}) *sql.Row
-	Query(query string, data ...interface{}) (*sql.Rows, error)
-	Exec(query string, data ...interface{}) (sql.Result, error)
+	QueryRow(query string, data ...any) *sql.Row
+	Query(query string, data ...any) (*sql.Rows, error)
+	Exec(query string, data ...any) (sql.Result, error)
 	Prepare(query string) (*sql.Stmt, error)
 }
 
-func isQueryAbleNil (inp QueryAble) bool {
+func isQueryAbleNil(inp QueryAble) bool {
 	switch it := inp.(type) {
 	case *sql.DB:
 		return it == nil
@@ -42,22 +42,22 @@ func useGlobalIfNil(incoming QueryAble) QueryAble {
 }
 
 // ConQueryRow is QueryRow ran on the standard connection
-func ConQueryRow(query string, data ...interface{}) *sql.Row {
+func ConQueryRow(query string, data ...any) *sql.Row {
 	return QueryRow(GetDatabase(), query, data...)
 }
 
 // ConQuery is Query ran on the standard connection
-func ConQuery(query string, data ...interface{}) (*sql.Rows, error) {
+func ConQuery(query string, data ...any) (*sql.Rows, error) {
 	return Query(GetDatabase(), query, data...)
 }
 
 // ConMustQuery is ConQuery which *must* execute (error will halt)
-func ConMustQuery(query string, data ...interface{}) *sql.Rows {
+func ConMustQuery(query string, data ...any) *sql.Rows {
 	return MustQuery(GetDatabase(), query, data...)
 }
 
 // QueryRow runs QueryRow on intf or global
-func QueryRow(intf QueryAble, query string, data ...interface{}) *sql.Row {
+func QueryRow(intf QueryAble, query string, data ...any) *sql.Row {
 	iv := useGlobalIfNil(intf)
 
 	if isQueryAbleNil(iv) {
@@ -68,7 +68,7 @@ func QueryRow(intf QueryAble, query string, data ...interface{}) *sql.Row {
 }
 
 // Query runs Query on intf or global
-func Query(intf QueryAble, query string, data ...interface{}) (*sql.Rows, error) {
+func Query(intf QueryAble, query string, data ...any) (*sql.Rows, error) {
 	iv := useGlobalIfNil(intf)
 
 	if isQueryAbleNil(iv) {
@@ -79,7 +79,7 @@ func Query(intf QueryAble, query string, data ...interface{}) (*sql.Rows, error)
 }
 
 // MustQuery runs Query on intf or global, and will halt on error
-func MustQuery(intf QueryAble, query string, data ...interface{}) *sql.Rows {
+func MustQuery(intf QueryAble, query string, data ...any) *sql.Rows {
 	iv := useGlobalIfNil(intf)
 
 	if isQueryAbleNil(iv) {
@@ -95,12 +95,12 @@ func MustQuery(intf QueryAble, query string, data ...interface{}) *sql.Rows {
 }
 
 // ConExec is like Exec but operates on the singleton DB
-func ConExec(query string, data ...interface{}) (sql.Result, error) {
+func ConExec(query string, data ...any) (sql.Result, error) {
 	return Exec(GetDatabase(), query, data...)
 }
 
 // Exec executes on intf or global if nil
-func Exec(intf QueryAble, query string, data ...interface{}) (sql.Result, error) {
+func Exec(intf QueryAble, query string, data ...any) (sql.Result, error) {
 	iv := useGlobalIfNil(intf)
 
 	if isQueryAbleNil(iv) {
@@ -111,12 +111,12 @@ func Exec(intf QueryAble, query string, data ...interface{}) (sql.Result, error)
 }
 
 // ConMustExec runs MustExec on the default connection, and will halt program if error
-func ConMustExec(query string, data ...interface{}) sql.Result {
+func ConMustExec(query string, data ...any) sql.Result {
 	return MustExec(GetDatabase(), query, data...)
 }
 
 // MustExec runs on intf or global if nil, and will halt on execute
-func MustExec(intf QueryAble, query string, data ...interface{}) sql.Result {
+func MustExec(intf QueryAble, query string, data ...any) sql.Result {
 	iv := useGlobalIfNil(intf)
 
 	if isQueryAbleNil(iv) {

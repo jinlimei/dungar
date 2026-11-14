@@ -2,6 +2,7 @@ package markov
 
 import (
 	"log"
+	"slices"
 	"strings"
 	"time"
 
@@ -28,7 +29,6 @@ func splitDirection(dir string) (string, string) {
 
 func buildGlobalWordList() {
 	regenerate := false
-
 
 	if retrievedThings < 0 && (normalizedWords == nil || len(normalizedWords) == 0) {
 		log.Println("normalizedWords is nil or empty")
@@ -113,7 +113,7 @@ func followFragmentChain(fragment *fragment, destination string) []int64 {
 
 	source, target := splitDirection(destination)
 
-	for i := 0; i < maxChainDistance; i++ {
+	for range maxChainDistance {
 		frag = queryChain(frag, source, target, nil)
 
 		if frag == nil {
@@ -168,11 +168,5 @@ func isJoinerWord(word string) bool {
 
 	word = strings.ToLower(word)
 
-	for _, val := range joinerWords() {
-		if val == word {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(joinerWords(), word)
 }

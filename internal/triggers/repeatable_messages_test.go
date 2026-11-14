@@ -39,7 +39,7 @@ func TestHandleRepeatable(t *testing.T) {
 	masterChanceList["repeatableHandler--fingerGuns"] = 0.80
 	masterChanceList["repeatableHandler--basic"] = 0.80
 
-	for k := 0; k < 50; k++ {
+	for range 50 {
 		rsp := repeatableHandler(msg)
 		if len(rsp) == 0 || rsp[0].IsEmpty() {
 			continue

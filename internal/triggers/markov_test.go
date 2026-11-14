@@ -82,7 +82,7 @@ func TestMarkovHandler(t *testing.T) {
 	msg.Contents = "!markov get-version"
 
 	hasNotYou := false
-	for k := 0; k < 50; k++ {
+	for range 50 {
 		rsp = markovSettingHandler(msg)
 
 		if strings.Contains(rsp[0].Contents, "TOUCH") {

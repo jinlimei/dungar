@@ -107,10 +107,10 @@ func markovExtendedHandler(svc *core2.Service, msg *core2.IncomingMessage) []*co
 		buildAlternativeMarkovs()
 	}
 
-	offerings := ""
+	var offerings strings.Builder
 	for title, mkv := range altMarkovs {
 		title = strings.ReplaceAll(title, "_", " ")
-		offerings += title + "\n"
+		offerings.WriteString(title + "\n")
 		log.Printf("checking input '%s' against '%s'\n",
 			msg.Lowered(), title)
 
@@ -120,7 +120,7 @@ func markovExtendedHandler(svc *core2.Service, msg *core2.IncomingMessage) []*co
 	}
 
 	if time.Now().Unix()-lastSentOfferings > 1800 {
-		return core2.MakeSingleRsp("I can tell you about:\n" + offerings)
+		return core2.MakeSingleRsp("I can tell you about:\n" + offerings.String())
 	}
 
 	return core2.EmptyRsp()

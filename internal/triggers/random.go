@@ -25,12 +25,12 @@ func randomHandler(msg *core2.IncomingMessage) []*core2.Response {
 	if strings.HasPrefix(msg.Lowered(), "!analytics") {
 		basicAnalytics := basic.Analytics()
 
-		rsp := ""
+		var rsp strings.Builder
 		for _, data := range basicAnalytics {
-			rsp += data.String() + "\n"
+			rsp.WriteString(data.String() + "\n")
 		}
 
-		return core2.MakeSingleRsp(rsp)
+		return core2.MakeSingleRsp(rsp.String())
 	}
 
 	return core2.EmptyRsp()

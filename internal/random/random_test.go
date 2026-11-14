@@ -41,7 +41,7 @@ func TestRandomlyTrue(t *testing.T) {
 		whenTrue = 0
 		whenFalse = 0
 
-		for k := 0; k < 1_000_000; k++ {
+		for range 1_000_000 {
 			if fnc(weight) {
 				whenTrue++
 			} else {
@@ -111,7 +111,7 @@ func TestRandomlyTrueAsACoinFlip(t *testing.T) {
 	whenTrue := 0
 	whenFalse := 0
 
-	for i := 0; i < 50000; i++ {
+	for range 50000 {
 		if legacyRandomlyTrue(0.50) {
 			whenTrue++
 		} else {
@@ -132,7 +132,7 @@ func TestInt64Range(t *testing.T) {
 	assert.True(t, val < 100)
 	assert.True(t, val > 0)
 
-	for i := 0; i < 100; i++ {
+	for range 100 {
 		val = Int64Range(6000, 25000)
 		assert.True(t, val > 6000)
 		assert.True(t, val < 25000)

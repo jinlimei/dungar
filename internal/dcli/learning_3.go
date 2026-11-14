@@ -7,7 +7,6 @@ import (
 	"gitlab.int.magneato.site/dungar/prototype/internal/learning"
 	"gitlab.int.magneato.site/dungar/prototype/internal/markov3"
 	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -60,7 +59,7 @@ func M3LearnCleaned(id, file string, makeFile bool) {
 
 	if makeFile {
 		out := markov.Serialize()
-		err = ioutil.WriteFile(fmt.Sprintf("%s.markov.gob", id), out, 0664)
+		err = os.WriteFile(fmt.Sprintf("%s.markov.gob", id), out, 0664)
 
 		if err != nil {
 			log.Fatalf("Failed to write gob: %v\n", err)
@@ -89,7 +88,7 @@ func M3LearnBook(id, file string, makeFile bool) {
 		start = time.Now()
 	)
 
-	bytes, err = ioutil.ReadFile(file)
+	bytes, err = os.ReadFile(file)
 	utils.HaltingError("M3LearnBook", err)
 
 	file = strings.ReplaceAll(file, "\\", "/")
@@ -119,7 +118,7 @@ func M3LearnBook(id, file string, makeFile bool) {
 
 	if makeFile {
 		out := markov.Serialize()
-		err = ioutil.WriteFile(fmt.Sprintf("%s.markov.gob", id), out, 0664)
+		err = os.WriteFile(fmt.Sprintf("%s.markov.gob", id), out, 0664)
 
 		if err != nil {
 			log.Fatalf("Failed to write gob: %v\n", err)

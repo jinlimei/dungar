@@ -16,7 +16,7 @@ func TestSauceQuestionsHandler(t *testing.T) {
 	masterChanceList["sauceQuestionsHandler--consume"] = 0.60
 
 	handled := false
-	for k := 0; k < 30; k++ {
+	for range 30 {
 		out := sauceQuestionsHandler(msg)
 		if len(out) > 0 && out[0].HandledMessage {
 			handled = true

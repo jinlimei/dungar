@@ -1,13 +1,14 @@
 package utils
 
 import (
-	"io/ioutil"
+	"io"
+
 	"net/http"
 )
 
 func retrieveRequestBody(res *http.Response) ([]byte, error) {
 	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 
 	if err != nil {
 		return nil, err

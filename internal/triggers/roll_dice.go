@@ -63,7 +63,7 @@ func generateDiceRolls(matchGroup []string, diceRolls, diceSize int) string {
 	//spew.Dump(matchGroup)
 	rolls := make([]int, 0)
 
-	for k := 0; k < diceRolls; k++ {
+	for range diceRolls {
 		val := random.Int(diceSize) + 1
 		rolls = append(rolls, val)
 	}
@@ -81,21 +81,18 @@ func generateDiceRolls(matchGroup []string, diceRolls, diceSize int) string {
 
 		if matchGroup[4][0] == 'h' || matchGroup[4][0] == 'H' {
 			pos := len(rolls) - 1
-			for x := 0; x < lim; x++ {
+			for range lim {
 				nRolls = append(nRolls, rolls[pos])
 				pos--
 			}
 		} else if matchGroup[4][0] == 'l' || matchGroup[4][0] == 'L' {
-			for x := 0; x < lim; x++ {
+			for x := range lim {
 				nRolls = append(nRolls, rolls[x])
 			}
 		} else {
-			midStart := int(len(rolls)/2) - lim
-			if midStart < 0 {
-				midStart = 0
-			}
+			midStart := max(int(len(rolls)/2)-lim, 0)
 
-			for x := 0; x < lim; x++ {
+			for x := range lim {
 				nRolls = append(nRolls, rolls[midStart+x])
 			}
 		}

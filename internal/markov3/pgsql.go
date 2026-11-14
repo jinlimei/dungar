@@ -61,7 +61,7 @@ func spaceCount(s string) int {
 		cn = 0
 	)
 
-	for k := 0; k < len(rs); k++ {
+	for k := range rs {
 		if rs[k] == ' ' {
 			cn++
 		}

@@ -1,7 +1,8 @@
 package dcli
 
 import (
-	"io/ioutil"
+	"os"
+
 	"log"
 	"strings"
 
@@ -14,7 +15,7 @@ import (
 func ImportFortunes(file string) {
 	DBConnect()
 
-	data, err := ioutil.ReadFile(file)
+	data, err := os.ReadFile(file)
 	utils.HaltingError("ImportFortunes()", err)
 
 	fortunes := strings.Split(string(data), "\n%\n")
@@ -69,4 +70,3 @@ func insertFortune(fortune string) bool {
 	db.ConMustExec(query, fortune)
 	return true
 }
-

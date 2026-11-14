@@ -10,7 +10,7 @@ import (
 
 var logMessageEvNum = 0
 
-func logEvent(subj string, ts time.Time, ev interface{}) {
+func logEvent(subj string, ts time.Time, ev any) {
 	if ev == nil {
 		return
 	}

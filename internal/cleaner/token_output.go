@@ -1,5 +1,7 @@
 package cleaner
 
+import "slices"
+
 // SimpleToken is a simplified struct of Token which is useful for ingesting
 // into Markov3 and maybe other things.
 type SimpleToken struct {
@@ -130,11 +132,5 @@ func isWordConsumableToken(tt TokenType) bool {
 		TokenCommand,
 	}
 
-	for _, vt := range valid {
-		if tt == vt {
-			return true
-		}
-	}
-
-	return false
+	return slices.Contains(valid, tt)
 }

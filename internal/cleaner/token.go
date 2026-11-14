@@ -180,7 +180,7 @@ func isNumeric(r []rune) bool {
 		numCount = 0
 	)
 
-	for k := 0; k < len(r); k++ {
+	for k := range r {
 		switch r[k] {
 		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '%':
 			numCount++
@@ -196,7 +196,7 @@ func isMaybeTimestamp(r []rune) bool {
 		numCount = 0
 	)
 
-	for k := 0; k < len(r); k++ {
+	for k := range r {
 		switch r[k] {
 		case ':':
 			colCount++

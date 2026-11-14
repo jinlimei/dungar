@@ -136,7 +136,7 @@ func isAbbreviation(s string) bool {
 	for _, abbr := range abbreviations {
 		if len(abbr) == len(word) {
 			matched := true
-			for k := 0; k < len(word); k++ {
+			for k := range word {
 				if word[k] != abbr[k] {
 					matched = false
 					break

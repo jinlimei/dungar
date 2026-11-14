@@ -34,7 +34,7 @@ func TestWhenWillHandler(t *testing.T) {
 	hasAlways := false
 	hasNow := false
 
-	for i := 0; i < 150; i++ {
+	for range 150 {
 		val := whenWillHandler("", "")
 		assert.NotEmpty(t, val)
 

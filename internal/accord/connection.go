@@ -7,7 +7,7 @@ import (
 
 // DiscordHandlerFn is the signature for discord handler functions
 // type DiscordHandlerFn func(s *discordgo.Session, ev any)
-type DiscordHandlerFn interface{}
+type DiscordHandlerFn any
 
 // DiscordConnection is the interface to be based on for RealDiscordConnection
 // and for a mock connection

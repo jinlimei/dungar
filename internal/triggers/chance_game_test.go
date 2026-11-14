@@ -45,7 +45,7 @@ func TestChanceGameHandler(t *testing.T) {
 		fmt.Sprintf("Rsp: %s", rsp[0].Contents))
 
 	hasEmpty := false
-	for k := 0; k < 50; k++ {
+	for range 50 {
 		rsp = chanceGameHandler(svc, msg)
 
 		if rsp[0].IsEmpty() {
@@ -71,7 +71,7 @@ func TestChanceTable(t *testing.T) {
 	result := make(map[string]int, 0)
 
 	choice := ""
-	for i := 0; i < 10000; i++ {
+	for range 10000 {
 		choice = pickWeightedChoice(chanceTable)
 
 		resp, ok := result[choice]

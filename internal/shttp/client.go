@@ -2,7 +2,8 @@ package shttp
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
+
 	"log"
 	"net/http"
 	tracer "net/http/httptrace"
@@ -86,7 +87,7 @@ func (h *HTTP) Request(sReq *SimpleRequest) (*SimpleResponse, error) {
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(rsp.Body)
+	body, err := io.ReadAll(rsp.Body)
 	if err != nil {
 		return nil, err
 	}

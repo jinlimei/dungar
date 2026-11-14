@@ -43,8 +43,9 @@ func parseDiscordMessage(msg *discordgo.Message) *core2.ParsedMessage {
 	return parsed
 }
 
+//go:fix inline
 func ptr(s string) *string {
-	return &s
+	return new(s)
 }
 
 func parseDiscordPiece(piece string) []core2.MessageToken {
@@ -139,13 +140,13 @@ func parseDiscordPiece(piece string) []core2.MessageToken {
 					tokens = append(tokens, core2.MessageToken{
 						Token: value,
 						Type:  tokenType,
-						Value: ptr(value[skip : len(value)-1]),
+						Value: new(value[skip : len(value)-1]),
 					})
 				case '#':
 					tokens = append(tokens, core2.MessageToken{
 						Token: value,
 						Type:  core2.TokenChanID,
-						Value: ptr(value[2 : len(value)-1]),
+						Value: new(value[2 : len(value)-1]),
 					})
 				case ':':
 					next := find(value, ':', 2)
@@ -155,8 +156,8 @@ func parseDiscordPiece(piece string) []core2.MessageToken {
 					tokens = append(tokens, core2.MessageToken{
 						Token:    value,
 						Type:     core2.TokenEmoticon,
-						Override: ptr(value[1 : next+1]),
-						Value:    ptr(value[1 : len(value)-1]),
+						Override: new(value[1 : next+1]),
+						Value:    new(value[1 : len(value)-1]),
 					})
 				}
 			}
@@ -170,7 +171,7 @@ func parseDiscordPiece(piece string) []core2.MessageToken {
 }
 
 func (d *Driver) translateParsedMessage(serverID string, parsed *core2.ParsedMessage) string {
-	var out string
+	var out strings.Builder
 
 	//session := d.Con.GetSession()
 
@@ -178,36 +179,36 @@ func (d *Driver) translateParsedMessage(serverID string, parsed *core2.ParsedMes
 
 		switch token.Type {
 		case core2.TokenWord, core2.TokenSpace, core2.TokenURL:
-			out += token.Token
+			out.WriteString(token.Token)
 		case core2.TokenUserID:
 			name := d.GetUserName(*token.Value, serverID)
 
 			if name != "" {
-				out += "@" + name
+				out.WriteString("@" + name)
 			} else {
-				out += "@" + *token.Value
+				out.WriteString("@" + *token.Value)
 			}
 
 		case core2.TokenRoleID:
 			name := d.GetRoleName(*token.Value, serverID)
 
 			if name != "" {
-				out += "&" + name
+				out.WriteString("&" + name)
 			} else {
-				out += "&" + *token.Value
+				out.WriteString("&" + *token.Value)
 			}
 
 		case core2.TokenChanID:
 			name := d.GetChannelName(*token.Value, serverID)
 
 			if name != "" {
-				out += "#" + name
+				out.WriteString("#" + name)
 			} else {
-				out += "#" + *token.Value
+				out.WriteString("#" + *token.Value)
 			}
 
 		case core2.TokenEmoticon:
-			out += *token.Override
+			out.WriteString(*token.Override)
 
 		default:
 			db.LogIssue(
@@ -218,5 +219,5 @@ func (d *Driver) translateParsedMessage(serverID string, parsed *core2.ParsedMes
 		}
 	}
 
-	return out
+	return out.String()
 }

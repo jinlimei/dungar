@@ -1,6 +1,7 @@
 package markov3
 
 import (
+	"slices"
 	"strings"
 )
 
@@ -20,16 +21,16 @@ var repl = strings.NewReplacer(
 
 func cleanWordTrimFunc(r rune) bool {
 	return r == '\\' ||
-			r == ',' ||
-			r == ':' ||
-			r == '/' ||
-			r == '"' ||
-			r == ' ' ||
-			r == '‘' ||
-			r == '’' ||
-			r == '“' ||
-			r == '”' ||
-			r == '\''
+		r == ',' ||
+		r == ':' ||
+		r == '/' ||
+		r == '"' ||
+		r == ' ' ||
+		r == '‘' ||
+		r == '’' ||
+		r == '“' ||
+		r == '”' ||
+		r == '\''
 }
 
 func cleanWord(w string) string {
@@ -44,8 +45,8 @@ func reverseMarkovIDs(arr []MarkovID) []MarkovID {
 
 	fwd := 0
 
-	for rev := len(arr) - 1; rev >= 0; rev-- {
-		out[fwd] = arr[rev]
+	for _, a := range slices.Backward(arr) {
+		out[fwd] = a
 		fwd++
 	}
 

@@ -209,16 +209,16 @@ func legacyRandomlyTrue(weightOfTruth float64) bool {
 func MakeTime(min, max int64) string {
 
 	move := min + using().Int63n(max-min)
-	output := ""
+	var output strings.Builder
 
 	for pos, val := range valTable {
 		key := keyTable[pos]
 
 		if move/val > 0 {
-			output += fmt.Sprintf(" %d%s", move/val, key)
+			output.WriteString(fmt.Sprintf(" %d%s", move/val, key))
 			move -= val * (move / val)
 		}
 	}
 
-	return strings.TrimSpace(output)
+	return strings.TrimSpace(output.String())
 }

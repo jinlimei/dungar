@@ -28,7 +28,7 @@ var randSequences = []sequenceMessage{
 func (sm sequenceMessage) next(str string) string {
 	strLen := len(sm)
 
-	for i := 0; i < strLen; i++ {
+	for i := range strLen {
 		if sm[i] == str {
 			return sm[((i + 1) % strLen)]
 		}
@@ -40,7 +40,7 @@ func (sm sequenceMessage) next(str string) string {
 func (sm sequenceMessage) random(str string) string {
 	strLen := len(sm)
 
-	for i := 0; i < strLen; i++ {
+	for i := range strLen {
 		if sm[i] == str {
 			return random.PickString(sm)
 		}
