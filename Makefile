@@ -9,13 +9,15 @@ CXX := clang-22
 export DCWD=$(shell pwd)
 export GOAMD64=v3
 
-.PHONY: all lint dep build clean test coverage coverage_html
-
+.PHONY: all fix vet dep build clean test coverage coverage_html
 
 all: build
 
-lint: dep ## Lint all the files
+fix: dep
 	@go fix ${PKG_LIST}
+	@go vet -fix ${PKG_LIST}
+
+vet: dep ## go vet
 	@go vet ${PKG_LIST}
 
 test: ## Run tests
@@ -41,7 +43,7 @@ build: dep ## Build the binary file
 	@go build -o bin/dungar -compiler gc -ldflags="-s -w" cmd/dungar/*.go
 
 cli_test: ## Test on the CLI
-	@docker-compose up --force-recreate --remove-orphans --build
+	@docker compose up --force-recreate --remove-orphans --build
 
 clean: ## Remove previous build
 	@rm -f bin/dungar

@@ -8,11 +8,11 @@ stages:
  - tests
  - deploy
 
-linter:
+go-vet:
   image: gitlab.int.magneato.site:4567/dungar/test-image:latest
   stage: tests
   script:
-    - make lint
+    - make vet
 
 main-test:
   image: gitlab.int.magneato.site:4567/dungar/test-image:latest
