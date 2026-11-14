@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 
 PGPASSWORD=dungar_ci_test \
   psql -h postgres -U dungar_ci_test -d dungar_ci_test < ./infra/db/structure.sql
