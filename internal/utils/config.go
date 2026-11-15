@@ -125,7 +125,7 @@ func ProtocolMode() string {
 		return os.Getenv("DUNGAR_PROTOCOL_MODE")
 	}
 
-	return normalIniFile.Section("base").Key("mode").MustString("slack")
+	return normalIniFile.Section("base").Key("mode").MustString("discord")
 }
 
 // DiscordGuildName returns the guild name of the discord we're working with
@@ -144,34 +144,6 @@ func DiscordAccessToken() string {
 	}
 
 	return secretsIniFile.Section("discord").Key("token").String()
-}
-
-// SlackAccessToken will return the slack access token
-func SlackAccessToken() string {
-	if MustUseEnvVars() {
-		return os.Getenv("DUNGAR_USER_ACCESS_TOKEN")
-	}
-
-	return secretsIniFile.Section("slack").Key("bot_user_access_token").String()
-}
-
-// PinCredentials will return a map of the pin credentials
-func PinCredentials() map[string]string {
-	if MustUseEnvVars() {
-		return map[string]string{
-			"team": os.Getenv("DUNGAR_TEAM_ID"),
-			"auth": os.Getenv("DUNGAR_PINS_AUTH"),
-			"url":  os.Getenv("DUNGAR_PINS_URL"),
-		}
-	}
-
-	sect := secretsIniFile.Section("pins")
-
-	return map[string]string{
-		"team": secretsIniFile.Section("slack").Key("team_id").String(),
-		"auth": sect.Key("auth").String(),
-		"url":  sect.Key("url").String(),
-	}
 }
 
 // DatabaseCredentials will return a map of the database credentials
