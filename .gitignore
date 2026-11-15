@@ -1,5 +1,5 @@
 /.idea/
-/static_data.go
+/.vscode/
 /settings.ini
 /settings.*.ini
 /secrets.ini
