@@ -29,7 +29,7 @@ var alternativeOptionsForTwo = []weightedChoice{
 const pickOptionRegex = `:?\s*(.+\s+or\s+.+)\??`
 
 var (
-	splitterRegexp = regexp.MustCompile(`\s*(?:,?\\sor\\s|,)\s*`)
+	splitterRegexp = regexp.MustCompile(`\s*(?:,?\sor\s|,)\s*`)
 	directedToRgx  = regexp.MustCompile(`^(@[^:][^ ]+|[^:][^ ]+):?\s*`)
 )
 
