@@ -22,13 +22,6 @@ func LogIssue(issueType, title, contents string) {
 	log.Printf("[ISSUE ENCOUNTERED %s] %s, %s\n",
 		issueType, title, contents)
 
-	// utils.SentryMessage(fmt.Sprintf(
-	//	"[LogIssue] Type='%s', Title='%s', Contents='%s'",
-	//	issueType,
-	//	title,
-	//	contents,
-	// ), nil)
-
 	sql := `
 		INSERT INTO log_issues (issue_type, title, contents, created)
 		VALUES($1, $2, $3, CURRENT_TIMESTAMP)

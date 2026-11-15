@@ -92,12 +92,7 @@ func GenerateFromCon(word string, con db.QueryAble) string {
 
 	if frag == nil {
 		// something went horribly wrong
-		log.Println("Fragment was <nil> when it shouldn't be.")
-		// utils.SentryMessage(
-		//	"fragment <nil> when shouldn't be",
-		//	map[string]string{"loc": "GenerateFromCon"},
-		// )
-
+		log.Println("ERROR: Fragment was <nil> when it shouldn't be.")
 		return ""
 	}
 

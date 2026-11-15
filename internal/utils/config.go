@@ -101,15 +101,6 @@ func TryIniLoad(paths ...string) (*ini.File, bool) {
 	return cfg, true
 }
 
-// SentryDSN will return the DSN for sentry
-func SentryDSN() string {
-	if MustUseEnvVars() {
-		return os.Getenv("DUNGAR_SENTRY_DSN")
-	}
-
-	return secretsIniFile.Section("sentry").Key("dsn").String()
-}
-
 // PinsSqliteFile will return what the sqlite file is supposed to be
 func PinsSqliteFile() string {
 	if MustUseEnvVars() {

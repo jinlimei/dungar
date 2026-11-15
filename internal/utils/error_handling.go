@@ -1,9 +1,10 @@
 package utils
 
 import (
-	"github.com/davecgh/go-spew/spew"
 	"log"
 	"runtime/debug"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 // NonHaltingError is to record errors that don't require process halting, but
@@ -14,8 +15,6 @@ func NonHaltingError(loc string, err error) {
 	}
 
 	log.Print(spew.Sdump(err))
-	// TODO sentry-like error notification
-	//SentryError(err, map[string]string{"location": loc})
 
 	debug.PrintStack()
 	log.Printf("Error @ '%s': %v\n", loc, err.Error())
@@ -29,8 +28,6 @@ func HaltingError(loc string, err error) {
 
 	spew.Dump(err)
 
-	// TODO sentry-like error notification
-	//SentryError(err, map[string]string{"location": loc})
 	debug.PrintStack()
 	log.Panicf("Error @ '%s' %v\n", loc, err)
 }
