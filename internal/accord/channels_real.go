@@ -92,7 +92,7 @@ func (d *Driver) translateDiscordChannel(channel *discordgo.Channel) core2.Chann
 		Name:           channel.Name,
 		NameNormalized: strings.ToLower(channel.Name),
 		Topic:          channel.Topic,
-		Type:           d.translateDiscordChannelType(channel.Type),
+		Type:           d.translateDiscordChannelType(channel),
 		Archetype:      d.inferChannelArchetype(channel),
 		PreviousNames:  []string{},
 	}
@@ -110,8 +110,8 @@ func (d *Driver) inferChannelArchetype(channel *discordgo.Channel) string {
 	return "public"
 }
 
-func (d *Driver) translateDiscordChannelType(chanType discordgo.ChannelType) core2.ChannelType {
-	switch chanType {
+func (d *Driver) translateDiscordChannelType(channel *discordgo.Channel) core2.ChannelType {
+	switch channel.Type {
 	case discordgo.ChannelTypeDM:
 		return core2.ChannelDirectMessage
 
@@ -144,8 +144,10 @@ func (d *Driver) translateDiscordChannelType(chanType discordgo.ChannelType) cor
 
 	case discordgo.ChannelTypeGuildVoice, discordgo.ChannelTypeGuildStageVoice:
 		return core2.ChannelVoice
-	}
 
-	log.Printf("Unknown channel type '%d' provided", chanType)
-	panic("unknown channel type provided")
+	default:
+		log.Printf("UNKNOWN CHANNEL TYPE '%d' PROVIDED", channel.Type)
+		log.Printf("CHANNEL INFO: %+v", channel)
+		return core2.ChannelUnknown
+	}
 }
