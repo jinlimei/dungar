@@ -1,15 +1,15 @@
 package triggers
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 type sequenceMessage []string
 
 var funSequences = []sequenceMessage{
-	//{"oof", "ouch", "owie"},
-	//{"haha", "yes"},
+	// {"oof", "ouch", "owie"},
+	// {"haha", "yes"},
 	{"me", "too", "thanks"},
 	{"rip", ":rip:", ":911:", "F"},
 }

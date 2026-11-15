@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 func TestLastSeenHandler(t *testing.T) {
@@ -28,7 +28,7 @@ func TestLastSeenHandler(t *testing.T) {
 
 	msg = makeMessage("!top", "foo", "bar")
 	rsp = userTrackingHandler(svc, msg)
-	//spew.Dump(rsp[0].Contents)
+	// spew.Dump(rsp[0].Contents)
 	assert.Truef(t, strings.Contains(rsp[0].Contents, "01: foo with 2 posts"),
 		"Failed to get valid results for '!top', got '%+v' instead", rsp)
 }

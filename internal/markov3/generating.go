@@ -4,7 +4,7 @@ import (
 	"log"
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 // Generate provides a bit simpler methodology for
@@ -55,7 +55,7 @@ func (m *Markov) GenerateGraph(w MarkovID) []MarkovID {
 		return []MarkovID{}
 	}
 
-	//log.Printf("GenerateGraph(w=%d) fragment decided=%v\n", w, frag.String())
+	// log.Printf("GenerateGraph(w=%d) fragment decided=%v\n", w, frag.String())
 	return m.GenerateGraphFromFragment(frag)
 }
 
@@ -65,7 +65,7 @@ func (m *Markov) GenerateGraph(w MarkovID) []MarkovID {
 func (m *Markov) FollowChain(base Fragment, dest FragmentDestination) []MarkovID {
 	var ok bool
 
-	//log.Printf("\n\nFollowChain(base=%v), dest=%v\n\n", base.String(), dest)
+	// log.Printf("\n\nFollowChain(base=%v), dest=%v\n\n", base.String(), dest)
 
 	// ToRight -> source=LWord target=RWord
 	// ToLeft -> source=RWord target=LWord
@@ -108,16 +108,16 @@ func (m *Markov) NextChainLink(orig, cur Fragment, source, target WordType) (Fra
 	var centered []MarkovID
 	var ok bool
 
-	//log.Printf("NextChainLink: fragment=%s, source=%v, target=%v\n",
+	// log.Printf("NextChainLink: fragment=%s, source=%v, target=%v\n",
 	//	cur.String(), source, target)
 
 	if cur.GetWord(target) == LeftMost || cur.GetWord(target) == RightMost {
-		//log.Printf("CWord is LeftMost or RightMost, returning not-ok\n")
+		// log.Printf("CWord is LeftMost or RightMost, returning not-ok\n")
 		return Fragment{}, false
 	}
 
 	centered, ok = m.WordFragmentIDs(cur.GetWord(target))
-	//log.Printf("wordFragmentIDs for word %d from target %s: (ok? %v) %v\n", cur.GetWord(target), target, ok, centered)
+	// log.Printf("wordFragmentIDs for word %d from target %s: (ok? %v) %v\n", cur.GetWord(target), target, ok, centered)
 
 	if !ok {
 		return Fragment{}, false
@@ -125,15 +125,15 @@ func (m *Markov) NextChainLink(orig, cur Fragment, source, target WordType) (Fra
 
 	eligible := make([]*Fragment, 0)
 
-	//log.Printf("source: %s, target: %s", source, target)
-	//log.Printf("cur: %+v", cur.Words())
+	// log.Printf("source: %s, target: %s", source, target)
+	// log.Printf("cur: %+v", cur.Words())
 
 	for _, fragID := range centered {
 		frag := m.Fragments[fragID]
-		//log.Printf("Checking fragment %v (id: %d) for Word %d at source %s (which is %d)\n",
+		// log.Printf("Checking fragment %v (id: %d) for Word %d at source %s (which is %d)\n",
 		//	frag, fragID, cur.CWord, source, frag.GetWord(source))
 		if frag.Equals(orig) {
-			//log.Printf("Fragment (%s) matches original (%s)\n",
+			// log.Printf("Fragment (%s) matches original (%s)\n",
 			//	frag.String(), orig.String())
 			continue
 		}
@@ -150,7 +150,7 @@ func (m *Markov) NextChainLink(orig, cur Fragment, source, target WordType) (Fra
 		//                       ^^^^^
 
 		if frag.GetWord(source) == cur.CWord {
-			//log.Printf("Found Eligible Fragment: %s\n", frag.String())
+			// log.Printf("Found Eligible Fragment: %s\n", frag.String())
 			eligible = append(eligible, frag)
 		}
 	}
@@ -162,8 +162,8 @@ func (m *Markov) NextChainLink(orig, cur Fragment, source, target WordType) (Fra
 	randomCentered := centered[random.Int(len(centered))]
 
 	if totalEligible == 0 {
-		//log.Printf("NextChainLink could not find another eligible candidate, picking one at random!\n")
-		//next = *m.Fragments[randomCentered]
+		// log.Printf("NextChainLink could not find another eligible candidate, picking one at random!\n")
+		// next = *m.Fragments[randomCentered]
 		return Fragment{}, false
 	} else if totalEligible == 1 && m.PeekEligibility(*eligible[0], source, target) == 1 {
 		// We peaked at the eligibility count of the next link, and found it also to be one,

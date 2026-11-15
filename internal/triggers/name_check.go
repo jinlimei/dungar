@@ -1,6 +1,6 @@
 package triggers
 
-import "gitlab.int.magneato.site/dungar/prototype/library/core2"
+import "gitlab.int.magneato.site/dungar/dungar/library/core2"
 
 var nameOutMouthChoices = []weightedChoice{
 	{0.90, "get my name out of your mouth"},

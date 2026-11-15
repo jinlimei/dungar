@@ -7,10 +7,10 @@ import (
 	"os"
 	"time"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
-	"gitlab.int.magneato.site/dungar/prototype/internal/learning"
-	"gitlab.int.magneato.site/dungar/prototype/internal/markov3"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/learning"
+	"gitlab.int.magneato.site/dungar/dungar/internal/markov3"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 // M3LearnCleaned is a methodology for learning a "cleaned" file where each

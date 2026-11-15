@@ -2,7 +2,7 @@ package accord
 
 import (
 	"github.com/bwmarrin/discordgo"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func (d *Driver) handleReactionAdd(s *discordgo.Session, ev *discordgo.MessageReactionAdd) {

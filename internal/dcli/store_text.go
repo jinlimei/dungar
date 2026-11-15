@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 type metaInfo struct {

@@ -3,7 +3,7 @@ package markov4
 import (
 	"bytes"
 	"encoding/gob"
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 )
 
 // MarkovSpaceID is our "unique" id that we can pass to the MakeMarkov

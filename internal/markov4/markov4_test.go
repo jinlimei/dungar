@@ -7,8 +7,8 @@ import (
 	"os"
 	"testing"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 func TestLearning(t *testing.T) {
@@ -38,21 +38,21 @@ func TestLearningSubTokens(t *testing.T) {
 
 func zTestDonaldTrump(t *testing.T) {
 	read, err := os.OpenFile("../../infra/trump.txt", os.O_RDONLY, 0444)
-	//write, err := os.OpenFile("../../infra/trump.txt", os.O_CREATE|os.O_RDWR, 0644)
+	// write, err := os.OpenFile("../../infra/trump.txt", os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		log.Fatalf("Failed to open read: %+v\n", err)
 	}
 
 	defer read.Close()
-	//defer write.Close()
+	// defer write.Close()
 
 	scanner := bufio.NewScanner(read)
 	mt := MakeMarkov("")
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		//tw := CleanTweet(line, false)
-		//write.WriteString(tw.Cleaned + "\n")
+		// tw := CleanTweet(line, false)
+		// write.WriteString(tw.Cleaned + "\n")
 		mt.LearnStringVariant(line, cleaner.VariantTwitter)
 	}
 
@@ -64,14 +64,14 @@ func zTestDonaldTrump(t *testing.T) {
 		fmt.Println(sentence)
 	}
 
-	//words, total := mt.GenerateNextWord("will", "be")
+	// words, total := mt.GenerateNextWord("will", "be")
 	//
-	//justWords := make([]string, 0, len(words))
-	//for word, _ := range words {
+	// justWords := make([]string, 0, len(words))
+	// for word, _ := range words {
 	//	justWords = append(justWords, word)
-	//}
+	// }
 	//
-	//sort.Slice(justWords, func(i, j int) bool {
+	// sort.Slice(justWords, func(i, j int) bool {
 	//	iWord := justWords[i]
 	//	jWord := justWords[j]
 	//
@@ -80,9 +80,9 @@ func zTestDonaldTrump(t *testing.T) {
 	//	}
 	//
 	//	return true
-	//})
+	// })
 	//
-	//for _, word := range justWords {
+	// for _, word := range justWords {
 	//	stat := words[word]
 	//
 	//	if stat <= 1 {
@@ -90,18 +90,18 @@ func zTestDonaldTrump(t *testing.T) {
 	//	}
 	//
 	//	fmt.Printf("WORD '%s': %d out of %d (%f%%)\n", word, stat, total, (float64(stat)/float64(total))*100.0)
-	//}
+	// }
 
-	//w, ok := mt.TokenWord["hillary"]
-	//assert.True(t, ok)
+	// w, ok := mt.TokenWord["hillary"]
+	// assert.True(t, ok)
 	//
-	//var ids []TokenID
-	//for k := 0; k < 10; k++ {
+	// var ids []TokenID
+	// for k := 0; k < 10; k++ {
 	//	ids = mt.GenerateGraph(w)
 	//	assert.True(t, len(ids) > 0)
 	//	fmt.Println(strings.TrimSpace(strings.Join(mt.TokensToStrings(ids), " ")))
 	//	//spew.Dump(strings.Join(mt.WordIDsToWords(ids), " "))
 	//	//ids = mt.GenerateGraph( w )
 	//	//spew.Dump(strings.Join(mt.WordIDsToWords(ids), " "))
-	//}
+	// }
 }

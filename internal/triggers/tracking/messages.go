@@ -2,7 +2,7 @@ package tracking
 
 import (
 	"errors"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 // StoreMessage will store a raw core2.IncomingMessage by its message ID

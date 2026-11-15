@@ -1,6 +1,6 @@
 package markov
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/utils"
+import "gitlab.int.magneato.site/dungar/dungar/internal/utils"
 
 func normalizeWordList(words []string) []string {
 	occurrences := make(map[string]int, 0)

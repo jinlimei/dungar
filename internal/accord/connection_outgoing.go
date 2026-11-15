@@ -1,8 +1,8 @@
 package accord
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 	"log"
 	"time"
 )
@@ -47,7 +47,7 @@ func (d *Driver) outgoingEventLoop() {
 		d.runScheduledTasks(outgoing)
 
 		if !outgoing.HasEnvelopes() {
-			//log.Printf("No outgoing envelopes for incoming message.\n")
+			// log.Printf("No outgoing envelopes for incoming message.\n")
 			time.Sleep(1 * time.Second)
 			continue
 		}

@@ -1,14 +1,14 @@
 package markov3
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 )
 
 // LearnString takes the incoming string and builds
 // out its sequence (via MakeWordSequence) and then
 // calls LearnWordSequence
 func (m *Markov) LearnString(str string, variant cleaner.TokenVariant) {
-	//str = strings.ToLower(str)
+	// str = strings.ToLower(str)
 	m.LearnTokenList(cleaner.Tokenize(str, variant))
 }
 
@@ -78,15 +78,15 @@ func (m *Markov) LearnWordSequence(words []string) {
 			wordID = m.AddWord(word)
 		}
 
-		//fmt.Printf("word=%s, wordID=%d\n", word, wordID)
+		// fmt.Printf("word=%s, wordID=%d\n", word, wordID)
 		wordIDs[idx] = wordID
 	}
 
 	// Now that we have our list of WordIDs, we are going to
 	// build a list of fragments and throw them in!
-	//log.Printf("creating chain (of wordIDs): %v\n", wordIDs)
+	// log.Printf("creating chain (of wordIDs): %v\n", wordIDs)
 	chain := m.CreateFragments(wordIDs)
-	//spew.Dump(chain)
+	// spew.Dump(chain)
 
 	// Fragments for this particular chain are completed, but we're
 	// *only* storing them in `chain`, so we want them to go to

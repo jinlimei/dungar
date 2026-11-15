@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func TestMainControlHandler(t *testing.T) {

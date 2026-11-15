@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func mainControlHandler(msg *core2.IncomingMessage) []*core2.Response {

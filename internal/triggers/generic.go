@@ -1,14 +1,14 @@
 package triggers
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 
 	"regexp"
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 var garbagePrefix = regexp.MustCompile(`^(<[^>]+>|\(?[^)]+\))`)

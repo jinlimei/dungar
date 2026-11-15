@@ -1,6 +1,6 @@
 package markov4
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/random"
+import "gitlab.int.magneato.site/dungar/dungar/internal/random"
 
 // randomMarkovID lets us box in the usage of the underlying
 // data type of MarkovID to a single function so we can then

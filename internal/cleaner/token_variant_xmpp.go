@@ -1,6 +1,6 @@
 package cleaner
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/utils"
+import "gitlab.int.magneato.site/dungar/dungar/internal/utils"
 
 func (t *Token) parseTokenForXMPP() []Token {
 	// Don't need that shit in the logs

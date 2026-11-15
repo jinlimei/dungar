@@ -1,6 +1,6 @@
 package markov3
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+import "gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 
 var fillerMap = map[cleaner.TokenType]string{
 	cleaner.TokenURL:            "\u0000URL",

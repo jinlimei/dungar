@@ -1,6 +1,6 @@
 package triggers
 
-import "gitlab.int.magneato.site/dungar/prototype/library/core2"
+import "gitlab.int.magneato.site/dungar/dungar/library/core2"
 
 var userSpammed = []weightedChoice{
 	{0.02, "behold! A rare performance in which $nick$ attempts intelligent conversation through the use of word vomit"},
@@ -49,9 +49,9 @@ func selfSpamHandler(svc *core2.Service, rsps []*core2.Response) []*core2.Respon
 			continue
 		}
 
-		//if basic.Execute("selfSpamHandler--skip", 0.10) {
+		// if basic.Execute("selfSpamHandler--skip", 0.10) {
 		//	continue
-		//}
+		// }
 
 		additions = append(additions, &core2.Response{
 			ConsumedMessage:  true,

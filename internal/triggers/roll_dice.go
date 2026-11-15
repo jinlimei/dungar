@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 var rollDiceRegex = regexp.MustCompile(`\s+((\d+)[Dd](\d+)([hlHLoO](\d+)|))`)
@@ -36,7 +36,7 @@ func rollDiceHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Re
 		return core2.PrefixedSingleRsp(pickWeightedChoice(overDiceRollsLimitResponses))
 	}
 
-	//spew.Dump(matches)
+	// spew.Dump(matches)
 	for pos, matchGroup := range matches {
 		diceRolls, _ := strconv.Atoi(matchGroup[2])
 		diceSize, _ := strconv.Atoi(matchGroup[3])

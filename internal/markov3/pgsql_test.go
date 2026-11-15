@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 func zTestMarkovLearnFromRawMessages(t *testing.T) {

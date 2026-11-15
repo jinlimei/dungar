@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 func TestRangeHandler(t *testing.T) {

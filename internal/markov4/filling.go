@@ -1,6 +1,6 @@
 package markov4
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+import "gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 
 func (m *Markov) initInitialFillers() {
 

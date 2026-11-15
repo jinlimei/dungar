@@ -3,7 +3,7 @@ package db
 import (
 	"database/sql"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 // GetBadWords retrieves a list of bad words (or empty if there's no results)

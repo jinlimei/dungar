@@ -1,4 +1,4 @@
-module gitlab.int.magneato.site/dungar/prototype
+module gitlab.int.magneato.site/dungar/dungar
 
 go 1.27
 

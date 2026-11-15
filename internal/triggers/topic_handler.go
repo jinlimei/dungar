@@ -3,7 +3,7 @@ package triggers
 import (
 	"fmt"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 func bitCoinHandler(_, serverID string) string {

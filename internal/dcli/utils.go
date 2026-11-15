@@ -1,8 +1,8 @@
 package dcli
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 // DBConnect connects to the DB for a CLI command

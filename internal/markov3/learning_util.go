@@ -1,7 +1,7 @@
 package markov3
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 	"strings"
 )
 

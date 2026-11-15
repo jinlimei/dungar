@@ -1,4 +1,4 @@
-PROJECT_NAME := "prototype"
+PROJECT_NAME := "dungar"
 PKG := "gitlab.int.magneato.site/dungar/${PROJECT_NAME}"
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
 GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)

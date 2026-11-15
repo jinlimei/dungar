@@ -1,11 +1,11 @@
 package triggers
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 func TestNoYouRegexp(t *testing.T) {
@@ -44,9 +44,9 @@ func testRoutine(t *testing.T, str string) {
 		}
 	}
 
-	//if pass {
+	// if pass {
 	//	log.Printf("noYouHandler passed against '%s' message after %d iterations\n", str, i)
-	//}
+	// }
 
 	assert.Truef(t, pass,
 		"noYouHandler failed against '%s' after %d iterations\n", str, i)

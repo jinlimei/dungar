@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 // UserTracking is the main struct for User Tracking
@@ -116,7 +116,7 @@ func UpdateUserFromUserTracking(tracking UserTracking) error {
 		  AND server_id = $2
 	`
 
-	//log.Printf("UpdateUserFromUserTracking: %+v", tracking)
+	// log.Printf("UpdateUserFromUserTracking: %+v", tracking)
 
 	_, err := ConExec(
 		qry,

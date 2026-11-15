@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func (d *Driver) convertEmbeds(embeds []*discordgo.MessageEmbed) []core2.IncomingAttachment {

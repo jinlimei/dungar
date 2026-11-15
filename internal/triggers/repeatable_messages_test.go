@@ -2,7 +2,7 @@ package triggers
 
 import (
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 	"strings"
 	"testing"
 )
@@ -21,9 +21,9 @@ func TestIsRepeatableMessage(t *testing.T) {
 
 	assert.True(t, isRepeatableMessage(":thinking:"))
 	// disabled these
-	//assert.True(t, isRepeatableMessage("hello"))
-	//assert.True(t, isRepeatableMessage("ohgod"))
-	//assert.True(t, isRepeatableMessage("ohgod"))
+	// assert.True(t, isRepeatableMessage("hello"))
+	// assert.True(t, isRepeatableMessage("ohgod"))
+	// assert.True(t, isRepeatableMessage("ohgod"))
 }
 
 func TestHandleRepeatable(t *testing.T) {

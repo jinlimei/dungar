@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 func haltingErr(loc string, err error) {

@@ -4,10 +4,10 @@ import (
 	"database/sql"
 	"log"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
 )
 
 // LearnFromRawMessagesM1 is a method for learning from the legacy raw messages

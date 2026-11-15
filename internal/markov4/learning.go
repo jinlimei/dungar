@@ -1,7 +1,7 @@
 package markov4
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 )
 
 // LearnStringVariant is LearnString but exposes what cleaner.TokenVariant can be utilized

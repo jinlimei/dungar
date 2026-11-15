@@ -1,10 +1,10 @@
 package dcli
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/accord"
-	"gitlab.int.magneato.site/dungar/prototype/internal/triggers"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/accord"
+	"gitlab.int.magneato.site/dungar/dungar/internal/triggers"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 	"log"
 )
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 const (

@@ -5,8 +5,8 @@ import (
 	"log"
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func postWeirdOutputFilterHandler(svc *core2.Service, rsps []*core2.Response) []*core2.Response {

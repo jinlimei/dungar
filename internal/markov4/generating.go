@@ -3,8 +3,8 @@ package markov4
 import (
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 func isInterchangeable(t cleaner.TokenType) bool {
@@ -193,16 +193,16 @@ func (m *Markov) NextChainLink(orig, curr Fragment, source, target WordType) (Fr
 		decided  Fragment
 	)
 
-	//log.Printf("NextChainLink: fragment=%s, source=%v, target=%v\n",
+	// log.Printf("NextChainLink: fragment=%s, source=%v, target=%v\n",
 	//	curr.String(), source, target)
 
 	if curr.GetToken(target) == LeftMost || curr.GetToken(target) == RightMost {
-		//log.Printf("CWord is LeftMost or RightMost, returning not-ok\n")
+		// log.Printf("CWord is LeftMost or RightMost, returning not-ok\n")
 		return Fragment{}, false
 	}
 
 	centered, ok = m.FragmentTokens[curr.GetToken(target)]
-	//log.Printf("wordFragmentIDs for word %d from target %s: (ok? %v) %v\n",
+	// log.Printf("wordFragmentIDs for word %d from target %s: (ok? %v) %v\n",
 	//	curr.GetToken(target), target, ok, centered)
 
 	if !ok {
@@ -211,17 +211,17 @@ func (m *Markov) NextChainLink(orig, curr Fragment, source, target WordType) (Fr
 
 	for _, fragID := range centered {
 		frag := m.Fragments[fragID]
-		//log.Printf("Checking fragment %v (id: %d) for Word %d at source %s (which is %d)\n",
+		// log.Printf("Checking fragment %v (id: %d) for Word %d at source %s (which is %d)\n",
 		//	frag, fragID, curr.CWord, source, frag.GetToken(source))
 
 		if frag.Equals(orig) {
-			//log.Printf("Fragment (%s) matches original (%s)\n",
+			// log.Printf("Fragment (%s) matches original (%s)\n",
 			//	frag.String(), orig.String())
 			continue
 		}
 
 		if frag.GetToken(source) == curr.CWord {
-			//log.Printf("Eligible: %s\n", frag)
+			// log.Printf("Eligible: %s\n", frag)
 			eligible = append(eligible, frag)
 		}
 	}
@@ -244,7 +244,7 @@ func (m *Markov) NextChainLink(orig, curr Fragment, source, target WordType) (Fr
 	 - Find the right L2Word in the listing
 	*/
 
-	//return Fragment{}, false
+	// return Fragment{}, false
 }
 
 // PeekEligibility lets us get a count of the next available

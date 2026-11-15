@@ -2,11 +2,11 @@ package triggers
 
 import (
 	"fmt"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 func TestBuildPostMessage(t *testing.T) {

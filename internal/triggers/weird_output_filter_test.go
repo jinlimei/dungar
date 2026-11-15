@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
 )
 
 func TestMain(m *testing.M) {

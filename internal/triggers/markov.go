@@ -8,11 +8,11 @@ import (
 	"sync"
 	"time"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/markov"
-	"gitlab.int.magneato.site/dungar/prototype/internal/markov3"
+	"gitlab.int.magneato.site/dungar/dungar/internal/markov"
+	"gitlab.int.magneato.site/dungar/dungar/internal/markov3"
 )
 
 type markovVer uint8
@@ -50,7 +50,7 @@ func markovV3Learn() {
 
 		lastLoadedM3 = time.Now()
 		modern := m3.LearnFromRawMessages()
-		legacy := 0 //m3.LearnFromRawMessagesM1()
+		legacy := 0 // m3.LearnFromRawMessagesM1()
 
 		learningMutex.Unlock()
 		log.Printf("[markovV3Learn] Learned (legacy=%d, modern=%d) messages!\n",

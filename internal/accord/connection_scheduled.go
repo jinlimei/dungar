@@ -1,6 +1,6 @@
 package accord
 
-import "gitlab.int.magneato.site/dungar/prototype/library/core2"
+import "gitlab.int.magneato.site/dungar/dungar/library/core2"
 
 func (d *Driver) runScheduledTasks(outgoing *core2.OutgoingResponses) {
 	var (

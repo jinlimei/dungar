@@ -3,10 +3,10 @@ package triggers
 import (
 	"log"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 var (

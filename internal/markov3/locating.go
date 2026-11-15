@@ -4,9 +4,9 @@ import (
 	"log"
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 // FindWordsWithVariants will take the incoming words and return their given variants via

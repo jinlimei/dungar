@@ -1,6 +1,6 @@
 package core2
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/utils"
+import "gitlab.int.magneato.site/dungar/dungar/internal/utils"
 
 // ResponseEnvelope is a list of response to a given target
 type ResponseEnvelope struct {

@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func (d *Driver) handleMessageUpdateEvent(s *discordgo.Session, ev *discordgo.MessageUpdate) {

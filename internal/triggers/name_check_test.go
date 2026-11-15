@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 func TestNameCheckHandler(t *testing.T) {
@@ -24,9 +24,9 @@ func TestNameCheckHandler(t *testing.T) {
 		}
 	}
 
-	//if pass {
+	// if pass {
 	//	log.Printf("TestNameCheckHandler passed after %d iterations\n", i)
-	//}
+	// }
 
 	assert.True(t, pass)
 }

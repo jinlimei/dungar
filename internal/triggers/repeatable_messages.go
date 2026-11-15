@@ -3,8 +3,8 @@ package triggers
 import (
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func isRepeatableMessage(msg string) bool {

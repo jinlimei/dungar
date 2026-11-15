@@ -3,8 +3,8 @@ package dcli
 import (
 	"database/sql"
 	"encoding/json"
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 	"os"
 
 	"log"
@@ -66,8 +66,8 @@ func ReconstructFragments(file string) {
 			tmp = append(tmp, words[frag.CWordID])
 		}
 
-		//fmt.Printf("Words: %d\n", len(tmp))
-		//fmt.Println(strings.Join(tmp, " "))
+		// fmt.Printf("Words: %d\n", len(tmp))
+		// fmt.Println(strings.Join(tmp, " "))
 		writeRawMessage(tx, sID, strings.Join(tmp, " "))
 
 		fragmentsWritten += len(tmp)
@@ -97,7 +97,7 @@ func writeRawMessage(tx *sql.Tx, sID uint64, msg string) {
 			"created_at" = CURRENT_TIMESTAMP
 	`
 
-	//log.Printf("I suppose we'd qry here:\n%s\n", qry)
+	// log.Printf("I suppose we'd qry here:\n%s\n", qry)
 	db.MustExec(tx, qry, sID, msg)
 }
 

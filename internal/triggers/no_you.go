@@ -3,8 +3,8 @@ package triggers
 import (
 	"regexp"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 var (

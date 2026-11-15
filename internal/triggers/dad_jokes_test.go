@@ -10,26 +10,26 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
-	"gitlab.int.magneato.site/dungar/prototype/internal/shttp"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/shttp"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 //
-//import (
+// import (
 //	"fmt"
 //	"strings"
 //	"testing"
 //
 //	"github.com/stretchr/testify/assert"
-//)
+// )
 //
-//func TestDadJokesPuller (t *testing.T) {
+// func TestDadJokesPuller (t *testing.T) {
 //	words := getRemoteDadJoke()
 //	assert.True(t, !strings.Contains(words, "explodes"),
 //		fmt.Sprintf("Message came back as '%s'", words))
-//}
+// }
 
 const validDadJoke = `{"id":"vPmy5EtPKuc","joke":"Do you want a brief explanation of what an acorn is? In a nutshell, it's an oak tree.","status":200}`
 

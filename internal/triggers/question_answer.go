@@ -3,7 +3,7 @@ package triggers
 import (
 	"regexp"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 var stupidAnswerResponses = []weightedChoice{

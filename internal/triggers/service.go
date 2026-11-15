@@ -1,8 +1,8 @@
 package triggers
 
 import (
-	tracker "gitlab.int.magneato.site/dungar/prototype/internal/triggers/tracking"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	tracker "gitlab.int.magneato.site/dungar/dungar/internal/triggers/tracking"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 var (

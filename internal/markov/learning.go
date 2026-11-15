@@ -4,16 +4,16 @@ import (
 	"database/sql"
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 // LearnMultipleSentences learns stuff very quickly I think hopefully?
 func LearnMultipleSentences(strs []string) {
 	var (
-		tx         = db.BeginTransaction()
+		tx = db.BeginTransaction()
 
-		normed string
+		normed     string
 		fragmentID int64
 		sentenceID int64
 		wordID     int64

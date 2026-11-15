@@ -3,7 +3,7 @@ package triggers
 import (
 	"time"
 
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 var scheduleGroup *core2.ScheduleTriggerGroup

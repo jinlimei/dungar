@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 var testQuestionMatches = []string{
@@ -43,7 +43,7 @@ func TestStupidQuestionAnswerRegex(t *testing.T) {
 func TestQuestionAnswer(t *testing.T) {
 	useAliceInWonderland()
 
-	//db.TestDatabaseConnect()
+	// db.TestDatabaseConnect()
 
 	random.UseTestSeed()
 
@@ -68,7 +68,7 @@ func TestQuestionAnswer(t *testing.T) {
 }
 
 func TestWeirdQnAMarkov(t *testing.T) {
-	//db.TestDatabaseConnect()
+	// db.TestDatabaseConnect()
 	useAliceInWonderland()
 
 	seeds := [4]int64{0, 1337, 31337, 42069}
@@ -83,7 +83,7 @@ func TestWeirdQnAMarkov(t *testing.T) {
 }
 
 func TestStupidQuestionAnswerHandler(t *testing.T) {
-	//db.TestDatabaseConnect()
+	// db.TestDatabaseConnect()
 	useAliceInWonderland()
 
 	assert.NotNil(t, stupidQuestionAnswerHandler("do you batman.jpg?", ""))

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 var (
@@ -19,11 +19,11 @@ var (
 )
 
 func debugHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Response {
-	//channel, _ := svc.GetChannel(msg.ChannelID)
+	// channel, _ := svc.GetChannel(msg.ChannelID)
 	//
-	//if channel.Name != "dungar-test" {
+	// if channel.Name != "dungar-test" {
 	//	return core2.EmptyRsp()
-	//}
+	// }
 
 	now := time.Now()
 	now = now.Add(-5 * time.Second)
@@ -62,7 +62,7 @@ func debugHandler(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Respo
 			}
 		}
 
-		//log.Printf("Outgoing Text: %+v", outgoing)
+		// log.Printf("Outgoing Text: %+v", outgoing)
 		return core2.MakeSingleRsp(strings.Join(outgoing, "\n"))
 	}
 

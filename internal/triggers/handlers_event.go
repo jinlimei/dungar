@@ -3,7 +3,7 @@ package triggers
 import (
 	"log"
 
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func eventHandler(svc *core2.Service, ev *core2.IncomingEvent) *core2.EventResponseEnvelope {

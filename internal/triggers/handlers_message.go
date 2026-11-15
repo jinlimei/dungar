@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/davecgh/go-spew/spew"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 var msgGroup *core2.MessageTriggerGroup

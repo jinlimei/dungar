@@ -1,6 +1,6 @@
 package triggers
 
-import "gitlab.int.magneato.site/dungar/prototype/library/core2"
+import "gitlab.int.magneato.site/dungar/dungar/library/core2"
 
 var complexTriggers = []multiTriggerCallback{
 	buildMultiQuestions(bitCoinHandler, "bitcoin", "btc"),

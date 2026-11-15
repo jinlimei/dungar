@@ -1,6 +1,6 @@
 package markov4
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+import "gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 
 // AddToken will take the incoming string and add it to Words and RevWords
 func (m *Markov) AddToken(w cleaner.Token) TokenID {
@@ -21,7 +21,7 @@ func (m *Markov) AddToken(w cleaner.Token) TokenID {
 // FragmentWords list and assign it a unique ID
 func (m *Markov) AddFragment(f Fragment) FragmentID {
 	fID := FragmentID(len(m.Fragments))
-	//hID := f.Hash()
+	// hID := f.Hash()
 
 	m.Fragments = append(m.Fragments, f)
 
@@ -34,14 +34,14 @@ func (m *Markov) AddFragment(f Fragment) FragmentID {
 
 	m.FragmentTokens[f.CWord] = append(m.FragmentTokens[f.CWord], fID)
 
-	//// Fragment Prefix Finding
-	//_, ok = m.FragmentPrefixes[hID]
+	// // Fragment Prefix Finding
+	// _, ok = m.FragmentPrefixes[hID]
 	//
-	//if !ok {
+	// if !ok {
 	//	m.FragmentPrefixes[hID] = make([]FragmentID, 0)
-	//}
+	// }
 	//
-	//m.FragmentPrefixes[hID] = append(m.FragmentPrefixes[hID], fID)
+	// m.FragmentPrefixes[hID] = append(m.FragmentPrefixes[hID], fID)
 
 	return fID
 }

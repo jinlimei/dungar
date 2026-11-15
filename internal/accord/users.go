@@ -1,7 +1,7 @@
 package accord
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 	"log"
 )
 
@@ -51,7 +51,7 @@ func (d *Driver) GetUser(userID, serverID string) (core2.User, error) {
 	}
 
 	log.Printf("user '%s' not in membercache (size = %d)", userID, len(guild.memberCache))
-	//spew.Dump(guild.memberCache)
+	// spew.Dump(guild.memberCache)
 
 	member, err := d.Con.GetSession().GuildMember(serverID, userID)
 

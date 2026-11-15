@@ -1,6 +1,6 @@
 package markov4
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+import "gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 
 // Reset will completely remove all data for this markov
 // (except its ID) and leave us with an empty state.

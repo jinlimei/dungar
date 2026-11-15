@@ -8,10 +8,10 @@ import (
 	"strings"
 	"testing"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.int.magneato.site/dungar/prototype/internal/random"
+	"gitlab.int.magneato.site/dungar/dungar/internal/random"
 )
 
 func TestLearning(t *testing.T) {
@@ -42,21 +42,21 @@ func TestLearningSubTokens(t *testing.T) {
 
 func zTestDonaldTrump(t *testing.T) {
 	read, err := os.OpenFile("../../infra/war_of_the_worlds.txt", os.O_RDONLY, 0444)
-	//write, err := os.OpenFile("../../infra/trump.txt", os.O_CREATE|os.O_RDWR, 0644)
+	// write, err := os.OpenFile("../../infra/trump.txt", os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		log.Fatalf("Failed to open read: %+v\n", err)
 	}
 
 	defer read.Close()
-	//defer write.Close()
+	// defer write.Close()
 
 	scanner := bufio.NewScanner(read)
 	mt := MakeMarkov("")
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		//tw := CleanTweet(line, false)
-		//write.WriteString(tw.Cleaned + "\n")
+		// tw := CleanTweet(line, false)
+		// write.WriteString(tw.Cleaned + "\n")
 		mt.LearnString(line, cleaner.VariantBook)
 	}
 
@@ -68,10 +68,10 @@ func zTestDonaldTrump(t *testing.T) {
 	var ids []MarkovID
 	for range 3 {
 		ids = mt.GenerateGraph(vars[random.Int(len(vars))])
-		//assert.True(t, len(ids) > 0)
+		// assert.True(t, len(ids) > 0)
 		fmt.Println(strings.TrimSpace(strings.Join(mt.WordIDsToWords(ids), " ")))
-		//spew.Dump(strings.Join(mt.WordIDsToWords(ids), " "))
-		//ids = mt.GenerateGraph( vars )
-		//spew.Dump(strings.Join(mt.WordIDsToWords(ids), " "))
+		// spew.Dump(strings.Join(mt.WordIDsToWords(ids), " "))
+		// ids = mt.GenerateGraph( vars )
+		// spew.Dump(strings.Join(mt.WordIDsToWords(ids), " "))
 	}
 }

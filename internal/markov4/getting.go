@@ -1,6 +1,6 @@
 package markov4
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
+import "gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
 
 // GetRandomWordID provides a random word-associated
 // MarkovID from the RevWords listing

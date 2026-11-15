@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/cleaner"
-	"gitlab.int.magneato.site/dungar/prototype/internal/learning"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/cleaner"
+	"gitlab.int.magneato.site/dungar/dungar/internal/learning"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func makeMessageWithChanID(msg, nick, channel, chanID string) *core2.IncomingMessage {

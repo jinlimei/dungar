@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/dcli"
+	"gitlab.int.magneato.site/dungar/dungar/internal/dcli"
 )
 
 func main() {

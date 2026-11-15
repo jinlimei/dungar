@@ -1,8 +1,8 @@
 package triggers
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 func rawMessageRecorder(svc *core2.Service, msg *core2.IncomingMessage) []*core2.Response {

@@ -6,7 +6,7 @@ import (
 
 	// Need this for PGSQL
 	_ "github.com/lib/pq"
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 var dbHandle *sql.DB

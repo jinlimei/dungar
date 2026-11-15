@@ -1,6 +1,6 @@
 package triggers
 
-import "gitlab.int.magneato.site/dungar/prototype/internal/random"
+import "gitlab.int.magneato.site/dungar/dungar/internal/random"
 
 const whenWillRegex = ":?\\s*(when|how long)\\b.+\\??"
 

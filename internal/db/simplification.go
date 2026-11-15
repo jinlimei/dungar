@@ -5,7 +5,7 @@ import (
 	"errors"
 	"log"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/utils"
+	"gitlab.int.magneato.site/dungar/dungar/internal/utils"
 )
 
 // ErrNoDBConnection returns when zero DB connections have been made.

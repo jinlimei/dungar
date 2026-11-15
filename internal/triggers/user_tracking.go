@@ -7,8 +7,8 @@ import (
 	"log"
 	"strings"
 
-	"gitlab.int.magneato.site/dungar/prototype/internal/db"
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/internal/db"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 // Handles last seen related functionality:

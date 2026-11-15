@@ -1,7 +1,7 @@
 package triggers
 
 import (
-	"gitlab.int.magneato.site/dungar/prototype/library/core2"
+	"gitlab.int.magneato.site/dungar/dungar/library/core2"
 )
 
 // MessageHandler to make sure our bot _only_ responds in the testing channel.
