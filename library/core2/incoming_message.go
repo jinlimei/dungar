@@ -62,7 +62,7 @@ func (im *IncomingMessage) Lowered() string {
 	return im.LowerContents
 }
 
-// HasValidUser returns whether or not the message has come with a valid UserID
+// HasValidUser returns whether the message has come with a valid UserID
 func (im *IncomingMessage) HasValidUser() bool {
 	return im.UserID != ""
 }

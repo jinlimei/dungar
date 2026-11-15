@@ -66,7 +66,7 @@ type AdvancedControl struct {
 	// based on IncreaseDuration
 	lastTimeCalled time.Time
 
-	// isReady returns whether or not the function has been initialized.
+	// isReady returns whether the function has been initialized.
 	isReady bool
 
 	// callCount defines the # of calls this function has received in runtime.

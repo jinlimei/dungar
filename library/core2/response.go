@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// Response is a struct of a message and whether or not to prefix
+// Response is a struct of a message and whether to prefix
 // that message with the respondents name.
 //
 // The table for what means what is as follows:
@@ -59,24 +59,24 @@ type Response struct {
 	Origin ResponseOrigin
 }
 
-// IsEmpty returns whether or not the contents is empty
+// IsEmpty returns whether the contents is empty
 func (rsp *Response) IsEmpty() bool {
 	return strings.TrimSpace(rsp.Contents) == ""
 }
 
-// IsCanceled returns whether or not the response is cancelled.
+// IsCanceled returns whether the response is cancelled.
 func (rsp *Response) IsCanceled() bool {
 	return rsp.CancelledMessage
 }
 
-// IsHandled returns whether or not the message is 'handled' i.e. the responses
+// IsHandled returns whether the message is 'handled' i.e. the responses
 // should be added to the envelope. This occurs when CancelledMessage and/or
 // HandledMessage is true
 func (rsp *Response) IsHandled() bool {
 	return rsp.CancelledMessage || rsp.HandledMessage
 }
 
-// IsConsumed returns whether or not the message should be considered
+// IsConsumed returns whether the message should be considered
 // consumed. This occurs when ConsumedMessage and/or CancelledMessage is true
 func (rsp *Response) IsConsumed() bool {
 	return rsp.CancelledMessage || rsp.ConsumedMessage

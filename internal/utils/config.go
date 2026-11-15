@@ -40,7 +40,7 @@ func doesFileExist(file string) bool {
 	return info.Size() > 0
 }
 
-// IsConfiguredDebugMode returns whether or not Debug Mode is configured
+// IsConfiguredDebugMode returns whether Debug Mode is configured
 func IsConfiguredDebugMode() bool {
 	if MustUseEnvVars() {
 		return true
@@ -49,7 +49,7 @@ func IsConfiguredDebugMode() bool {
 	return normalIniFile.Section("base").Key("debug").MustBool(false)
 }
 
-// IsSilentRunning returns whether or not Dungar should respond
+// IsSilentRunning returns whether Dungar should respond
 // This places a hard limit on what dungar does in ~taut~ and ~accord~
 func IsSilentRunning() bool {
 	if MustUseEnvVars() {

@@ -23,7 +23,7 @@ func NewRealDiscordConnection() *RealDiscordConnection {
 	return &RealDiscordConnection{}
 }
 
-// IsConnected is whether or not Connect has been called
+// IsConnected is whether Connect has been called
 func (r *RealDiscordConnection) IsConnected() bool {
 	return r.connected
 }

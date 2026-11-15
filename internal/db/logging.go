@@ -6,7 +6,7 @@ import (
 
 var writeIssues = true
 
-// FlagWritingIssues changes whether or not to write issues,
+// FlagWritingIssues changes whether to write issues,
 // and is built to disable writing issues in a test environment
 func FlagWritingIssues(enabled bool) {
 	writeIssues = enabled
@@ -22,12 +22,12 @@ func LogIssue(issueType, title, contents string) {
 	log.Printf("[ISSUE ENCOUNTERED %s] %s, %s\n",
 		issueType, title, contents)
 
-	//utils.SentryMessage(fmt.Sprintf(
+	// utils.SentryMessage(fmt.Sprintf(
 	//	"[LogIssue] Type='%s', Title='%s', Contents='%s'",
 	//	issueType,
 	//	title,
 	//	contents,
-	//), nil)
+	// ), nil)
 
 	sql := `
 		INSERT INTO log_issues (issue_type, title, contents, created)

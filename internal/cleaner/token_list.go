@@ -38,7 +38,7 @@ func (tl *TokenList) DebugPrint() {
 	DebugPrintTokenList(tl.tokens)
 }
 
-// IsMalformed returns whether or not we found a token that appears
+// IsMalformed returns whether we found a token that appears
 // malformed.
 func (tl *TokenList) IsMalformed() bool {
 	for _, token := range tl.tokens {

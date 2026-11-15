@@ -34,7 +34,7 @@ func Normalize(s string) string {
 	return strings.ToLower(res)
 }
 
-// EndsWithPunctuation Returns whether or not a word ends in punctuation that we care about
+// EndsWithPunctuation Returns whether a word ends in punctuation that we care about
 func EndsWithPunctuation(word string) bool {
 	if word == "" {
 		return false
@@ -62,7 +62,7 @@ func TrimPunctuation(s string) string {
 	return s
 }
 
-// IsURL returns whether or not the string is a URL
+// IsURL returns whether the string is a URL
 func IsURL(str string) bool {
 	if len(str) < 8 {
 		return urlRegex.MatchString(str)
