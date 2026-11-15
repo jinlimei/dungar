@@ -134,14 +134,14 @@ func (rc *AdvancedControl) Execute() bool {
 		diff := now.Sub(rc.lastTimeCalled)
 		multiplier := diff.Seconds() / rc.IncreaseDuration.Seconds()
 
-		//log.Printf("Diff: %v, Multiplier: %v,", diff, multiplier)
+		// log.Printf("Diff: %v, Multiplier: %v,", diff, multiplier)
 
-		//log.Printf("Pre-Calc Chance: %0.6f\n", rc.currentChance)
+		// log.Printf("Pre-Calc Chance: %0.6f\n", rc.currentChance)
 		rc.currentChance += rc.IncrementIncrease * multiplier
-		//log.Printf("Post-Calc Chance: %0.6f\n", rc.currentChance)
+		// log.Printf("Post-Calc Chance: %0.6f\n", rc.currentChance)
 		// 5 decimal places
-		//rc.currentChance = math.Round(rc.currentChance * 100_000) / 100_000
-		//log.Printf("Rounded Chance: %0.6f\n", rc.currentChance)
+		// rc.currentChance = math.Round(rc.currentChance * 100_000) / 100_000
+		// log.Printf("Rounded Chance: %0.6f\n", rc.currentChance)
 
 	}
 

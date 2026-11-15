@@ -57,7 +57,7 @@ func (r *RealDiscordConnection) Disconnect() error {
 
 // AddHandler is a wrapper around the AddHandler function in the discordgo.Session
 func (r *RealDiscordConnection) AddHandler(handler DiscordHandlerFn) {
-	//log.Printf("RealDiscordConnection AddHandler, session: %+v", r.session)
+	// log.Printf("RealDiscordConnection AddHandler, session: %+v", r.session)
 	r.session.AddHandler(handler)
 }
 
