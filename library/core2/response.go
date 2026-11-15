@@ -1,7 +1,6 @@
 package core2
 
 import (
-	"fmt"
 	"log"
 	"strings"
 )
@@ -130,17 +129,4 @@ func (rsp *Response) Format(driver ProtocolDriver, msg *IncomingMessage) string 
 	}
 
 	return rsp.Contents
-}
-
-// String converts to String
-func (rsp *Response) String() string {
-	return fmt.Sprintf(
-		"handled='%v', prefix='%v', consume='%v', cancelled='%v', contents='%s', type='%s'",
-		rsp.HandledMessage,
-		rsp.PrefixUsername,
-		rsp.ConsumedMessage,
-		rsp.CancelledMessage,
-		rsp.Contents,
-		rsp.ResponseType,
-	)
 }
