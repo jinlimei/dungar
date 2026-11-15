@@ -2,12 +2,13 @@ package accord
 
 import (
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/bwmarrin/discordgo"
 	"github.com/davecgh/go-spew/spew"
 	"gitlab.int.magneato.site/dungar/dungar/internal/db"
 	"gitlab.int.magneato.site/dungar/dungar/library/core2"
-	"log"
-	"time"
 )
 
 // GetOutgoingResponses retrieves the OutgoingResponses and ensures that outgoing is
@@ -77,6 +78,11 @@ func (d *Driver) handleResponse(envelope *core2.ResponseEnvelope, response *core
 
 	sess = d.Con.GetSession()
 
+	channelID := envelope.Message.ChannelID
+	if envelope.Message.SubChannelID != "" {
+		channelID = envelope.Message.SubChannelID
+	}
+
 	switch response.ResponseType {
 	case core2.ResponseTypeBasic, core2.ResponseTypeDirectMessage:
 
@@ -85,17 +91,17 @@ func (d *Driver) handleResponse(envelope *core2.ResponseEnvelope, response *core
 
 		if response.MakeSubChannelIfPossible {
 			_, err = sess.ChannelMessageSendReply(
-				envelope.Message.ChannelID,
+				channelID,
 				formatted,
 				&discordgo.MessageReference{
 					MessageID: envelope.Message.ID,
-					ChannelID: envelope.Message.ChannelID,
+					ChannelID: channelID,
 					GuildID:   envelope.Message.ServerID,
 				},
 			)
 		} else {
 			_, err = sess.ChannelMessageSend(
-				envelope.Message.ChannelID,
+				channelID,
 				formatted,
 			)
 		}
@@ -118,14 +124,14 @@ func (d *Driver) handleResponse(envelope *core2.ResponseEnvelope, response *core
 		formatted = d.translateReactionEmoji(formatted, envelope.Message.ServerID)
 
 		err = sess.MessageReactionAdd(
-			envelope.Message.ChannelID,
+			channelID,
 			envelope.Message.ID,
 			formatted,
 		)
 
 		log.Printf(
 			"MessageReactionAdd(channel-id='%s',message-id='%s',formatted='%s'",
-			envelope.Message.ChannelID,
+			channelID,
 			envelope.Message.ID,
 			formatted,
 		)
@@ -135,15 +141,16 @@ func (d *Driver) handleResponse(envelope *core2.ResponseEnvelope, response *core
 				"reaction_add_failed",
 				"Failed to Add Reaction",
 				fmt.Sprintf(
-					"Reaction: '%s'\nChannelID: '%s'\nSubChannelID: '%s'\nError: %v",
+					"Reaction: '%s'\nChannelID: '%s'\nError: %v",
 					formatted,
-					envelope.Message.ChannelID,
-					envelope.Message.SubChannelID,
+					channelID,
 					err,
 				),
 			)
 		} else {
 			d.core.SetLastSentMessage()
 		}
+	default:
+		log.Printf("Unhandled response type: %s", response.ResponseType)
 	} // end switch response.ResponseType
 }
