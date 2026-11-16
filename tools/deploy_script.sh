@@ -1,30 +1,42 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-
-mkdir -p ~/.ssh/
-
+SSH_DIR="$HOME/.ssh"
 IPADDR="10.0.0.90"
 
-echo "Host $IPADDR" > ~/.ssh/ssh_config
-echo "  StrictHostKeyChecking no" >> ~/.ssh/ssh_config
-echo "SSH Config Set"
+umask 077
 
-echo "$PROD_SSH_KEY" > ~/.ssh/deploy.key
-echo "$PROD_KNOWN_HOSTS" > ~/.ssh/known_hosts
+mkdir -p "$SSH_DIR"
+chmod 700 "$SSH_DIR"
+echo "SSH dir chmod'd correctly"
+
+touch "$SSH_DIR/deploy.key" "$SSH_DIR/known_hosts"
+chmod 600 "$SSH_DIR/deploy.key" "$SSH_DIR/known_hosts"
+echo "SSH-related files chmod'd correctly"
+
+cleanup() {
+  rm -f "$SSH_DIR/deploy.key" "$SSH_DIR/known_hosts"
+}
+
+trap cleanup EXIT
+
+if [[ -z "${PROD_SSH_KEY:-}" || -z "${PROD_KNOWN_HOSTS:-}" ]]; then
+  echo "PROD_SSH_KEY AND/OR PROD_KNOWN_HOSTS ARE EMPTY"
+  exit 1
+fi
+
+printf '%s\n' "$PROD_SSH_KEY" > "$SSH_DIR/deploy.key"
+printf '%s\n' "$PROD_KNOWN_HOSTS" > "$SSH_DIR/known_hosts"
 echo "SSH Key and Known Hosts set"
-
-chmod 600 ~/.ssh/deploy.key
-chmod 640 ~/.ssh/known_hosts
-chmod 640 ~/.ssh/ssh_config
-echo "SSH Settings CHModded correctly"
 
 NOW=$(date +%s)
 echo "Setting Deploy Date: $NOW"
 
-cp ./bin/dungar "dungar_$NOW"
+CMD_ARGS=(-o BatchMode=yes -o IdentitiesOnly=yes -i "$SSH_DIR/deploy.key")
+
 echo "Transferring Dungar..."
-scp -i ~/.ssh/deploy.key "dungar_$NOW" dungar@$IPADDR:~
+scp "${CMD_ARGS[@]}" ./bin/dungar dungar@"$IPADDR":"dungar_$NOW"
 
 echo "Dungar Transferred. Updating Watcher"
-ssh -i ~/.ssh/deploy.key -t dungar@$IPADDR "echo $NOW > watcher"
+ssh "${CMD_ARGS[@]}" dungar@"$IPADDR" "echo $NOW > watcher.tmp && mv watcher.tmp watcher"
 echo "Completed push to production. Supervisor on production will now deploy"
