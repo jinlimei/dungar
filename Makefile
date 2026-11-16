@@ -17,9 +17,11 @@ dep: ## Get the dependencies
 	@go mod verify
 
 build: dep ## Build the binary file
+	@go generate ./...
 	@go build -o bin/dungar -compiler gc -ldflags="-s -w" cmd/dungar/*.go
 
 fix: dep
+	@go generate ./...
 	@go fix ${PKG_LIST}
 	@go vet -fix ${PKG_LIST}
 
