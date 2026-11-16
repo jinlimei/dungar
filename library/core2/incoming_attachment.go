@@ -6,7 +6,7 @@ import (
 
 // AttachmentType is the different kind of types of attachments to a given message or event
 //
-//go:generate stringer -type=AttachmentType
+//go:generate go tool stringer -type=AttachmentType
 type AttachmentType uint8
 
 const (

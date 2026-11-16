@@ -5,13 +5,16 @@ import "fmt"
 // ChannelType is the means of establishing special channel types for working out how
 // to react to them in various circumstances (through triggers, etc.)
 //
-//go:generate stringer -type=ChannelType
+//go:generate go tool stringer -type=ChannelType
 type ChannelType uint8
 
 const (
 	// ChannelUnknown is our base channel type and is used as the "default" if no code
 	// actually specified a valid type
 	ChannelUnknown ChannelType = iota
+	// ChannelDiscard is our way of explicitly discarding some channels from a service
+	// that should be ignored by the bot writ large
+	ChannelDiscard
 	// ChannelPublic is a standard slack/discord/IRC channel
 	ChannelPublic
 	// ChannelPrivileged is a private Slack channel, or other instances of a channel

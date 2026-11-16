@@ -6,7 +6,7 @@ import (
 
 // MessageType is the different types of incoming backlog
 //
-//go:generate stringer -type=MessageType
+//go:generate go tool stringer -type=MessageType
 type MessageType uint8
 
 const (

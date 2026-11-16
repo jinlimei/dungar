@@ -2,7 +2,7 @@ package core2
 
 // EventType is our different kinds of event types for a given IncomingEvent
 //
-//go:generate stringer -type=EventType
+//go:generate go tool stringer -type=EventType
 type EventType uint8
 
 const (

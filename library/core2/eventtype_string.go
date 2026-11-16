@@ -20,15 +20,17 @@ func _() {
 	_ = x[EventUnpinnedItem-9]
 	_ = x[EventReactionAdd-10]
 	_ = x[EventReactionRemove-11]
+	_ = x[EventMessageDelete-12]
 }
 
-const _EventType_name = "EventUnknownEventChannelJoinEventChannelLeaveEventChannelTopicEventChannelPurposeEventChannelNameEventChannelArchiveEventFileShareEventPinnedItemEventUnpinnedItemEventReactionAddEventReactionRemove"
+const _EventType_name = "EventUnknownEventChannelJoinEventChannelLeaveEventChannelTopicEventChannelPurposeEventChannelNameEventChannelArchiveEventFileShareEventPinnedItemEventUnpinnedItemEventReactionAddEventReactionRemoveEventMessageDelete"
 
-var _EventType_index = [...]uint8{0, 12, 28, 45, 62, 81, 97, 116, 130, 145, 162, 178, 197}
+var _EventType_index = [...]uint8{0, 12, 28, 45, 62, 81, 97, 116, 130, 145, 162, 178, 197, 215}
 
 func (i EventType) String() string {
-	if i >= EventType(len(_EventType_index)-1) {
+	idx := int(i) - 0
+	if i < 0 || idx >= len(_EventType_index)-1 {
 		return "EventType(" + strconv.FormatInt(int64(i), 10) + ")"
 	}
-	return _EventType_name[_EventType_index[i]:_EventType_index[i+1]]
+	return _EventType_name[_EventType_index[idx]:_EventType_index[idx+1]]
 }

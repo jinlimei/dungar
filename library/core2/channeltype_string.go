@@ -9,22 +9,24 @@ func _() {
 	// Re-run the stringer command to generate them again.
 	var x [1]struct{}
 	_ = x[ChannelUnknown-0]
-	_ = x[ChannelPublic-1]
-	_ = x[ChannelPrivileged-2]
-	_ = x[ChannelDirectMessage-3]
-	_ = x[ChannelGroupMessage-4]
-	_ = x[ChannelReadOnly-5]
-	_ = x[ChannelVoice-6]
-	_ = x[ChannelForum-7]
+	_ = x[ChannelDiscard-1]
+	_ = x[ChannelPublic-2]
+	_ = x[ChannelPrivileged-3]
+	_ = x[ChannelDirectMessage-4]
+	_ = x[ChannelGroupMessage-5]
+	_ = x[ChannelReadOnly-6]
+	_ = x[ChannelVoice-7]
+	_ = x[ChannelForum-8]
 }
 
-const _ChannelType_name = "ChannelUnknownChannelPublicChannelPrivilegedChannelDirectMessageChannelGroupMessageChannelReadOnlyChannelVoiceChannelForum"
+const _ChannelType_name = "ChannelUnknownChannelDiscardChannelPublicChannelPrivilegedChannelDirectMessageChannelGroupMessageChannelReadOnlyChannelVoiceChannelForum"
 
-var _ChannelType_index = [...]uint8{0, 14, 27, 44, 64, 83, 98, 110, 122}
+var _ChannelType_index = [...]uint8{0, 14, 28, 41, 58, 78, 97, 112, 124, 136}
 
 func (i ChannelType) String() string {
-	if i >= ChannelType(len(_ChannelType_index)-1) {
+	idx := int(i) - 0
+	if i < 0 || idx >= len(_ChannelType_index)-1 {
 		return "ChannelType(" + strconv.FormatInt(int64(i), 10) + ")"
 	}
-	return _ChannelType_name[_ChannelType_index[i]:_ChannelType_index[i+1]]
+	return _ChannelType_name[_ChannelType_index[idx]:_ChannelType_index[idx+1]]
 }

@@ -19,8 +19,9 @@ const _ResponseType_name = "ResponseTypeUnknownResponseTypeBasicResponseTypeReac
 var _ResponseType_index = [...]uint8{0, 19, 36, 56, 81}
 
 func (i ResponseType) String() string {
-	if i >= ResponseType(len(_ResponseType_index)-1) {
+	idx := int(i) - 0
+	if i < 0 || idx >= len(_ResponseType_index)-1 {
 		return "ResponseType(" + strconv.FormatInt(int64(i), 10) + ")"
 	}
-	return _ResponseType_name[_ResponseType_index[i]:_ResponseType_index[i+1]]
+	return _ResponseType_name[_ResponseType_index[idx]:_ResponseType_index[idx+1]]
 }

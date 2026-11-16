@@ -3,7 +3,7 @@ package core2
 // ResponseType indicates how a Response should be handled/interpreted by a given
 // ProtocolDriver
 //
-//go:generate stringer -type=ResponseType
+//go:generate go tool stringer -type=ResponseType
 type ResponseType uint8
 
 const (

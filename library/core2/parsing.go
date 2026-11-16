@@ -7,7 +7,7 @@ import (
 
 // TokenType is an enum for various token types for message tokens
 //
-//go:generate stringer -type=TokenType
+//go:generate go tool stringer -type=TokenType
 type TokenType int
 
 const (

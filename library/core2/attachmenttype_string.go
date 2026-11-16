@@ -19,8 +19,9 @@ const _AttachmentType_name = "AttachmentUnknownAttachmentImageAttachmentTweetAtt
 var _AttachmentType_index = [...]uint8{0, 17, 32, 47, 67}
 
 func (i AttachmentType) String() string {
-	if i >= AttachmentType(len(_AttachmentType_index)-1) {
+	idx := int(i) - 0
+	if i < 0 || idx >= len(_AttachmentType_index)-1 {
 		return "AttachmentType(" + strconv.FormatInt(int64(i), 10) + ")"
 	}
-	return _AttachmentType_name[_AttachmentType_index[i]:_AttachmentType_index[i+1]]
+	return _AttachmentType_name[_AttachmentType_index[idx]:_AttachmentType_index[idx+1]]
 }

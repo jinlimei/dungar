@@ -7,7 +7,7 @@ import (
 
 // TokenType is our base type for handling tokens
 //
-//go:generate stringer -type=TokenType
+//go:generate go tool stringer -type=TokenType
 type TokenType uint8
 
 const (
